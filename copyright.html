@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Copyright &amp; Licences — RelicMaze</title>
+  <meta name="description" content="Copyright notice, original procedural art and solver-verified map provenance, and open-source MIT licences for Godot Engine and .NET.">
+  <meta name="theme-color" content="#07080F">
+  <link rel="icon" type="image/png" sizes="44x44" href="assets/logos/RelicMaze-Logo-44x44.png">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <div class="lantern-aura" aria-hidden="true"></div>
+
+  <header class="top-toolbar" role="banner">
+    <div class="toolbar-inner">
+      <a href="index.html" class="brand-link" aria-label="RelicMaze Home">
+        <img src="assets/logos/RelicMaze-Logo-150x150.png" alt="RelicMaze Crest" class="brand-crest" width="38" height="38">
+        <span class="brand-wordmark">
+          <span>RELICMAZE</span>
+          <span class="brand-sub" data-i18n="meridian_works">The Meridian Works</span>
+        </span>
+      </a>
+
+      <nav class="toolbar-sections" aria-label="Navigation">
+        <a href="index.html" class="section-link" data-i18n="nav_home">Home</a>
+        <a href="index.html#trailer" class="section-link" data-i18n="nav_trailer">Trailer</a>
+        <a href="index.html#pyramid" class="section-link" data-i18n="nav_pyramid">Pyramid</a>
+        <a href="index.html#gallery" class="section-link" data-i18n="nav_gallery">Screenshots</a>
+      </nav>
+
+      <div class="toolbar-actions">
+        <button type="button" id="toolbar-music-btn" class="hud-btn hud-music" aria-pressed="false">
+          <span class="eq-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span data-i18n="music">Music</span>
+        </button>
+
+        <a href="support.html" class="hud-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4"></path>
+            <circle cx="12" cy="17.5" r="0.6" fill="currentColor"></circle>
+          </svg>
+          <span data-i18n="btn_support">Support</span>
+        </a>
+
+        <a href="privacy.html" class="hud-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M12 3l7 3v6c0 5-3.5 8.2-7 9-3.5-.8-7-4-7-9V6l7-3z"></path>
+            <path d="M9.5 12l1.8 1.8 3.4-3.6"></path>
+          </svg>
+          <span data-i18n="btn_privacy">Privacy</span>
+        </a>
+
+        <a href="copyright.html" class="hud-btn active" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M14.8 9.5a4 4 0 1 0 0 5"></path>
+          </svg>
+          <span data-i18n="btn_copyright">Copyright</span>
+        </a>
+
+        <div class="lang-dropdown" id="lang-dropdown">
+          <button type="button" class="hud-btn lang-trigger" id="lang-trigger" aria-haspopup="listbox" aria-expanded="false">
+            <span class="lang-trigger-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"></path>
+              </svg>
+              <span id="lang-current-native">English</span>
+              <span class="lang-code-pill" id="lang-current-code">EN</span>
+            </span>
+            <span class="lang-caret" aria-hidden="true">▼</span>
+          </button>
+          <div class="lang-menu" id="lang-menu" role="listbox" aria-label="Select Language"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="scroll-meridian" aria-hidden="true"><div class="scroll-meridian-bar"></div></div>
+  <audio id="rm-audio" src="assets/media/relicmaze.mp3" preload="metadata" loop></audio>
+
+  <main>
+    <section class="doc-hero">
+      <div class="container">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          <span data-i18n="btn_copyright">Copyright</span>
+        </div>
+        <h1 class="section-title" style="text-align:start; margin-bottom:0.5rem;" data-i18n="copyright_page_title">
+          Copyright, Provenance &amp; Open-Source Licences
+        </h1>
+        <p class="section-sub" style="text-align:start;" data-i18n="copyright_page_sub">
+          Originality statement, procedural asset provenance, and third-party MIT notices for Godot Engine and .NET.
+        </p>
+      </div>
+    </section>
+
+    <section class="doc-body">
+      <div class="container">
+        <div class="doc-grid">
+          <article class="temple-frame doc-card reveal">
+            <h2>1. Copyright &amp; Originality</h2>
+            <p><strong>© 2026 bulentozkir. All rights reserved for RelicMaze original code, chamber designs, narrative, and synthesized score.</strong></p>
+            <p data-i18n="credits_orig">
+              Design, levels, simulation, art, music and sound effects: original work. Every chamber is machine-authored, solver-verified and replayed in two independent implementations. The soundtrack is a pre-rendered original piece, synthesized from code with no samples; the sound effects and every visual are generated in code. No third-party art or map data is included.
+            </p>
+            <p>
+              RelicMaze takes broad genre inspiration from classic flip-screen treasure-exploration platformers. No proprietary room maps, ROM data, character likenesses, extracted sprites, sound samples, or disassembled code from any classic or third-party game were used, and no affiliation with or endorsement by any third-party publisher is claimed.
+            </p>
+          </article>
+
+          <article class="temple-frame doc-card reveal">
+            <h2>2. Historical &amp; Scientific Attribution ("Help &amp; Legend")</h2>
+            <p>
+              The in-game illustrated book <em>Help &amp; Legend</em> discusses the real hill Visočica above Visoko, Bosnia and Herzegovina: separating public claims about the "Bosnian Pyramid of the Sun" (marked in amber as claims) from peer-reviewed geological and archaeological findings (marked in teal) and documented regional history such as Neolithic Okolište and medieval Visoki (marked in pale blue). Milo the Coppercap, Kabeel, the Keepers of the Meridian, and the Meridian Works are original fictional creations of RelicMaze.
+            </p>
+          </article>
+        </div>
+
+        <article class="temple-frame doc-card reveal" style="margin-bottom:1.5rem;">
+          <h2 data-i18n="credits_licences">Credits &amp; Licences</h2>
+          <p data-i18n="credits_godot">Made with the Godot Engine (MIT licence) and .NET (MIT licence).</p>
+          <p>
+            Full third-party component notices (including FreeType, HarfBuzz, mbedTLS, libpng, zlib, Vorbis/MPH/MP3 decoders, and .NET runtime libraries) ship inside every RelicMaze release package as <code>THIRD-PARTY-NOTICES.txt</code> and are viewable in-game under <strong>Credits &amp; Licences</strong>.
+          </p>
+
+          <h3>Godot Engine — MIT License</h3>
+          <pre class="license-pre">This game uses Godot Engine, available under the following license:
+
+Copyright (c) 2014-present Godot Engine contributors.
+Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</pre>
+
+          <h3>.NET Runtime &amp; Libraries — MIT License</h3>
+          <pre class="license-pre">The MIT License (MIT)
+
+Copyright (c) .NET Foundation and Contributors
+
+All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.</pre>
+
+          <p style="margin-top:1.25rem;">
+            <a href="index.html" class="btn-secondary" data-i18n="back">Back</a>
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="brand-link">
+        <img src="assets/logos/RelicMaze-Logo-44x44.png" alt="RelicMaze Icon" class="brand-crest" width="34" height="34">
+        <span class="brand-wordmark">
+          <span>RELICMAZE</span>
+          <span class="brand-sub" data-i18n="subtitle_game">RelicMaze — a lantern-runner's temple puzzle platformer.</span>
+        </span>
+      </a>
+      <div class="footer-links">
+        <a href="support.html" class="hud-btn" data-i18n="btn_support">Support</a>
+        <a href="privacy.html" class="hud-btn" data-i18n="btn_privacy">Privacy</a>
+        <a href="copyright.html" class="hud-btn active" data-i18n="btn_copyright">Copyright</a>
+      </div>
+      <div class="footer-note">
+        <span>© 2026 bulentozkir · RelicMaze</span>
+        <span>Godot Engine 4.7.2 (MIT) · .NET (MIT)</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/i18n-data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

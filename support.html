@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Support — RelicMaze Official Player Support &amp; Field Manual</title>
+  <meta name="description" content="Player support, installation, save file locations, controls, accessibility shortcuts, and troubleshooting for RelicMaze on Windows.">
+  <meta name="theme-color" content="#07080F">
+  <link rel="icon" type="image/png" sizes="44x44" href="assets/logos/RelicMaze-Logo-44x44.png">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <div class="lantern-aura" aria-hidden="true"></div>
+
+  <header class="top-toolbar" role="banner">
+    <div class="toolbar-inner">
+      <a href="index.html" class="brand-link" aria-label="RelicMaze Home">
+        <img src="assets/logos/RelicMaze-Logo-150x150.png" alt="RelicMaze Crest" class="brand-crest" width="38" height="38">
+        <span class="brand-wordmark">
+          <span>RELICMAZE</span>
+          <span class="brand-sub" data-i18n="meridian_works">The Meridian Works</span>
+        </span>
+      </a>
+
+      <nav class="toolbar-sections" aria-label="Navigation">
+        <a href="index.html" class="section-link" data-i18n="nav_home">Home</a>
+        <a href="index.html#trailer" class="section-link" data-i18n="nav_trailer">Trailer</a>
+        <a href="index.html#pyramid" class="section-link" data-i18n="nav_pyramid">Pyramid</a>
+        <a href="index.html#gallery" class="section-link" data-i18n="nav_gallery">Screenshots</a>
+      </nav>
+
+      <div class="toolbar-actions">
+        <button type="button" id="toolbar-music-btn" class="hud-btn hud-music" aria-pressed="false">
+          <span class="eq-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span data-i18n="music">Music</span>
+        </button>
+
+        <a href="support.html" class="hud-btn active" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4"></path>
+            <circle cx="12" cy="17.5" r="0.6" fill="currentColor"></circle>
+          </svg>
+          <span data-i18n="btn_support">Support</span>
+        </a>
+
+        <a href="privacy.html" class="hud-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M12 3l7 3v6c0 5-3.5 8.2-7 9-3.5-.8-7-4-7-9V6l7-3z"></path>
+            <path d="M9.5 12l1.8 1.8 3.4-3.6"></path>
+          </svg>
+          <span data-i18n="btn_privacy">Privacy</span>
+        </a>
+
+        <a href="copyright.html" class="hud-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M14.8 9.5a4 4 0 1 0 0 5"></path>
+          </svg>
+          <span data-i18n="btn_copyright">Copyright</span>
+        </a>
+
+        <div class="lang-dropdown" id="lang-dropdown">
+          <button type="button" class="hud-btn lang-trigger" id="lang-trigger" aria-haspopup="listbox" aria-expanded="false">
+            <span class="lang-trigger-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"></path>
+              </svg>
+              <span id="lang-current-native">English</span>
+              <span class="lang-code-pill" id="lang-current-code">EN</span>
+            </span>
+            <span class="lang-caret" aria-hidden="true">▼</span>
+          </button>
+          <div class="lang-menu" id="lang-menu" role="listbox" aria-label="Select Language"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="scroll-meridian" aria-hidden="true"><div class="scroll-meridian-bar"></div></div>
+  <audio id="rm-audio" src="assets/media/relicmaze.mp3" preload="metadata" loop></audio>
+
+  <main>
+    <section class="doc-hero">
+      <div class="container">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          <span data-i18n="btn_support">Support</span>
+        </div>
+        <h1 class="section-title" style="text-align:start; margin-bottom:0.5rem;" data-i18n="support_page_title">
+          Player Support &amp; Field Manual
+        </h1>
+        <p class="section-sub" style="text-align:start;" data-i18n="support_page_sub">
+          Installation, controls, save files, accessibility shortcuts, and troubleshooting for RelicMaze on Windows.
+        </p>
+      </div>
+    </section>
+
+    <section class="doc-body">
+      <div class="container">
+        <div class="doc-grid">
+          <article class="temple-frame doc-card reveal">
+            <h2>1. System Requirements &amp; Installation</h2>
+            <ul>
+              <li><strong>Operating System:</strong> Windows 11 or Windows 10 (version 1903 / build 18362 or newer).</li>
+              <li><strong>Architectures:</strong> Native <code>x64</code> and <code>ARM64</code> packages (MSIX bundle and MSI installers).</li>
+              <li><strong>Network:</strong> None required — RelicMaze runs 100% offline.</li>
+              <li><strong>Single-Instance Protection:</strong> Launching <code>RelicMaze.exe</code> while already open switches cleanly to the running window instead of opening a duplicate instance.</li>
+              <li><strong>Seamless Upgrades:</strong> Installing a newer build replaces the previous installation in place without duplicating shortcuts or deleting save progress.</li>
+            </ul>
+          </article>
+
+          <article class="temple-frame doc-card reveal">
+            <h2>2. Save Files &amp; Settings Storage</h2>
+            <p>
+              Both the Microsoft Store / MSIX package and the standalone MSI installer write save data and configuration to your real user profile directory:
+            </p>
+            <ul>
+              <li><strong>Folder:</strong> <code>%APPDATA%\RelicMaze</code></li>
+              <li><strong>Expedition Save:</strong> <code>campaign-save.json</code> (with crash-safe atomic backup <code>campaign-save.json.bak</code>)</li>
+              <li><strong>Settings &amp; Bindings:</strong> <code>settings.cfg</code></li>
+            </ul>
+            <p>
+              Uninstalling RelicMaze leaves your save files intact so you never lose expedition progress. To reset your campaign, choose <strong>Delete Expedition Save…</strong> on the Title Screen.
+            </p>
+          </article>
+
+          <article class="temple-frame doc-card reveal">
+            <h2>3. Accessibility &amp; Quick Shortcuts</h2>
+            <ul>
+              <li><kbd>F9</kbd> — Toggle <strong>Clear View</strong> low-vision high-contrast rendering on/off at any time.</li>
+              <li><kbd>F10</kbd> — Cycle through the four contrast-audited Clear View palettes.</li>
+              <li><kbd>F1</kbd> or <kbd>H</kbd> — Open the Controls reference card and the illustrated 17-page book <em>Help &amp; Legend</em>.</li>
+              <li><kbd>Tab</kbd> or <kbd>J</kbd> — Open the 144-Chamber stepped pyramid Journal.</li>
+              <li><strong>Settings → Accessibility:</strong> Scale UI up to 250%, enable Bold Text, Chamber Magnifier, Spoken Narration (via Windows TTS voices or live captions across 20 languages), Reduced Motion, Reduced Flashes, and Timing Assists.</li>
+            </ul>
+          </article>
+
+          <article class="temple-frame doc-card reveal">
+            <h2>4. Troubleshooting &amp; Contact</h2>
+            <h3>No Spoken Voice for Selected Language</h3>
+            <p>
+              RelicMaze uses installed Windows speech synthesis voices. If Windows does not have a voice pack installed for your chosen language, all spoken hints and descriptions automatically appear as readable on-screen captions. You can add additional voices in <strong>Windows Settings → Time &amp; language → Speech</strong>.
+            </p>
+            <h3>Controller Reconnection</h3>
+            <p>
+              Standard XInput / Windows gamepads work seamlessly alongside keyboard navigation (D-Pad / Left Stick to move, South button to jump, West button to interact, Start to pause). Every key and gamepad button (except <kbd>F11</kbd>/<kbd>F12</kbd>) can be rebound under <strong>Settings → Controls</strong>.
+            </p>
+            <h3>Report an Issue or Request Assistance</h3>
+            <p>
+              For bug reports, accessibility feedback, translation corrections, or technical assistance, open an issue on GitHub:
+            </p>
+            <p style="margin-top:0.9rem; display:flex; gap:0.65rem; flex-wrap:wrap;">
+              <a href="https://github.com/bulentozkir/relicmaze-site/issues" target="_blank" rel="noopener noreferrer" class="btn-primary">Open Support Issue on GitHub</a>
+              <a href="index.html" class="btn-secondary" data-i18n="back">Back</a>
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="brand-link">
+        <img src="assets/logos/RelicMaze-Logo-44x44.png" alt="RelicMaze Icon" class="brand-crest" width="34" height="34">
+        <span class="brand-wordmark">
+          <span>RELICMAZE</span>
+          <span class="brand-sub" data-i18n="subtitle_game">RelicMaze — a lantern-runner's temple puzzle platformer.</span>
+        </span>
+      </a>
+      <div class="footer-links">
+        <a href="support.html" class="hud-btn active" data-i18n="btn_support">Support</a>
+        <a href="privacy.html" class="hud-btn" data-i18n="btn_privacy">Privacy</a>
+        <a href="copyright.html" class="hud-btn" data-i18n="btn_copyright">Copyright</a>
+      </div>
+      <div class="footer-note">
+        <span>© 2026 bulentozkir · RelicMaze</span>
+        <span>Windows 11 x64 &amp; ARM64 · 100% Offline</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/i18n-data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

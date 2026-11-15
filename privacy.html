@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy — RelicMaze</title>
+  <meta name="description" content="RelicMaze Privacy Policy: 100% offline single-player game with zero telemetry, zero analytics, zero accounts, and local-only save files.">
+  <meta name="theme-color" content="#07080F">
+  <link rel="icon" type="image/png" sizes="44x44" href="assets/logos/RelicMaze-Logo-44x44.png">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <div class="lantern-aura" aria-hidden="true"></div>
+
+  <header class="top-toolbar" role="banner">
+    <div class="toolbar-inner">
+      <a href="index.html" class="brand-link" aria-label="RelicMaze Home">
+        <img src="assets/logos/RelicMaze-Logo-150x150.png" alt="RelicMaze Crest" class="brand-crest" width="38" height="38">
+        <span class="brand-wordmark">
+          <span>RELICMAZE</span>
+          <span class="brand-sub" data-i18n="meridian_works">The Meridian Works</span>
+        </span>
+      </a>
+
+      <nav class="toolbar-sections" aria-label="Navigation">
+        <a href="index.html" class="section-link" data-i18n="nav_home">Home</a>
+        <a href="index.html#trailer" class="section-link" data-i18n="nav_trailer">Trailer</a>
+        <a href="index.html#pyramid" class="section-link" data-i18n="nav_pyramid">Pyramid</a>
+        <a href="index.html#gallery" class="section-link" data-i18n="nav_gallery">Screenshots</a>
+      </nav>
+
+      <div class="toolbar-actions">
+        <button type="button" id="toolbar-music-btn" class="hud-btn hud-music" aria-pressed="false">
+          <span class="eq-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span data-i18n="music">Music</span>
+        </button>
+
+        <a href="support.html" class="hud-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4"></path>
+            <circle cx="12" cy="17.5" r="0.6" fill="currentColor"></circle>
+          </svg>
+          <span data-i18n="btn_support">Support</span>
+        </a>
+
+        <a href="privacy.html" class="hud-btn active" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M12 3l7 3v6c0 5-3.5 8.2-7 9-3.5-.8-7-4-7-9V6l7-3z"></path>
+            <path d="M9.5 12l1.8 1.8 3.4-3.6"></path>
+          </svg>
+          <span data-i18n="btn_privacy">Privacy</span>
+        </a>
+
+        <a href="copyright.html" class="hud-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M14.8 9.5a4 4 0 1 0 0 5"></path>
+          </svg>
+          <span data-i18n="btn_copyright">Copyright</span>
+        </a>
+
+        <div class="lang-dropdown" id="lang-dropdown">
+          <button type="button" class="hud-btn lang-trigger" id="lang-trigger" aria-haspopup="listbox" aria-expanded="false">
+            <span class="lang-trigger-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"></path>
+              </svg>
+              <span id="lang-current-native">English</span>
+              <span class="lang-code-pill" id="lang-current-code">EN</span>
+            </span>
+            <span class="lang-caret" aria-hidden="true">▼</span>
+          </button>
+          <div class="lang-menu" id="lang-menu" role="listbox" aria-label="Select Language"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="scroll-meridian" aria-hidden="true"><div class="scroll-meridian-bar"></div></div>
+  <audio id="rm-audio" src="assets/media/relicmaze.mp3" preload="metadata" loop></audio>
+
+  <main>
+    <section class="doc-hero">
+      <div class="container">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          <span data-i18n="btn_privacy">Privacy</span>
+        </div>
+        <h1 class="section-title" style="text-align:start; margin-bottom:0.5rem;" data-i18n="privacy_page_title">
+          Privacy Policy
+        </h1>
+        <p class="section-sub" style="text-align:start;" data-i18n="privacy_page_sub">
+          100% offline play. Zero telemetry, zero accounts, zero analytics, and zero third-party data collection.
+        </p>
+      </div>
+    </section>
+
+    <section class="doc-body">
+      <div class="container">
+        <div class="doc-grid">
+          <article class="temple-frame doc-card reveal">
+            <h2>1. Summary: No Personal Data Collected</h2>
+            <p>
+              <strong>RelicMaze</strong> does not collect, transmit, store, rent, or share any personal information, gameplay telemetry, device identifiers, location data, crash reports, or usage analytics.
+            </p>
+            <ul>
+              <li><strong>Zero Network Activity:</strong> The RelicMaze application makes no outbound network connections and requires no internet access to install, launch, or complete.</li>
+              <li><strong>Zero Accounts or Sign-In:</strong> No registration, profile, cloud login, or online leaderboard is used.</li>
+              <li><strong>Zero Ads or Trackers:</strong> No advertising SDKs, analytics libraries, or third-party tracking components are included in the game.</li>
+            </ul>
+          </article>
+
+          <article class="temple-frame doc-card reveal">
+            <h2>2. Local Device Storage Only</h2>
+            <p>
+              To preserve your expedition progress and preferences between play sessions, RelicMaze writes plain local configuration and save files exclusively on your own Windows PC under:
+            </p>
+            <ul>
+              <li><code>%APPDATA%\RelicMaze\campaign-save.json</code> — current chamber, collected seals/sigils, opened latches, play timer, and score.</li>
+              <li><code>%APPDATA%\RelicMaze\settings.cfg</code> — chosen UI language, audio volume, key/gamepad bindings, and accessibility settings.</li>
+            </ul>
+            <p>
+              These files never leave your computer. You may delete your expedition save at any time inside the game via <strong>Delete Expedition Save…</strong> or by deleting the <code>%APPDATA%\RelicMaze</code> folder directly.
+            </p>
+          </article>
+
+          <article class="temple-frame doc-card reveal">
+            <h2>3. Website &amp; Distribution Platforms</h2>
+            <ul>
+              <li><strong>Official Website (GitHub Pages):</strong> This static website uses zero tracking cookies, zero ad pixels, and zero analytics scripts. If you choose a language or toggle Clear View, that preference is saved locally in your browser's own <code>localStorage</code> (`rm_site_lang`, `rm_clear_view`) and is never transmitted anywhere. Standard web hosting access logs are governed by <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">GitHub's Privacy Statement</a>.</li>
+              <li><strong>Microsoft Store:</strong> If you acquire RelicMaze through the Microsoft Store, purchase and download processing are handled by Microsoft under the <a href="https://privacy.microsoft.com/" target="_blank" rel="noopener noreferrer">Microsoft Privacy Statement</a>.</li>
+            </ul>
+          </article>
+
+          <article class="temple-frame doc-card reveal">
+            <h2>4. Children's Privacy &amp; Contact</h2>
+            <p>
+              Because RelicMaze operates completely offline and collects zero personal or technical data from any player of any age, it complies inherently with global data-minimisation principles (including GDPR and COPPA).
+            </p>
+            <p>
+              <strong>Last updated:</strong> November 2026.<br>
+              Questions regarding this policy may be submitted via our <a href="support.html">Support</a> page or on <a href="https://github.com/bulentozkir/relicmaze-site/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>.
+            </p>
+            <p style="margin-top:1rem;">
+              <a href="index.html" class="btn-secondary" data-i18n="back">Back</a>
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="brand-link">
+        <img src="assets/logos/RelicMaze-Logo-44x44.png" alt="RelicMaze Icon" class="brand-crest" width="34" height="34">
+        <span class="brand-wordmark">
+          <span>RELICMAZE</span>
+          <span class="brand-sub" data-i18n="subtitle_game">RelicMaze — a lantern-runner's temple puzzle platformer.</span>
+        </span>
+      </a>
+      <div class="footer-links">
+        <a href="support.html" class="hud-btn" data-i18n="btn_support">Support</a>
+        <a href="privacy.html" class="hud-btn active" data-i18n="btn_privacy">Privacy</a>
+        <a href="copyright.html" class="hud-btn" data-i18n="btn_copyright">Copyright</a>
+      </div>
+      <div class="footer-note">
+        <span>© 2026 bulentozkir · RelicMaze</span>
+        <span>Zero Telemetry · Zero Ads · 100% Offline</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/i18n-data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
