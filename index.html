@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RelicMaze — 144 Chambers · 11 Hidden Sanctums · The Meridian Awaits</title>
+  <meta name="description" content="RelicMaze is an original room-by-room temple puzzle platformer for Windows: 144 solver-verified chambers across a 12-floor stepped pyramid, 11 Hidden Sanctums, 9 Meridian Sigils, spectral relics, and 20 languages.">
+  <meta property="og:title" content="RelicMaze — The Meridian Awaits">
+  <meta property="og:description" content="144 chambers. 11 Hidden Sanctums. Nine Meridian Sigils. Descend the stepped pyramid as Milo the Coppercap.">
+  <meta property="og:image" content="assets/logos/RelicMaze-Logo-1920x1080.png">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#07080F">
+  <link rel="icon" type="image/png" sizes="44x44" href="assets/logos/RelicMaze-Logo-44x44.png">
+  <link rel="apple-touch-icon" href="assets/logos/RelicMaze-Logo-150x150.png">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <div class="lantern-aura" aria-hidden="true"></div>
+
+  <!-- =====================================================================
+       TOP HUD TOOLBAR (Support, Privacy, Copyright Buttons + Language Selector)
+       ===================================================================== -->
+  <header class="top-toolbar" role="banner">
+    <div class="toolbar-inner">
+      <a href="index.html" class="brand-link" aria-label="RelicMaze Home">
+        <img src="assets/logos/RelicMaze-Logo-150x150.png" alt="RelicMaze Crest" class="brand-crest" width="38" height="38">
+        <span class="brand-wordmark">
+          <span>RELICMAZE</span>
+          <span class="brand-sub" data-i18n="meridian_works">The Meridian Works</span>
+        </span>
+      </a>
+
+      <nav class="toolbar-sections" aria-label="Page sections">
+        <a href="#trailer" class="section-link" data-i18n="nav_trailer">Trailer</a>
+        <a href="#pyramid" class="section-link" data-i18n="nav_pyramid">Pyramid</a>
+        <a href="#relics" class="section-link" data-i18n="nav_relics">Relics</a>
+        <a href="#gallery" class="section-link" data-i18n="nav_gallery">Screenshots</a>
+        <a href="#legend" class="section-link" data-i18n="nav_legend">Legend</a>
+      </nav>
+
+      <div class="toolbar-actions">
+        <!-- Original Soundtrack Toggle -->
+        <button type="button" id="toolbar-music-btn" class="hud-btn hud-music" aria-pressed="false" title="Play / Pause Original Soundtrack (relicmaze.mp3)">
+          <span class="eq-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span data-i18n="music">Music</span>
+        </button>
+
+        <!-- Explicit Top Toolbar Buttons: Support, Privacy, Copyright -->
+        <a href="support.html" class="hud-btn" id="nav-btn-support">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4"></path>
+            <circle cx="12" cy="17.5" r="0.6" fill="currentColor"></circle>
+          </svg>
+          <span data-i18n="btn_support">Support</span>
+        </a>
+
+        <a href="privacy.html" class="hud-btn" id="nav-btn-privacy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M12 3l7 3v6c0 5-3.5 8.2-7 9-3.5-.8-7-4-7-9V6l7-3z"></path>
+            <path d="M9.5 12l1.8 1.8 3.4-3.6"></path>
+          </svg>
+          <span data-i18n="btn_privacy">Privacy</span>
+        </a>
+
+        <a href="copyright.html" class="hud-btn" id="nav-btn-copyright">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M14.8 9.5a4 4 0 1 0 0 5"></path>
+          </svg>
+          <span data-i18n="btn_copyright">Copyright</span>
+        </a>
+
+        <!-- 20-Language Selector at Top Toolbar -->
+        <div class="lang-dropdown" id="lang-dropdown">
+          <button type="button" class="hud-btn lang-trigger" id="lang-trigger" aria-haspopup="listbox" aria-expanded="false">
+            <span class="lang-trigger-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"></path>
+              </svg>
+              <span id="lang-current-native">English</span>
+              <span class="lang-code-pill" id="lang-current-code">EN</span>
+            </span>
+            <span class="lang-caret" aria-hidden="true">▼</span>
+          </button>
+          <div class="lang-menu" id="lang-menu" role="listbox" aria-label="Select Language"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="scroll-meridian" aria-hidden="true">
+    <div class="scroll-meridian-bar"></div>
+  </div>
+
+  <!-- Shared Original Soundtrack Audio Element -->
+  <audio id="rm-audio" src="assets/media/relicmaze.mp3" preload="metadata" loop></audio>
+
+  <main>
+    <!-- ===================================================================
+         HERO SECTION WITH PROCEDURAL MERIDIAN SKY & ASTROLABE CANVAS
+         =================================================================== -->
+    <section class="hero">
+      <canvas id="meridian-canvas" aria-hidden="true"></canvas>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span data-i18n="eyebrow_platform">WINDOWS 11 · x64 &amp; ARM64 · OFFLINE SINGLE-PLAYER</span>
+          </div>
+
+          <h1 class="hero-title">RELICMAZE</h1>
+
+          <p class="hero-kicker">
+            <span class="diamond-sep" aria-hidden="true"></span>
+            <span data-i18n="hero_kicker">144 CHAMBERS · 11 HIDDEN SANCTUMS · 9 MERIDIAN SIGILS · 1 HEART</span>
+          </p>
+
+          <blockquote class="hero-quote" data-i18n="opening_quote">
+            “The Meridian kept time long after its keepers left. Milo the Coppercap descended the 144 chambers of the pyramid to slay Kabeel and claim its heart.”
+          </blockquote>
+
+          <p class="hero-lead" data-i18n="intro_rules">
+            Collect every seal in a chamber to wake its door. All the Meridian sigils and the Heart of the Meridian open the very last one. Touching anything lethal only sends you back to the chamber's entry door: there are no lives to lose and nothing is taken from you.
+          </p>
+
+          <div class="cta-row">
+            <a href="#trailer" id="hero-watch-trailer" class="btn-primary">
+              <span>▶</span>
+              <span data-i18n="cta_trailer">Watch Trailer &amp; Music</span>
+            </a>
+            <a href="#pyramid" class="btn-secondary">
+              <span>◆</span>
+              <span data-i18n="cta_explore">Explore 144 Chambers</span>
+            </a>
+          </div>
+
+          <!-- Authentic TitleScreen.DrawLore Rotating Legend Plate -->
+          <div class="legend-ticker" aria-live="polite">
+            <div class="legend-ticker-head">
+              <span data-i18n="the_legend">THE LEGEND</span>
+              <div class="legend-dots" id="legend-dots"></div>
+            </div>
+            <p class="legend-ticker-line" id="legend-ticker-line" data-i18n="lore_0">
+              Beneath the hill Visočica, above the town of Visoko in Bosnia, the legend says a pyramid sleeps. Read it all under Help &amp; Legend.
+            </p>
+          </div>
+        </div>
+
+        <div class="hero-art-stage">
+          <div class="poster-frame" id="hero-poster-frame">
+            <img src="assets/logos/RelicMaze-Poster-720x1080.png" alt="RelicMaze Official Poster — The Meridian Awaits: 144 Chambers · 11 Hidden Sanctums" width="720" height="1080">
+            <div class="floating-walkthrough-card">
+              <img src="assets/previews/room144-reference-walkthrough.gif" alt="Animated preview of Chamber 144 solver walkthrough" loading="lazy">
+              <div class="floating-walkthrough-tag">CHAMBER 144 · LIVE 12 Hz SIM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         ANIMATED STATS RIBBON
+         =================================================================== -->
+    <section class="stats-ribbon" aria-label="Game specifications">
+      <div class="container stats-grid">
+        <div class="stat-card reveal">
+          <div class="stat-num" data-count-to="144">144</div>
+          <div class="stat-label" data-i18n="stat_chambers">Solver-Verified Chambers</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-num" data-count-to="12">12</div>
+          <div class="stat-label" data-i18n="stat_floors">Stepped Pyramid Floors</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-num" data-count-to="11">11</div>
+          <div class="stat-label" data-i18n="stat_sanctums">Hidden Sanctum Puzzles</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-num" data-count-to="17">17</div>
+          <div class="stat-label" data-i18n="stat_creatures">Creature &amp; Trap Types</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-num" data-count-to="20">20</div>
+          <div class="stat-label" data-i18n="stat_languages">Supported Languages</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-num" data-count-to="0">0</div>
+          <div class="stat-label" data-i18n="stat_telemetry">Telemetry or Ads</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         GAMEPLAY TRAILER (ANIMATED GIF) + ORIGINAL SOUNDTRACK STAGE
+         =================================================================== -->
+    <section id="trailer" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span data-i18n="trailer_eyebrow">ACTUAL IN-GAME FOOTAGE · ANIMATED GIF + ORIGINAL SOUNDTRACK</span>
+          </div>
+          <h2 class="section-title" data-i18n="trailer_title">Gameplay Trailer &amp; Synthesized Score</h2>
+          <p class="section-sub" data-i18n="trailer_sub">
+            Experience RelicMaze's crisp procedural masonry, timed temple traps, Hidden Sanctum puzzles, and the synthesized original score (relicmaze.mp3) — streamed right here as an animated GIF with live audio.
+          </p>
+        </div>
+
+        <div class="temple-frame trailer-stage reveal">
+          <div class="trailer-viewport">
+            <img
+              id="trailer-gif-img"
+              class="trailer-gif"
+              src="assets/media/trailer.gif"
+              data-gif="assets/media/trailer.gif"
+              data-poster="assets/media/trailer-poster.png"
+              alt="RelicMaze Official Gameplay Trailer Animated GIF"
+              width="720"
+              height="405"
+            >
+            <div class="trailer-badge-bar">
+              <span class="trailer-pill">RELICMAZE · ANIMATED GIF REEL</span>
+              <span class="trailer-pill" id="trailer-sound-pill">♪ relicmaze.mp3 · MUTED</span>
+            </div>
+            <div class="trailer-sound-cta">
+              <button type="button" id="overlay-music-btn" class="btn-primary">
+                <span>♪</span>
+                <span data-label data-i18n="btn_play_music">Play Original Soundtrack</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="audio-deck">
+            <div class="audio-deck-controls">
+              <button type="button" id="deck-music-btn" class="hud-btn hud-music">
+                <span>♪</span>
+                <span data-label data-i18n="btn_play_music">Play Original Soundtrack</span>
+              </button>
+              <button type="button" id="gif-toggle-btn" class="hud-btn" data-i18n="btn_pause_gif">
+                Pause Animation
+              </button>
+            </div>
+
+            <div class="audio-track-mid">
+              <div class="audio-track-top">
+                <span class="audio-title">RelicMaze Original Score — relicmaze.mp3</span>
+                <span id="audio-time">0:00 / 5:00</span>
+              </div>
+              <input type="range" id="audio-seek" class="audio-seek" min="0" max="100" value="0" step="0.2" aria-label="Seek soundtrack">
+            </div>
+
+            <div class="audio-deck-controls">
+              <canvas id="audio-visualizer" width="180" height="40" aria-hidden="true"></canvas>
+              <label class="volume-wrap">
+                <span>🔊</span>
+                <input type="range" id="audio-volume" min="0" max="1" step="0.05" value="0.75" aria-label="Music volume">
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Deterministic 12 Hz Solver Walkthrough Mini GIF Strip -->
+        <div class="walkthrough-strip reveal">
+          <h3 data-i18n="walkthrough_strip_title">Deterministic 12 Hz Solver Walkthrough Reels</h3>
+          <div class="walkthrough-grid">
+            <button type="button" class="walkthrough-card" data-lightbox-src="assets/previews/room1-reference-walkthrough.gif" data-lightbox-title="Chamber 001 — Reference 12 Hz Solver Walkthrough">
+              <img src="assets/previews/room1-reference-walkthrough.gif" alt="Chamber 1 walkthrough GIF" loading="lazy">
+              <span>ROOM 001</span>
+            </button>
+            <button type="button" class="walkthrough-card" data-lightbox-src="assets/previews/room21-reference-walkthrough.gif" data-lightbox-title="Chamber 021 — Ochre Cloisters Solver Walkthrough">
+              <img src="assets/previews/room21-reference-walkthrough.gif" alt="Chamber 21 walkthrough GIF" loading="lazy">
+              <span>ROOM 021</span>
+            </button>
+            <button type="button" class="walkthrough-card" data-lightbox-src="assets/previews/room25-reference-walkthrough.gif" data-lightbox-title="Chamber 025 — Gateway to Sanctum S4 Walkthrough">
+              <img src="assets/previews/room25-reference-walkthrough.gif" alt="Chamber 25 walkthrough GIF" loading="lazy">
+              <span>ROOM 025</span>
+            </button>
+            <button type="button" class="walkthrough-card" data-lightbox-src="assets/previews/room26-reference-walkthrough.gif" data-lightbox-title="Chamber 026 — Floor 6 Ascent Solver Walkthrough">
+              <img src="assets/previews/room26-reference-walkthrough.gif" alt="Chamber 26 walkthrough GIF" loading="lazy">
+              <span>ROOM 026</span>
+            </button>
+            <button type="button" class="walkthrough-card" data-lightbox-src="assets/previews/room101-reference-walkthrough.gif" data-lightbox-title="Chamber 101 — Rainclock Galleries Solver Walkthrough">
+              <img src="assets/previews/room101-reference-walkthrough.gif" alt="Chamber 101 walkthrough GIF" loading="lazy">
+              <span>ROOM 101</span>
+            </button>
+            <button type="button" class="walkthrough-card" data-lightbox-src="assets/previews/room144-reference-walkthrough.gif" data-lightbox-title="Chamber 144 — Throne of Kabeel Final Duel Walkthrough">
+              <img src="assets/previews/room144-reference-walkthrough.gif" alt="Chamber 144 walkthrough GIF" loading="lazy">
+              <span>ROOM 144</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         INTERACTIVE 12-FLOOR STEPPED PYRAMID & 10 REGIONS ATLAS
+         =================================================================== -->
+    <section id="pyramid" class="section section-alt">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span data-i18n="pyramid_eyebrow">INTERACTIVE ARCHITECTURAL ATLAS</span>
+          </div>
+          <h2 class="section-title" data-i18n="pyramid_title">12 Floors · 10 Regions · 144 Chambers</h2>
+          <p class="section-sub" data-i18n="pyramid_sub">
+            Select any region or hover over any chamber of the stepped pyramid (1, 3, 5 … 23 chambers per floor) to inspect its Meridian Sigils and East-flank Hidden Sanctums.
+          </p>
+        </div>
+
+        <div class="pyramid-explorer reveal">
+          <div class="region-list" id="region-list" aria-label="Pyramid regions"></div>
+
+          <div class="temple-frame pyramid-board">
+            <div class="pyramid-capstone" aria-hidden="true"></div>
+            <div class="pyramid-rows" id="pyramid-rows"></div>
+
+            <div class="pyramid-inspector" aria-live="polite">
+              <div class="inspector-num" id="inspector-num">144</div>
+              <div class="inspector-body">
+                <h3 class="inspector-title" id="inspector-title">The Last Meridian · Throne of Kabeel</h3>
+                <p class="inspector-meta" id="inspector-meta">Floor 12 of 12 — Kabeel's lava throne &amp; the Heart of the Meridian.</p>
+              </div>
+              <div class="pyramid-legend-pills">
+                <span class="p-pill">● Gold Dot = Meridian Sigil (9)</span>
+                <span class="p-pill">S1–S11 = Hidden Sanctums (11)</span>
+                <span class="p-pill">144 = Kabeel Boss Duel</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SPECTRAL RELICS & INTERACTIVE ASTRAL VEIL PHASE SHIFT
+         =================================================================== -->
+    <section id="relics" class="section astral-section">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span data-i18n="relics_eyebrow">SCHEMA 8 · DEEP PYRAMID ARSENAL</span>
+          </div>
+          <h2 class="section-title" data-i18n="relics_title">Spectral Relics &amp; Ancient Mechanisms</h2>
+          <p class="section-sub" data-i18n="relics_sub">
+            Toggle the Astral Lantern below to phase this chamber view between the Physical Tomb and the Astral Veil.
+          </p>
+        </div>
+
+        <div class="astral-controls reveal">
+          <button type="button" id="btn-phase-toggle" class="btn-secondary" aria-pressed="false">
+            <span>🏮</span>
+            <span data-i18n="btn_phase_toggle">Toggle Astral Veil Phase</span>
+          </button>
+          <span class="phase-status-pill" id="phase-status-pill">◈ Physical Tomb</span>
+        </div>
+
+        <!-- Interactive Live Phase Shift Chamber Strip -->
+        <div class="phase-diorama reveal">
+          <div class="diorama-track">
+            <div class="diorama-tile tile-phase-wall">
+              <div class="diorama-glyph">🧱</div>
+              <div class="diorama-name">Phase Wall (|)</div>
+              <div class="diorama-state" id="state-phase-wall">SOLID SANDSTONE (#)</div>
+            </div>
+            <div class="diorama-tile tile-astral-bridge">
+              <div class="diorama-glyph">〰️</div>
+              <div class="diorama-name">Astral Bridge (~)</div>
+              <div class="diorama-state" id="state-astral-bridge">INTANGIBLE MIST (Fall)</div>
+            </div>
+            <div class="diorama-tile tile-wraith">
+              <div class="diorama-glyph">👁️</div>
+              <div class="diorama-name">Wraith-Mummy</div>
+              <div class="diorama-state" id="state-wraith">HARMLESS ECTOPLASM</div>
+            </div>
+            <div class="diorama-tile">
+              <div class="diorama-glyph">🪜</div>
+              <div class="diorama-name">Ladders &amp; Levers</div>
+              <div class="diorama-state" id="state-ladder">CLIMBABLE RUNGS (H)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relics-grid">
+          <article class="relic-card reveal">
+            <div class="relic-icon" aria-hidden="true">🏮</div>
+            <h3 data-i18n="relic_1_name">Astral Lantern &amp; Soul Prism</h3>
+            <p data-i18n="relic_1_desc">
+              An Astral Lantern phases Milo into the Astral Veil for four seconds so he can walk through sandstone phase walls and cross spirit bridges. Recovering the Soul Prism permanently attunes sight to spectral seams.
+            </p>
+          </article>
+
+          <article class="relic-card reveal">
+            <div class="relic-icon" aria-hidden="true">⚡</div>
+            <h3 data-i18n="relic_2_name">5-Slot Tactical Belt, Sun Scepter &amp; Arc Wand</h3>
+            <p data-i18n="relic_2_desc">
+              The five-slot belt holds active tools in FIFO order. The Sun Scepter petrifies creatures to harmless stone for six seconds, while the Arc Wand fires a horizontal lightning bolt on Interact to vaporize guardians from afar.
+            </p>
+          </article>
+
+          <article class="relic-card reveal">
+            <div class="relic-icon" aria-hidden="true">🗝️</div>
+            <h3 data-i18n="relic_3_name">Brazier Torch, Glyph Keys &amp; Zephyr Sandals</h3>
+            <p data-i18n="relic_3_desc">
+              A Brazier Torch permanently illuminates pitch-dark lower chambers, color-coded Glyph Keys unlock Cobalt, Jade, Crimson and Solar gates on touch, and Zephyr Sandals boost stride speed and jump reach for eight seconds.
+            </p>
+          </article>
+
+          <article class="relic-card reveal">
+            <div class="relic-icon" aria-hidden="true">🌊</div>
+            <h3 data-i18n="relic_4_name">Flooded Basins, Crumbling Slabs &amp; Stone Spheres</h3>
+            <p data-i18n="relic_4_desc">
+              Wading in flooded cenotes drains breath until the sluice lever empties the chamber. Crumbling sandstone slabs collapse beneath hurried boots, while giant Bosnian stone spheres thunder down temple chutes.
+            </p>
+          </article>
+
+          <article class="relic-card reveal">
+            <div class="relic-icon" aria-hidden="true">👑</div>
+            <h3 data-i18n="play_sanctums_name">11 Hidden Sanctums &amp; Three-Crown Mastery</h3>
+            <p data-i18n="play_sanctums_desc">
+              Eleven square-numbered gateway chambers (4, 9, 16 … 144) open standalone Sanctum puzzle rooms with mirrors, glyph dials and boulder circuits. Every chamber awards up to three crowns for completion, treasure and par time.
+            </p>
+          </article>
+
+          <article class="relic-card reveal">
+            <div class="relic-icon" aria-hidden="true">♾️</div>
+            <h3 data-i18n="play_death_name">Dying costs nothing</h3>
+            <p data-i18n="play_death_desc">
+              Touch anything lethal and you are sent back to the chamber's entry door. There are no lives to lose, nothing is taken from you, and the seals and levers you have already won stay won.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         OFFICIAL SCREENSHOTS, SANCTUMS & KEY ART GALLERY
+         =================================================================== -->
+    <section id="gallery" class="section section-alt">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span data-i18n="gallery_eyebrow">OFFICIAL VISUAL ARCHIVE</span>
+          </div>
+          <h2 class="section-title" data-i18n="gallery_title">Screenshots, Sanctums &amp; Key Art</h2>
+          <p class="section-sub" data-i18n="gallery_sub">
+            High-contrast procedural vector geometry engineered for instant readability across every region theme.
+          </p>
+        </div>
+
+        <div class="filter-bar reveal" role="tablist" aria-label="Filter gallery">
+          <button type="button" class="filter-btn active" data-filter="all" data-i18n="filter_all">All Media</button>
+          <button type="button" class="filter-btn" data-filter="gameplay" data-i18n="filter_gameplay">Gameplay</button>
+          <button type="button" class="filter-btn" data-filter="boss" data-i18n="filter_boss">Boss &amp; Sanctums</button>
+          <button type="button" class="filter-btn" data-filter="ui" data-i18n="filter_ui">Journal &amp; Book</button>
+          <button type="button" class="filter-btn" data-filter="art" data-i18n="filter_art">Logos &amp; Key Art</button>
+        </div>
+
+        <div class="gallery-grid reveal">
+          <button type="button" class="gallery-item" data-category="gameplay" data-lightbox-src="assets/screenshots/01-Gameplay-Astral-Veil-Chamber.png" data-lightbox-title="035 Veil of the Soul Prism — Astral Lantern &amp; Glyph Key">
+            <img class="gallery-thumb" src="assets/screenshots/01-Gameplay-Astral-Veil-Chamber.png" alt="Chamber 035 Veil of the Soul Prism screenshot" loading="lazy">
+            <div class="gallery-caption"><strong>Veil of the Soul Prism</strong><span>CHAMBER 035</span></div>
+          </button>
+
+          <button type="button" class="gallery-item" data-category="boss" data-lightbox-src="assets/screenshots/06-Gameplay-Boss-Heart-Of-Meridian.png" data-lightbox-title="144 Throne of Kabeel — 20-Stone Duel &amp; Heart of the Meridian">
+            <img class="gallery-thumb" src="assets/screenshots/06-Gameplay-Boss-Heart-Of-Meridian.png" alt="Chamber 144 Throne of Kabeel boss duel screenshot" loading="lazy">
+            <div class="gallery-caption"><strong>Throne of Kabeel</strong><span>CHAMBER 144</span></div>
+          </button>
+
+          <button type="button" class="gallery-item" data-category="boss" data-lightbox-src="assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" data-lightbox-title="Sanctum 7 / 11 — The Rolling Boulder Maze (Mechanical &amp; Trap)">
+            <img class="gallery-thumb" src="assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" alt="Hidden Sanctum S07 Rolling Boulder Maze screenshot" loading="lazy">
+            <div class="gallery-caption"><strong>The Rolling Boulder Maze</strong><span>SANCTUM S07</span></div>
+          </button>
+
+          <button type="button" class="gallery-item" data-category="gameplay" data-lightbox-src="assets/screenshots/02-Gameplay-Gecko-Spire-Shafts.png" data-lightbox-title="057 Spire of the Climbing Gecko — Mothscript Archive">
+            <img class="gallery-thumb" src="assets/screenshots/02-Gameplay-Gecko-Spire-Shafts.png" alt="Gecko Spire Shafts gameplay screenshot" loading="lazy">
+            <div class="gallery-caption"><strong>Gecko Spire Shafts</strong><span>CHAMBER 057</span></div>
+          </button>
+
+          <button type="button" class="gallery-item" data-category="gameplay" data-lightbox-src="assets/screenshots/03-Gameplay-Sunken-Cenote-Sluice.png" data-lightbox-title="097 Sunken Cenote Sluice — Flooded Rainclock Basin">
+            <img class="gallery-thumb" src="assets/screenshots/03-Gameplay-Sunken-Cenote-Sluice.png" alt="Sunken Cenote Sluice flooded chamber screenshot" loading="lazy">
+            <div class="gallery-caption"><strong>Sunken Cenote Sluice</strong><span>CHAMBER 097</span></div>
+          </button>
+
+          <button type="button" class="gallery-item" data-category="gameplay" data-lightbox-src="assets/screenshots/04-Gameplay-Shrouded-Torch-Vault.png" data-lightbox-title="114 Brazier of the Shrouded Vault — Lantern Radius &amp; Brazier Torch">
+            <img class="gallery-thumb" src="assets/screenshots/04-Gameplay-Shrouded-Torch-Vault.png" alt="Brazier of the Shrouded Vault dark chamber screenshot" loading="lazy">
+            <div class="gallery-caption"><strong>Brazier of the Shrouded Vault</strong><span>CHAMBER 114</span></div>
+          </button>
+
+          <button type="button" class="gallery-item" data-category="ui" data-lightbox-src="assets/screenshots/07-Game-Opening-Page.png" data-lightbox-title="Animated Opening Title Screen — Meridian Ring &amp; Legend Plate">
+            <img class="gallery-thumb" src="assets/screenshots/07-Game-Opening-Page.png" alt="RelicMaze Opening Title Screen screenshot" loading="lazy">
+            <div class="gallery-caption"><strong>Opening Monument Screen</strong><span>TITLE UI</span></div>
+          </button>
+
+          <button type="button" class="gallery-item" data-category="ui" data-lightbox-src="assets/screenshots/10-Journal-Page.png" data-lightbox-title="Chamber Journal — 12-Floor Pyramid &amp; 11 Hidden Sanctums">
+            <img class="gallery-thumb" src="assets/screenshots/10-Journal-Page.png" alt="Chamber Journal stepped pyramid screenshot" loading="lazy">
+            <div class="gallery-caption"><strong data-i18n="chamber_journal">Chamber Journal</strong><span>144 PYRAMID</span></div>
+          </button>
+
+          <button type="button" class="gallery-item" data-category="ui" data-lightbox-src="assets/screenshots/11-Game-Story-Page.png" data-lightbox-title="Illustrated Story — The Hill That Looks Back (Visoko, Bosnia)">
+            <img class="gallery-thumb" src="assets/screenshots/11-Game-Story-Page.png" alt="The Hill That Looks Back story plate screenshot" loading="lazy">
+            <div class="gallery-caption"><strong>The Hill That Looks Back</strong><span>STORY BOOK</span></div>
+          </button>
+
+          <button type="button" class="gallery-item" data-category="ui" data-lightbox-src="assets/screenshots/09-Help-Page.png" data-lightbox-title="Help &amp; Legend Field Guide — Spectral Relics and Deep Hazards">
+            <img class="gallery-thumb" src="assets/screenshots/09-Help-Page.png" alt="Help and Legend Spectral Relics page screenshot" loading="lazy">
+            <div class="gallery-caption"><strong data-i18n="help_legend">Help &amp; Legend</strong><span>FIELD GUIDE</span></div>
+          </button>
+
+          <button type="button" class="gallery-item" data-category="ui" data-lightbox-src="assets/screenshots/08-Settings-Page.png" data-lightbox-title="Settings — 20 Languages, Audio, Rebindable Controls &amp; Accessibility">
+            <img class="gallery-thumb" src="assets/screenshots/08-Settings-Page.png" alt="Settings and 20 Languages screen screenshot" loading="lazy">
+            <div class="gallery-caption"><strong data-i18n="settings">Settings</strong><span>20 LANGUAGES</span></div>
+          </button>
+
+          <button type="button" class="gallery-item" data-category="art" data-lightbox-src="assets/logos/RelicMaze-Logo-1920x1080.png" data-lightbox-title="RelicMaze Official Widescreen Key Art (1920×1080)">
+            <img class="gallery-thumb" src="assets/logos/RelicMaze-Logo-1920x1080.png" alt="RelicMaze 1920x1080 Official Key Art" loading="lazy">
+            <div class="gallery-caption"><strong>Official Key Art Banner</strong><span>1920×1080</span></div>
+          </button>
+
+          <button type="button" class="gallery-item" data-category="art" data-lightbox-src="assets/logos/RelicMaze-BoxArt-1080x1080.png" data-lightbox-title="RelicMaze Official Square Box Art (1080×1080)">
+            <img class="gallery-thumb" src="assets/logos/RelicMaze-BoxArt-1080x1080.png" alt="RelicMaze Box Art 1080x1080" loading="lazy">
+            <div class="gallery-caption"><strong>Official Box Art</strong><span>1080×1080</span></div>
+          </button>
+
+          <button type="button" class="gallery-item" data-category="art" data-lightbox-src="assets/previews/all-144-rooms.png" data-lightbox-title="Complete 144-Chamber Architectural Contact Sheet">
+            <img class="gallery-thumb" src="assets/previews/all-144-rooms.png" alt="All 144 Chambers architectural mosaic" loading="lazy">
+            <div class="gallery-caption"><strong>All 144 Chambers Mosaic</strong><span>FULL CAMPAIGN</span></div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         HELP & LEGEND: VISOKO CLAIM vs EVIDENCE & CAST OF THE MERIDIAN
+         =================================================================== -->
+    <section id="legend" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span data-i18n="part1">PART ONE · THE LEGEND</span>
+          </div>
+          <h2 class="section-title" data-i18n="help_legend">Help &amp; Legend</h2>
+          <p class="section-sub" data-i18n="intro_legend">
+            The legend says the Meridian Works lie under a hill in Bosnia, Visočica above the town of Visoko, which its believers call the Pyramid of the Sun. Scientists say it is a natural hill. Read the whole story, with everything that is claimed and everything that was found, under Help &amp; Legend.
+          </p>
+        </div>
+
+        <div class="voices-grid reveal">
+          <article class="voice-card claim">
+            <span class="voice-label" data-i18n="legend_says">THE LEGEND SAYS</span>
+            <p data-i18n="legend_claim_sun">
+              The Pyramid of the Sun is 220 metres tall; later papers say 270, 300 and even 368. The Great Pyramid of Giza is 146. Its four faces slope at about 45 degrees and point to true north, to within an error that one paper puts at twelve seconds of arc.
+            </p>
+          </article>
+
+          <article class="voice-card evidence">
+            <span class="voice-label" data-i18n="evidence_says">WHAT THE EVIDENCE SAYS</span>
+            <p data-i18n="legend_proof_sun">
+              Surveyed, Visočica stands 213 metres above its valley and 767 above the sea. The figures quoted for the base do not agree with one another, and even older texts of the project describe only three well-preserved sides.
+            </p>
+          </article>
+
+          <article class="voice-card record">
+            <span class="voice-label" data-i18n="on_the_record">ON THE RECORD</span>
+            <p data-i18n="legend_fact_sun">
+              For scale: the Great Pyramid of Giza was 146.6 metres tall when it was finished and stands 138.5 today. The hill Visočica, measured from its valley, is taller than that. Whether anything but nature built it is the whole question.
+            </p>
+          </article>
+        </div>
+
+        <p class="section-sub reveal" style="text-align:center; color:var(--gold); font-style:italic;" data-i18n="honest_summary">
+          The honest summary: the pyramid is a legend. The valley, its history and the wonder of it are real.
+        </p>
+
+        <div class="cast-grid">
+          <article class="cast-card reveal">
+            <span class="cast-role">PROTAGONIST</span>
+            <h3 data-i18n="hero_milo_name">Milo the Coppercap</h3>
+            <p data-i18n="hero_milo_desc">
+              A lantern-runner and practical surveyor of buried machines, in a burnished copper cap, a slate-blue coat and a teal scarf, with a lamp on his shoulder.
+            </p>
+          </article>
+
+          <article class="cast-card reveal">
+            <span class="cast-role">CHAMBER 144 GUARDIAN</span>
+            <h3 data-i18n="hero_kabeel_name">Kabeel</h3>
+            <p data-i18n="hero_kabeel_desc">
+              The fire giant who guards the Heart of the Meridian. A basalt and obsidian idol-god with molten veins, a crown of flames and a sun disc behind his head.
+            </p>
+          </article>
+
+          <article class="cast-card reveal">
+            <span class="cast-role">COMPANION</span>
+            <h3 data-i18n="hero_crow_name">The Crow</h3>
+            <p data-i18n="hero_crow_desc">
+              Milo's uninvited companion, who turns up at the worst moments. It is harmless, and he ducks anyway.
+            </p>
+          </article>
+
+          <article class="cast-card reveal">
+            <span class="cast-role">ANCIENT ARCHITECTS</span>
+            <h3 data-i18n="hero_keepers_name">The Keepers of the Meridian</h3>
+            <p data-i18n="hero_keepers_desc">
+              The vanished builders, as the legend tells it. They raised the pyramid to keep time, sealed nine sigils in its floors and a heart in its deepest hall.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         ACCESSIBILITY, CLEAR VIEW (F9) & CONTROLS REFERENCE
+         =================================================================== -->
+    <section class="section section-alt">
+      <div class="container a11y-split">
+        <div class="reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span data-i18n="a11y_eyebrow">BUILT FOR EVERY DELVER</span>
+          </div>
+          <h2 class="section-title" style="text-align:start;" data-i18n="a11y_title">
+            Clear View, Narration &amp; Zero-Penalty Exploration
+          </h2>
+          <p class="section-sub" style="text-align:start; margin-bottom:1.1rem;">
+            Every object in RelicMaze is contrast-audited across all ten regional themes. Opt-in accessibility features include UI scaling up to 250%, four Clear View high-contrast palettes (<kbd>F9</kbd> / <kbd>F10</kbd>), a live magnifier, spatial sound cues, solver hints, and spoken narration across twenty languages (including RTL layout mirroring for Arabic and Urdu).
+          </p>
+          <button type="button" class="btn-secondary" data-clear-view-toggle aria-pressed="false">
+            <span>◐</span>
+            <span data-i18n="btn_clear_view">Toggle Clear View (F9)</span>
+          </button>
+
+          <div class="a11y-pills">
+            <div class="a11y-box">
+              <strong>Clear View Palettes</strong>
+              <span>Instant high-contrast geometry &amp; distinct hazard glyphs without relying on color alone.</span>
+            </div>
+            <div class="a11y-box">
+              <strong>20 Languages + RTL</strong>
+              <span>Full UI, hints, spoken narration &amp; chamber titles in 20 languages; mirrored RTL menus.</span>
+            </div>
+            <div class="a11y-box">
+              <strong>250% UI Scaling &amp; Magnifier</strong>
+              <span>Crisp procedural vector walls at any resolution plus optional chamber magnifier.</span>
+            </div>
+            <div class="a11y-box">
+              <strong>100% Offline &amp; Local Saves</strong>
+              <span>Crash-safe local saves in <code>%APPDATA%\RelicMaze</code>; zero accounts or servers.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="temple-frame reveal" style="padding:1.5rem;">
+          <h3 style="font-family:var(--font-serif); color:var(--gold); margin:0 0 0.85rem; font-size:1.3rem;" data-i18n="controls">Controls</h3>
+          <table class="controls-table">
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Keyboard</th>
+                <th>Gamepad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Move Left / Right</td>
+                <td><kbd>A</kbd> / <kbd>D</kbd> or <kbd>←</kbd> / <kbd>→</kbd></td>
+                <td>D-Pad / Left Stick</td>
+              </tr>
+              <tr>
+                <td>Climb Ladder / Rope</td>
+                <td><kbd>W</kbd> / <kbd>S</kbd> or <kbd>↑</kbd> / <kbd>↓</kbd></td>
+                <td>D-Pad Up / Down</td>
+              </tr>
+              <tr>
+                <td>Jump</td>
+                <td><kbd>Space</kbd> or <kbd>Z</kbd></td>
+                <td><kbd>A</kbd> (South)</td>
+              </tr>
+              <tr>
+                <td>Interact / Lever / Throw / Wand</td>
+                <td><kbd>E</kbd> or <kbd>X</kbd></td>
+                <td><kbd>X</kbd> (West)</td>
+              </tr>
+              <tr>
+                <td>Chamber Journal</td>
+                <td><kbd>Tab</kbd> or <kbd>J</kbd></td>
+                <td>View / Select</td>
+              </tr>
+              <tr>
+                <td>Clear View / Next Palette</td>
+                <td><kbd>F9</kbd> / <kbd>F10</kbd></td>
+                <td>Accessibility Menu</td>
+              </tr>
+              <tr>
+                <td>Controls / Pause</td>
+                <td><kbd>F1</kbd> / <kbd>Esc</kbd></td>
+                <td>Start</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================================
+       LIGHTBOX VIEWER
+       ===================================================================== -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Image viewer">
+    <div class="lightbox-inner">
+      <img src="" alt="" class="lightbox-img" id="lightbox-img">
+      <div class="lightbox-bar">
+        <span id="lightbox-caption"></span>
+        <div style="display:flex; gap:0.5rem;">
+          <button type="button" class="hud-btn" id="lightbox-prev" aria-label="Previous image">◀</button>
+          <button type="button" class="hud-btn" id="lightbox-next" aria-label="Next image">▶</button>
+          <button type="button" class="hud-btn" id="lightbox-close" data-i18n="close">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       FOOTER
+       ===================================================================== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="brand-link">
+        <img src="assets/logos/RelicMaze-Logo-44x44.png" alt="RelicMaze Icon" class="brand-crest" width="34" height="34">
+        <span class="brand-wordmark">
+          <span>RELICMAZE</span>
+          <span class="brand-sub" data-i18n="subtitle_game">RelicMaze — a lantern-runner's temple puzzle platformer.</span>
+        </span>
+      </a>
+
+      <div class="footer-links">
+        <a href="support.html" class="hud-btn" data-i18n="btn_support">Support</a>
+        <a href="privacy.html" class="hud-btn" data-i18n="btn_privacy">Privacy</a>
+        <a href="copyright.html" class="hud-btn" data-i18n="btn_copyright">Copyright</a>
+        <button type="button" class="hud-btn" data-clear-view-toggle aria-pressed="false" data-i18n="btn_clear_view">Toggle Clear View (F9)</button>
+      </div>
+
+      <div class="footer-note">
+        <span>© 2026 bulentozkir · RelicMaze. Built with Godot Engine 4.7.2 (.NET) &amp; C#.</span>
+        <span>Windows 11 x64 &amp; ARM64 · 100% Offline · Original Procedural Art &amp; Synthesized Score</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/i18n-data.js"></script>
+  <script src="assets/js/meridian-canvas.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
