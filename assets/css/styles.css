@@ -821,15 +821,11 @@ body.clear-view .hero-title {
   display: block;
 }
 .trailer-badge-bar {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  right: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
-  pointer-events: none;
+  margin-bottom: 0.75rem;
 }
 .trailer-pill {
   background: rgba(7, 8, 15, 0.84);
