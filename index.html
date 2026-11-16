@@ -12,7 +12,7 @@
   <meta name="theme-color" content="#07080F">
   <link rel="icon" type="image/png" sizes="44x44" href="assets/logos/RelicMaze-Logo-44x44.png">
   <link rel="apple-touch-icon" href="assets/logos/RelicMaze-Logo-150x150.png">
-  <link rel="stylesheet" href="assets/css/styles.css?v=7">
+  <link rel="stylesheet" href="assets/css/styles.css?v=8">
 </head>
 <body>
   <div class="lantern-aura" aria-hidden="true"></div>
@@ -113,8 +113,8 @@
     <div class="scroll-meridian-bar"></div>
   </div>
 
-  <!-- Shared Original Soundtrack Audio Element -->
-  <audio id="rm-audio" src="assets/media/relicmaze.mp3" preload="metadata" loop></audio>
+  <!-- Shared Dual 432 Hz Original Soundtrack Audio Element -->
+  <audio id="rm-audio" src="assets/media/relicmaze.mp3?v=8" preload="metadata"></audio>
 
   <main>
     <!-- ===================================================================
@@ -279,6 +279,9 @@
                 <span>♪</span>
                 <span data-label data-i18n="btn_play_music">Play Original Soundtrack</span>
               </button>
+              <button type="button" id="next-track-btn" class="hud-btn" title="Switch between the two 432 Hz original soundtracks">
+                ⏭ Track 2/2
+              </button>
               <button type="button" id="gif-toggle-btn" class="hud-btn" data-i18n="btn_pause_gif">
                 Pause Animation
               </button>
@@ -286,8 +289,8 @@
 
             <div class="audio-track-mid">
               <div class="audio-track-top">
-                <span class="audio-title">RelicMaze Original Score — relicmaze.mp3</span>
-                <span id="audio-time">0:00 / 5:00</span>
+                <span class="audio-title" id="audio-track-title">432 Hz Score I — relicmaze.mp3 (1/2)</span>
+                <span id="audio-time">0:00 / 3:00</span>
               </div>
               <input type="range" id="audio-seek" class="audio-seek" min="0" max="100" value="0" step="0.2" aria-label="Seek soundtrack">
             </div>
@@ -405,6 +408,11 @@
             <p class="sanctum-stage-obj" id="sanctum-stage-obj">
               Push the movable basalt blocks into both side-tunnel pits and trip the upper pressure plate so the rolling boulder smashes the brittle back wall.
             </p>
+
+            <div class="sanctum-clue-box">
+              <strong>STRATUM KEYSTONE &amp; ASTRAL RELAY PORTAL</strong>
+              <span>Reaching a floor's Gate Chamber manifests a randomized <strong>Stratum Keystone</strong> (<kbd>+1,000 pts</kbd>) earlier on that floor line—backtrack under the <strong>Eclipse Pulse</strong>, carry its <strong>Volatile Charge</strong> without dying (<kbd>+2,500 pts</kbd> mastery) to awaken the <strong>Astral Relay Portal</strong> (<kbd>+1,500 pts</kbd>), and warp back to unseal the Sanctum!</span>
+            </div>
 
             <div class="sanctum-clue-box">
               <strong>CARVED STELA INSCRIPTION</strong>
@@ -865,7 +873,7 @@
             <div class="relic-icon" aria-hidden="true">♾️</div>
             <h3 data-i18n="play_death_name">Dying costs nothing</h3>
             <p data-i18n="play_death_desc">
-              Touch anything lethal and you are sent back to the chamber's entry door. There are no lives to lose, nothing is taken from you, and the seals and levers you have already won stay won.
+              Touch anything lethal and you are sent back to the chamber's entry door. There are no lives to lose, nothing is taken from you, and the seals and levers you have already won stay won. Every chamber is solver-verified free of softlocks and stuck standing pockets (<kbd>PositionTraps</kbd>).
             </p>
           </article>
         </div>
@@ -1247,8 +1255,8 @@
     </div>
   </footer>
 
-  <script src="assets/js/i18n-data.js?v=7"></script>
-  <script src="assets/js/meridian-canvas.js?v=7"></script>
-  <script src="assets/js/app.js?v=7"></script>
+  <script src="assets/js/i18n-data.js?v=8"></script>
+  <script src="assets/js/meridian-canvas.js?v=8"></script>
+  <script src="assets/js/app.js?v=8"></script>
 </body>
 </html>

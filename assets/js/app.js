@@ -256,11 +256,27 @@
   }
 
   // --------------------------------------------------------------------------
-  // 4. ORIGINAL SOUNDTRACK (relicmaze.mp3) + WEBAUDIO VISUALIZER + GIF STAGE
+  // 4. DUAL 432 Hz SOUNDTRACK PLAYLIST (relicmaze.mp3 + relicmaze-phrygian.mp3)
   // --------------------------------------------------------------------------
+  const PLAYLIST = [
+    {
+      src: "assets/media/relicmaze.mp3?v=8",
+      title: "432 Hz Score I — relicmaze.mp3 (1/2)",
+      pill: "relicmaze.mp3 (1/2)",
+    },
+    {
+      src: "assets/media/relicmaze-phrygian.mp3?v=8",
+      title: "432 Hz Score II — relicmaze-phrygian.mp3 (2/2)",
+      pill: "relicmaze-phrygian.mp3 (2/2)",
+    },
+  ];
+  let trackIdx = 0;
+
   const audioEl = document.getElementById("rm-audio");
   const toolbarMusicBtn = document.getElementById("toolbar-music-btn");
   const deckMusicBtn = document.getElementById("deck-music-btn");
+  const nextTrackBtn = document.getElementById("next-track-btn");
+  const trackTitleEl = document.getElementById("audio-track-title");
   const overlayMusicBtn = document.getElementById("overlay-music-btn");
   const trailerStatusPill = document.getElementById("trailer-sound-pill");
   const seekBar = document.getElementById("audio-seek");
@@ -274,6 +290,11 @@
   let analyser = null;
   let freqData = null;
   let gifPaused = false;
+
+  if (audioEl) {
+    audioEl.loop = false;
+    audioEl.src = PLAYLIST[trackIdx].src;
+  }
 
   function fmtTime(sec) {
     if (!isFinite(sec) || sec < 0) return "0:00";
@@ -328,6 +349,7 @@
 
   function syncAudioLabels() {
     const playing = Boolean(audioEl && !audioEl.paused);
+    const curTrack = PLAYLIST[trackIdx] || PLAYLIST[0];
     if (toolbarMusicBtn) {
       toolbarMusicBtn.classList.toggle("playing", playing);
       toolbarMusicBtn.setAttribute("aria-pressed", playing ? "true" : "false");
@@ -337,6 +359,13 @@
       deckMusicBtn.querySelector("[data-label]") &&
         (deckMusicBtn.querySelector("[data-label]").textContent = labelText);
     }
+    if (trackTitleEl) {
+      trackTitleEl.textContent = curTrack.title;
+    }
+    if (nextTrackBtn) {
+      const nextNum = ((trackIdx + 1) % PLAYLIST.length) + 1;
+      nextTrackBtn.textContent = `⏭ Track ${nextNum}/${PLAYLIST.length}`;
+    }
     if (overlayMusicBtn) {
       overlayMusicBtn.style.display = playing ? "none" : "inline-flex";
       const sp = overlayMusicBtn.querySelector("[data-label]");
@@ -344,8 +373,25 @@
     }
     if (trailerStatusPill) {
       trailerStatusPill.classList.toggle("sound-live", playing);
-      trailerStatusPill.textContent = playing ? "♪ relicmaze.mp3 · LIVE" : "♪ relicmaze.mp3 · MUTED";
+      trailerStatusPill.textContent = playing
+        ? `♪ 432 Hz · ${curTrack.pill} · LIVE`
+        : `♪ 432 Hz · ${curTrack.pill} · MUTED`;
     }
+  }
+
+  async function switchTrack(nextIndex, autoPlay) {
+    if (!audioEl) return;
+    trackIdx = ((nextIndex % PLAYLIST.length) + PLAYLIST.length) % PLAYLIST.length;
+    const wasPlaying = !audioEl.paused || autoPlay;
+    audioEl.src = PLAYLIST[trackIdx].src;
+    if (wasPlaying) {
+      ensureWebAudio();
+      if (audioCtx && audioCtx.state === "suspended") {
+        try { await audioCtx.resume(); } catch (_) {}
+      }
+      try { await audioEl.play(); } catch (_) {}
+    }
+    syncAudioLabels();
   }
 
   async function toggleMusic() {
@@ -395,6 +441,15 @@
     });
     audioEl.addEventListener("play", syncAudioLabels);
     audioEl.addEventListener("pause", syncAudioLabels);
+    audioEl.addEventListener("ended", () => {
+      switchTrack(trackIdx + 1, true);
+    });
+  }
+
+  if (nextTrackBtn) {
+    nextTrackBtn.addEventListener("click", () => {
+      switchTrack(trackIdx + 1, true);
+    });
   }
 
   if (seekBar && audioEl) {
@@ -756,17 +811,17 @@
   // 9. 11 INTER-FLOOR SANCTUM PUZZLE ROOMS EXPLORER (4, 9, 16 .. 144)
   // --------------------------------------------------------------------------
   const SANCTUM_LIST = [
-    { order: 1, room: 4, floor: 2, regIdx: 0, shot: "assets/screenshots/sanctum-04-dial.png" },
-    { order: 2, room: 9, floor: 3, regIdx: 0, shot: "assets/screenshots/sanctum-04-dial.png" },
-    { order: 3, room: 16, floor: 4, regIdx: 1, shot: "assets/screenshots/sanctum-04-dial.png" },
-    { order: 4, room: 25, floor: 5, regIdx: 1, shot: "assets/screenshots/sanctum-25-prism.png" },
-    { order: 5, room: 36, floor: 6, regIdx: 2, shot: "assets/screenshots/sanctum-25-prism.png" },
-    { order: 6, room: 49, floor: 7, regIdx: 3, shot: "assets/screenshots/sanctum-25-prism.png" },
-    { order: 7, room: 64, floor: 8, regIdx: 4, shot: "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" },
-    { order: 8, room: 81, floor: 9, regIdx: 5, shot: "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" },
-    { order: 9, room: 100, floor: 10, regIdx: 6, shot: "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" },
-    { order: 10, room: 121, floor: 11, regIdx: 8, shot: "assets/screenshots/sanctum-25-prism.png" },
-    { order: 11, room: 144, floor: 12, regIdx: 9, shot: "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" },
+    { order: 1, first: 2, room: 4, floor: 2, regIdx: 0, shot: "assets/screenshots/sanctum-04-dial.png" },
+    { order: 2, first: 5, room: 9, floor: 3, regIdx: 0, shot: "assets/screenshots/sanctum-04-dial.png" },
+    { order: 3, first: 10, room: 16, floor: 4, regIdx: 1, shot: "assets/screenshots/sanctum-04-dial.png" },
+    { order: 4, first: 17, room: 25, floor: 5, regIdx: 1, shot: "assets/screenshots/sanctum-25-prism.png" },
+    { order: 5, first: 26, room: 36, floor: 6, regIdx: 2, shot: "assets/screenshots/sanctum-25-prism.png" },
+    { order: 6, first: 37, room: 49, floor: 7, regIdx: 3, shot: "assets/screenshots/sanctum-25-prism.png" },
+    { order: 7, first: 50, room: 64, floor: 8, regIdx: 4, shot: "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" },
+    { order: 8, first: 65, room: 81, floor: 9, regIdx: 5, shot: "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" },
+    { order: 9, first: 82, room: 100, floor: 10, regIdx: 6, shot: "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" },
+    { order: 10, first: 101, room: 121, floor: 11, regIdx: 8, shot: "assets/screenshots/sanctum-25-prism.png" },
+    { order: 11, first: 122, room: 144, floor: 12, regIdx: 9, shot: "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" },
   ];
   let activeSanctumIdx = 6; // Default S07 (Chamber 64 — Rolling Boulder Maze)
 
@@ -794,7 +849,7 @@
     const archText = t(`s${k}_arch`);
     if (badgeCode) badgeCode.textContent = `SANCTUM ${String(k).padStart(2, "0")} / 11 · CHAMBER ${String(item.room).padStart(3, "0")} (${item.floor}²)`;
     if (badgeArch) badgeArch.textContent = archText;
-    if (badgeRegion) badgeRegion.textContent = `Floor ${item.floor} · ${t(`reg_${item.regIdx}`)}`;
+    if (badgeRegion) badgeRegion.textContent = `Floor ${item.floor} · Stratum ${item.first}–${item.room} · ${t(`reg_${item.regIdx}`)}`;
     if (titleEl) titleEl.textContent = titleText;
     if (objEl) objEl.textContent = t(`s${k}_obj`);
     if (clueEl) clueEl.textContent = t(`s${k}_clue`);
