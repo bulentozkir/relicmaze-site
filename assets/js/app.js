@@ -384,6 +384,7 @@
     trackIdx = ((nextIndex % PLAYLIST.length) + PLAYLIST.length) % PLAYLIST.length;
     const wasPlaying = !audioEl.paused || autoPlay;
     audioEl.src = PLAYLIST[trackIdx].src;
+    syncAudioLabels();
     if (wasPlaying) {
       ensureWebAudio();
       if (audioCtx && audioCtx.state === "suspended") {
