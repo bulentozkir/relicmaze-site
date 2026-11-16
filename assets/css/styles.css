@@ -590,6 +590,159 @@ body.clear-view .hero-title {
   transform: translateY(-2px);
 }
 
+/* ==========================================================================
+   MICROSOFT STORE PURCHASE CTA (SOLAR GOLD <-> ASTRAL CYAN BLINK BEACON)
+   ========================================================================== */
+.btn-msstore {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.72rem;
+  padding: 0.58rem 1.35rem 0.58rem 0.72rem;
+  border-radius: 10px;
+  color: #060810 !important;
+  font-weight: 800;
+  border: 2px solid #fff5c8;
+  background: linear-gradient(180deg, #ffe896 0%, #ea9e1e 100%);
+  animation: msStoreBlink 1.45s ease-in-out infinite;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.btn-msstore:hover {
+  transform: translateY(-3px) scale(1.03);
+  color: #04060c !important;
+}
+.btn-msstore::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: -65%;
+  width: 46%;
+  height: 180%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  transform: skewX(-24deg);
+  animation: msStoreSheen 2.9s ease-in-out infinite;
+  pointer-events: none;
+}
+.msstore-icon-pod {
+  width: 36px;
+  height: 36px;
+  border-radius: 7px;
+  background: #090c16;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.7);
+}
+.msstore-icon-pod svg {
+  width: 20px;
+  height: 20px;
+}
+.msstore-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.08;
+  text-align: start;
+}
+.msstore-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.86;
+}
+.msstore-name {
+  font-family: var(--font-sans);
+  font-size: 1.04rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+@keyframes msStoreBlink {
+  0%, 100% {
+    background: linear-gradient(180deg, #ffe896 0%, #ea9e1e 100%);
+    border-color: #fff7d4;
+    box-shadow: 0 0 24px rgba(255, 212, 107, 0.86), 0 0 52px rgba(234, 158, 30, 0.42);
+  }
+  50% {
+    background: linear-gradient(180deg, #7afff4 0%, #1cc8ba 100%);
+    border-color: #e4fffd;
+    box-shadow: 0 0 28px rgba(86, 246, 234, 0.94), 0 0 58px rgba(46, 196, 182, 0.5);
+  }
+}
+
+@keyframes msStoreSheen {
+  0%, 55% { left: -65%; }
+  100% { left: 135%; }
+}
+
+/* Top Toolbar Compact Blinking Microsoft Store Button */
+.hud-btn.hud-msstore {
+  border-width: 1.5px;
+  font-weight: 700;
+  animation: msStoreHudBlink 1.45s ease-in-out infinite;
+}
+@keyframes msStoreHudBlink {
+  0%, 100% {
+    border-color: var(--gold-bright);
+    color: var(--gold-bright);
+    background: linear-gradient(180deg, rgba(92, 66, 18, 0.92), rgba(38, 27, 8, 0.96));
+    box-shadow: 0 0 16px rgba(255, 212, 107, 0.55);
+  }
+  50% {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    background: linear-gradient(180deg, rgba(14, 74, 76, 0.92), rgba(8, 34, 38, 0.96));
+    box-shadow: 0 0 18px rgba(86, 246, 234, 0.65);
+  }
+}
+
+/* Closing Store Conversion Banner */
+.msstore-banner-section {
+  padding: 3.5rem 0;
+}
+.msstore-banner {
+  padding: 1.85rem 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  background:
+    radial-gradient(ellipse 65% 90% at 15% 50%, rgba(255, 212, 107, 0.13), transparent 70%),
+    radial-gradient(ellipse 65% 90% at 85% 50%, rgba(86, 246, 234, 0.13), transparent 70%),
+    var(--bg-panel);
+}
+.msstore-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex: 1;
+  min-width: 260px;
+}
+.msstore-banner-art {
+  width: 84px;
+  height: 84px;
+  border-radius: 12px;
+  border: 1.5px solid var(--gold);
+  box-shadow: var(--glow-gold);
+  flex-shrink: 0;
+}
+.msstore-banner-left h2 {
+  font-family: var(--font-serif);
+  color: var(--gold);
+  font-size: clamp(1.35rem, 2.3vw, 1.85rem);
+  margin: 0 0 0.3rem;
+}
+.msstore-banner-left p {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
 /* Rotating THE LEGEND Plate (exact homage to TitleScreen.DrawLore) */
 .legend-ticker {
   background: var(--bg-panel);

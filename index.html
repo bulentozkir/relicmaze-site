@@ -12,7 +12,7 @@
   <meta name="theme-color" content="#07080F">
   <link rel="icon" type="image/png" sizes="44x44" href="assets/logos/RelicMaze-Logo-44x44.png">
   <link rel="apple-touch-icon" href="assets/logos/RelicMaze-Logo-150x150.png">
-  <link rel="stylesheet" href="assets/css/styles.css?v=4">
+  <link rel="stylesheet" href="assets/css/styles.css?v=5">
 </head>
 <body>
   <div class="lantern-aura" aria-hidden="true"></div>
@@ -41,6 +41,23 @@
       </nav>
 
       <div class="toolbar-actions">
+        <!-- Microsoft Store Blinking Purchase Button -->
+        <a
+          href="https://apps.microsoft.com/detail/XXXXX?hl=en-us&amp;gl=US&amp;ocid=pdpshare"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hud-btn hud-msstore"
+          id="nav-btn-msstore"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="2" width="9" height="9" fill="#F25022"></rect>
+            <rect x="13" y="2" width="9" height="9" fill="#7FBA00"></rect>
+            <rect x="2" y="13" width="9" height="9" fill="#00A4EF"></rect>
+            <rect x="13" y="13" width="9" height="9" fill="#FFB900"></rect>
+          </svg>
+          <span data-i18n="msstore_toolbar">Buy on Store</span>
+        </a>
+
         <!-- Original Soundtrack Toggle -->
         <button type="button" id="toolbar-music-btn" class="hud-btn hud-music" aria-pressed="false" title="Play / Pause Original Soundtrack (relicmaze.mp3)">
           <span class="eq-bars" aria-hidden="true"><span></span><span></span><span></span></span>
@@ -128,6 +145,27 @@
           </p>
 
           <div class="cta-row">
+            <a
+              href="https://apps.microsoft.com/detail/XXXXX?hl=en-us&amp;gl=US&amp;ocid=pdpshare"
+              target="_blank"
+              rel="noopener noreferrer"
+              id="hero-msstore-cta"
+              class="btn-msstore"
+            >
+              <span class="msstore-icon-pod" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <rect x="2" y="2" width="9" height="9" fill="#F25022"></rect>
+                  <rect x="13" y="2" width="9" height="9" fill="#7FBA00"></rect>
+                  <rect x="2" y="13" width="9" height="9" fill="#00A4EF"></rect>
+                  <rect x="13" y="13" width="9" height="9" fill="#FFB900"></rect>
+                </svg>
+              </span>
+              <span class="msstore-copy">
+                <span class="msstore-kicker" data-i18n="msstore_kicker">GET IT FROM</span>
+                <span class="msstore-name" data-i18n="msstore_label">Microsoft Store</span>
+              </span>
+            </a>
+
             <a href="#trailer" id="hero-watch-trailer" class="btn-primary">
               <span>▶</span>
               <span data-i18n="cta_trailer">Watch Trailer &amp; Music</span>
@@ -1125,6 +1163,43 @@
         </div>
       </div>
     </section>
+
+    <!-- ===================================================================
+         CLOSING MICROSOFT STORE PURCHASE BANNER
+         =================================================================== -->
+    <section class="msstore-banner-section">
+      <div class="container">
+        <div class="temple-frame msstore-banner reveal">
+          <div class="msstore-banner-left">
+            <img src="assets/logos/RelicMaze-BoxArt-1080x1080.png" alt="RelicMaze Box Art" class="msstore-banner-art" width="84" height="84" loading="lazy">
+            <div>
+              <h2 data-i18n="msstore_banner_title">Ready to Descend the 144 Chambers?</h2>
+              <p data-i18n="msstore_banner_sub">Windows 11 &amp; Windows 10 (x64 &amp; ARM64) · 100% Offline Single-Player · Zero Telemetry or Ads</p>
+            </div>
+          </div>
+
+          <a
+            href="https://apps.microsoft.com/detail/XXXXX?hl=en-us&amp;gl=US&amp;ocid=pdpshare"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-msstore"
+          >
+            <span class="msstore-icon-pod" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="2" y="2" width="9" height="9" fill="#F25022"></rect>
+                <rect x="13" y="2" width="9" height="9" fill="#7FBA00"></rect>
+                <rect x="2" y="13" width="9" height="9" fill="#00A4EF"></rect>
+                <rect x="13" y="13" width="9" height="9" fill="#FFB900"></rect>
+              </svg>
+            </span>
+            <span class="msstore-copy">
+              <span class="msstore-kicker" data-i18n="msstore_kicker">GET IT FROM</span>
+              <span class="msstore-name" data-i18n="msstore_label">Microsoft Store</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- =====================================================================
@@ -1171,8 +1246,8 @@
     </div>
   </footer>
 
-  <script src="assets/js/i18n-data.js?v=4"></script>
-  <script src="assets/js/meridian-canvas.js?v=4"></script>
-  <script src="assets/js/app.js?v=4"></script>
+  <script src="assets/js/i18n-data.js?v=5"></script>
+  <script src="assets/js/meridian-canvas.js?v=5"></script>
+  <script src="assets/js/app.js?v=5"></script>
 </body>
 </html>
