@@ -12,7 +12,7 @@
   <meta name="theme-color" content="#07080F">
   <link rel="icon" type="image/png" sizes="44x44" href="assets/logos/RelicMaze-Logo-44x44.png">
   <link rel="apple-touch-icon" href="assets/logos/RelicMaze-Logo-150x150.png">
-  <link rel="stylesheet" href="assets/css/styles.css?v=5">
+  <link rel="stylesheet" href="assets/css/styles.css?v=6">
 </head>
 <body>
   <div class="lantern-aura" aria-hidden="true"></div>
@@ -663,16 +663,16 @@
 
           <!-- 13. Kabeel — Satanic Archfiend Boss -->
           <article class="enemy-card" data-enemy-group="guardians">
-            <div class="enemy-portrait-wrap" data-lightbox-src="assets/enemies/kabeel-visage.png" data-lightbox-title="Kabeel — Satanic Lava-Born Archfiend (Updated In-Game Visage)">
-              <img src="assets/enemies/kabeel-visage.png" alt="Close-up visage of Kabeel the satanic horned lava beast with pentagram crown and black-sun wheel" loading="lazy">
-              <span class="enemy-bounty immune">ARCHFIEND · +7,000 PTS</span>
+            <div class="enemy-portrait-wrap" data-lightbox-src="assets/enemies/kabeel-visage.png?v=6" data-lightbox-title="Kabeel — Satanic Lava-Born Archfiend (v0.0.7 Volumetric Visage)">
+              <img src="assets/enemies/kabeel-visage.png?v=6" alt="Close-up visage of Kabeel the satanic horned lava beast with pentagram crown and black-sun wheel" loading="lazy">
+              <span class="enemy-bounty immune">ARCHFIEND · +10,000 PTS</span>
             </div>
             <div class="enemy-body">
               <h3 data-i18n="hero_kabeel_name">Kabeel</h3>
-              <p>Nine times Milo's height: a winged basalt-and-obsidian satanic beast crowned with four horns, an iron pentagram, and an eclipsed Black-Sun wheel. Immune to all blades—felled only by 20 hurled sun-stones.</p>
+              <p>Nine times Milo's height: a winged satanic beast crowned with four horns, an iron pentagram, and an eclipsed Black-Sun wheel. Every hurled sun-stone decays his flesh to bone until the 50th pierces his beating heart.</p>
               <div class="enemy-chips">
                 <span class="enemy-chip">3 Hell-Fire Lanes</span>
-                <span class="enemy-chip">20 Sun-Stones</span>
+                <span class="enemy-chip">50 Sun-Stones Decay</span>
               </div>
             </div>
           </article>
@@ -692,30 +692,31 @@
           </div>
           <h2 class="section-title" data-i18n="kabeel_title">Kabeel, the Satanic Lava-Born Beast</h2>
           <p class="section-sub" data-i18n="kabeel_sub">
-            Towering nine times Milo's height above twin lakes of hell-fire: a winged basalt-and-obsidian archfiend crowned with four horns, an iron pentagram brow-band, an eclipsed Black-Sun wheel, and a ripped bone ribcage gripping his pulsing molten heart.
+            The winged satanic beast who guards the Heart of the Meridian. Towered between two boiling lakes of lava beneath an eclipsed black-sun sigil, with four ribbed horns, leathery bat-wings and an exposed beating heart, he hurls staggered fireballs across the citadel. Every hurled sun-stone withers and decays his demonic flesh and bone until the fiftieth pierces his heart.
           </p>
         </div>
 
         <div class="kabeel-grid reveal">
           <div class="temple-frame kabeel-sim-box">
-            <div style="display:flex; justify-content:center; gap:0.5rem; margin-bottom:0.85rem; flex-wrap:wrap;">
-              <button type="button" class="filter-btn active" id="kabeel-view-full">Winged Archfiend Portrait</button>
-              <button type="button" class="filter-btn" id="kabeel-view-visage">Horned Visage Close-Up</button>
+            <div style="display:flex; justify-content:center; gap:0.45rem; margin-bottom:0.85rem; flex-wrap:wrap;">
+              <button type="button" class="filter-btn active" id="kabeel-view-full">Prime Beast (0/50)</button>
+              <button type="button" class="filter-btn" id="kabeel-view-withered">Withered Bone Decay</button>
+              <button type="button" class="filter-btn" id="kabeel-view-visage">Horned Visage</button>
             </div>
 
             <div class="kabeel-portrait-stage" id="kabeel-portrait-stage">
               <img
                 id="kabeel-main-img"
-                src="assets/enemies/kabeel-portrait.png"
-                alt="Kabeel, the Satanic Lava-Born Archfiend — Official Updated In-Game Portrait"
+                src="assets/enemies/kabeel-portrait.png?v=6"
+                alt="Kabeel, the Satanic Lava-Born Archfiend — Official v0.0.7 In-Game Portrait"
                 width="776"
-                height="776"
+                height="752"
               >
             </div>
 
             <div class="kabeel-meters">
               <div class="kabeel-stat">
-                <strong id="kabeel-hits-val">0 / 20</strong>
+                <strong id="kabeel-hits-val">0 / 50</strong>
                 <span>SUN-STONE HITS</span>
               </div>
               <div class="kabeel-stat">
@@ -724,7 +725,7 @@
               </div>
               <div class="kabeel-stat">
                 <strong id="kabeel-horn-val">4 HORNS INTACT</strong>
-                <span>HORN ARMOR</span>
+                <span>FLESH &amp; BONE</span>
               </div>
               <div class="kabeel-stat">
                 <strong id="kabeel-bridge-val">ENTHRONED</strong>
@@ -745,23 +746,23 @@
 
           <div style="display:flex; flex-direction:column; gap:1rem;">
             <article class="temple-frame doc-card">
-              <h2>Anatomy of the Satanic Archfiend</h2>
+              <h2>Volumetric Anatomy &amp; Flesh-to-Bone Decay (v0.0.7)</h2>
               <p>
-                Sculpted procedurally in zero-allocation vector geometry (<kbd>KabeelArt</kbd>), Kabeel stands <strong>nine times Milo's height</strong> (<kbd>6 × 13</kbd> chamber tiles) enthroned above the inferno:
+                Sculpted procedurally in zero-allocation 3D-shaded vector geometry (<kbd>KabeelArt</kbd>), Kabeel towers <strong>nine times Milo's height</strong> (<kbd>6 × 13</kbd> chamber tiles) above twin boiling lava lakes:
               </p>
               <ul>
                 <li><strong>Horned Skull &amp; Iron Pentagram:</strong> Sweeping Baphomet arch-horns, coiled lower ram-horns, pierced bat-goat ears with blood-ruby rings, vertical-slit bloodshot hell-eyes, a spiked iron pentagram brow-crown, and a snarling fanged maw breathing hell-fire.</li>
-                <li><strong>Infernal Wings &amp; Black-Sun Halo:</strong> Colossal scalloped bat-wings lit with crimson subsurface blood-veins unfurl before a counter-rotating <strong>Eclipsed Black-Sun Sigil</strong> ringed by 16 scythe spikes and 36 brimstone corona tongues.</li>
-                <li><strong>Living Ribcage &amp; Cloven Hooves:</strong> A ripped-open bone ribcage grips his pulsing two-chambered molten heart above digitigrade beast legs, cloven obsidian hooves, and a lashing spade-tipped barbed tail.</li>
+                <li><strong>Infernal Wings &amp; Eclipsed Black-Sun:</strong> Colossal scalloped bat-wings lit with crimson subsurface blood-veins unfurl before a counter-rotating <strong>Eclipsed Black-Sun Sigil</strong> ringed by 16 scythe spikes and 36 brimstone corona tongues.</li>
+                <li><strong>50-Hit Progressive Decay:</strong> Across 12 anatomical impact zones, hurled sun-stones literally wither his demonic flesh—exposing white cervical vertebrae, tearing wing membranes, shattering horns, and baring gleaming humerus &amp; femur bones around his pulsing molten heart.</li>
               </ul>
             </article>
 
             <article class="temple-frame doc-card">
-              <h2>Combat Profile: Three Hell-Fire Lanes &amp; 20 Sun-Stones</h2>
+              <h2>Combat Profile: 50 Sun-Stones &amp; Counter-Wired Logic</h2>
               <ul>
-                <li><strong>Attack Profile:</strong> Unleashes three lanes of lethal hell-fire—a surging lava wave along the floor, a blazing orb from his clawed fist, and a roaring bolt from his maw—each telegraphed <strong>7 ticks</strong> ahead.</li>
-                <li><strong>Defense Profile:</strong> Completely unreachable across twin lakes of lava; no Sun Blade exists in his hall, and he cannot be bypassed until felled.</li>
-                <li><strong>Defeat Profile:</strong> Gather scattered <strong>sun-stones</strong> and hurl <strong>20 hits</strong> from marked ledges (<kbd>+100 pts</kbd> per stone; roars every 5th hit; shatters a horn at 10 hits; <kbd>+5,000 pts</kbd> on the 20th strike to his molten heart). <em>Chamber 144's room layout itself is kept hidden here so your final descent stays unspoiled!</em></li>
+                <li><strong>Staggered Hell-Fire Comets:</strong> Unleashes three lanes of lethal hell-fire—a surging lava wave, a clawed-fist comet, and a roaring maw bolt—each telegraphed <strong>7 ticks</strong> ahead across a campaign now packing <strong>703 active hazard/guardian instances</strong> and <strong>119 counter-wired toggle-lever chambers</strong>.</li>
+                <li><strong>50-Stone Finale (<kbd>+10,000 PTS</kbd>):</strong> Gather all three sun-stone caches, reverse counter-wired toggle gates to reach elevated sun-disc altars, and hurl <strong>50 hits</strong> (<kbd>+100 pts</kbd> each + <kbd>+5,000 pts</kbd> heart-shattering blow).</li>
+                <li><strong>Golden Bulb Assist:</strong> Stuck after 19 attempts in any chamber or Sanctum? A golden Bulb button appears on the top toolbar to demonstrate the full recorded 12 Hz solution—press any key to take back live control! <em>(Chamber 144's room layout stays hidden here so your first arrival remains unspoiled.)</em></li>
               </ul>
             </article>
           </div>
@@ -934,8 +935,8 @@
             <div class="gallery-caption"><strong>The Rolling Boulder Maze</strong><span>SANCTUM S07 · 064</span></div>
           </button>
 
-          <button type="button" class="gallery-item" data-category="boss" data-lightbox-src="assets/enemies/kabeel-portrait.png" data-lightbox-title="Kabeel — Satanic Lava-Born Archfiend Portrait (Updated In-Game Art)">
-            <img class="gallery-thumb" src="assets/enemies/kabeel-portrait.png" alt="Kabeel Satanic Lava-Born Beast Portrait" loading="lazy">
+          <button type="button" class="gallery-item" data-category="boss" data-lightbox-src="assets/enemies/kabeel-portrait.png?v=6" data-lightbox-title="Kabeel — Satanic Lava-Born Archfiend Portrait (v0.0.7 In-Game Art)">
+            <img class="gallery-thumb" src="assets/enemies/kabeel-portrait.png?v=6" alt="Kabeel Satanic Lava-Born Beast Portrait" loading="lazy">
             <div class="gallery-caption"><strong>Kabeel — Satanic Archfiend</strong><span>BOSS PORTRAIT</span></div>
           </button>
 
@@ -1048,7 +1049,7 @@
             <span class="cast-role">SATANIC ARCHFIEND</span>
             <h3 data-i18n="hero_kabeel_name">Kabeel</h3>
             <p data-i18n="hero_kabeel_desc">
-              The satanic lava-born beast who guards the Heart of the Meridian. Winged in scorched crimson membrane, crowned with Baphomet horns and an iron pentagram, he hurls three lanes of hell-fire and yields only to twenty hurled sun-stones.
+              The winged satanic beast who guards the Heart of the Meridian. Towered between two boiling lakes of lava beneath an eclipsed black-sun sigil, with four ribbed horns, leathery bat-wings and an exposed beating heart, he hurls staggered fireballs across the citadel. Every hurled sun-stone withers and decays his demonic flesh and bone until the fiftieth pierces his heart.
             </p>
           </article>
 
@@ -1246,8 +1247,8 @@
     </div>
   </footer>
 
-  <script src="assets/js/i18n-data.js?v=5"></script>
-  <script src="assets/js/meridian-canvas.js?v=5"></script>
-  <script src="assets/js/app.js?v=5"></script>
+  <script src="assets/js/i18n-data.js?v=6"></script>
+  <script src="assets/js/meridian-canvas.js?v=6"></script>
+  <script src="assets/js/app.js?v=6"></script>
 </body>
 </html>

@@ -507,7 +507,7 @@
 
     numEl.textContent = String(n).padStart(3, "0");
     let badge = "";
-    if (n === 144) badge = " · Kabeel, the Satanic Lava-Born Beast (20-Stone Duel)";
+    if (n === 144) badge = " · Kabeel, the Satanic Lava-Born Beast (50-Stone Duel)";
     else if (SIGIL_ROOMS.has(n)) badge = ` · Meridian Sigil #${n / 15} Chamber`;
     else if (SANCTUMS[n]) badge = ` · Gateway to Sanctum ${SANCTUMS[n].code} (${SANCTUMS[n].name})`;
 
@@ -879,6 +879,7 @@
     const portraitImg = document.getElementById("kabeel-main-img");
     const stageWrap = document.getElementById("kabeel-portrait-stage");
     const viewFullBtn = document.getElementById("kabeel-view-full");
+    const viewWitheredBtn = document.getElementById("kabeel-view-withered");
     const viewVisageBtn = document.getElementById("kabeel-view-visage");
     const strikeBtn = document.getElementById("btn-throw-stone");
     const resetBtn = document.getElementById("btn-reset-duel");
@@ -889,35 +890,54 @@
 
     if (!portraitImg) return;
     let hits = 0;
+    const NEEDED = 50;
+
+    function setActivePortraitTab(activeBtn, src) {
+      portraitImg.src = src;
+      [viewFullBtn, viewWitheredBtn, viewVisageBtn].forEach((b) => {
+        if (b) b.classList.toggle("active", b === activeBtn);
+      });
+    }
 
     function syncStats() {
-      const felled = hits >= 20;
+      const felled = hits >= NEEDED;
       const pts = hits * 100 + (felled ? 5000 : 0);
-      if (elHits) elHits.textContent = `${hits} / 20`;
+      if (elHits) elHits.textContent = `${hits} / ${NEEDED}`;
       if (elScore) elScore.textContent = `+${pts.toLocaleString()} PTS`;
-      if (elHorn) elHorn.textContent = hits >= 10 ? "SHATTERED" : "4 HORNS INTACT";
-      if (elState) elState.textContent = felled ? "CRUMBLED" : hits > 0 && hits % 5 === 0 ? "ROARING!" : "ENTHRONED";
+      if (elHorn) {
+        elHorn.textContent =
+          hits >= 35 ? "FEMUR & SKULL BARED" : hits >= 25 ? "HORN SHATTERED" : "4 HORNS INTACT";
+      }
+      if (elState) {
+        elState.textContent = felled
+          ? "HEART PIERCED"
+          : hits >= 25
+          ? "WITHERING BONE"
+          : hits > 0 && hits % 5 === 0
+          ? "ROARING!"
+          : "ENTHRONED";
+      }
       if (strikeBtn) strikeBtn.disabled = felled;
       if (stageWrap) stageWrap.classList.toggle("kabeel-felled", felled);
     }
 
-    if (viewFullBtn && viewVisageBtn) {
-      viewFullBtn.addEventListener("click", () => {
-        portraitImg.src = "assets/enemies/kabeel-portrait.png";
-        viewFullBtn.classList.add("active");
-        viewVisageBtn.classList.remove("active");
-      });
-      viewVisageBtn.addEventListener("click", () => {
-        portraitImg.src = "assets/enemies/kabeel-visage.png";
-        viewVisageBtn.classList.add("active");
-        viewFullBtn.classList.remove("active");
-      });
+    if (viewFullBtn) {
+      viewFullBtn.addEventListener("click", () => setActivePortraitTab(viewFullBtn, "assets/enemies/kabeel-portrait.png?v=6"));
+    }
+    if (viewWitheredBtn) {
+      viewWitheredBtn.addEventListener("click", () => setActivePortraitTab(viewWitheredBtn, "assets/enemies/kabeel-withered.png?v=6"));
+    }
+    if (viewVisageBtn) {
+      viewVisageBtn.addEventListener("click", () => setActivePortraitTab(viewVisageBtn, "assets/enemies/kabeel-visage.png?v=6"));
     }
 
     if (strikeBtn) {
       strikeBtn.addEventListener("click", () => {
-        if (hits >= 20) return;
+        if (hits >= NEEDED) return;
         hits++;
+        if (hits === 25 && viewWitheredBtn) {
+          setActivePortraitTab(viewWitheredBtn, "assets/enemies/kabeel-withered.png?v=6");
+        }
         syncStats();
         if (stageWrap && !document.body.classList.contains("reduced-motion")) {
           stageWrap.classList.remove("kabeel-flinch");
@@ -930,6 +950,7 @@
     if (resetBtn) {
       resetBtn.addEventListener("click", () => {
         hits = 0;
+        if (viewFullBtn) setActivePortraitTab(viewFullBtn, "assets/enemies/kabeel-portrait.png?v=6");
         syncStats();
       });
     }
