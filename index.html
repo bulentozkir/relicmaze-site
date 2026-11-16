@@ -12,7 +12,7 @@
   <meta name="theme-color" content="#07080F">
   <link rel="icon" type="image/png" sizes="44x44" href="assets/logos/RelicMaze-Logo-44x44.png">
   <link rel="apple-touch-icon" href="assets/logos/RelicMaze-Logo-150x150.png">
-  <link rel="stylesheet" href="assets/css/styles.css?v=2">
+  <link rel="stylesheet" href="assets/css/styles.css?v=3">
 </head>
 <body>
   <div class="lantern-aura" aria-hidden="true"></div>
@@ -33,9 +33,11 @@
       <nav class="toolbar-sections" aria-label="Page sections">
         <a href="#trailer" class="section-link" data-i18n="nav_trailer">Trailer</a>
         <a href="#pyramid" class="section-link" data-i18n="nav_pyramid">Pyramid</a>
+        <a href="#puzzles" class="section-link" data-i18n="nav_puzzles">Puzzle Rooms</a>
+        <a href="#enemies" class="section-link" data-i18n="nav_enemies">Enemies</a>
+        <a href="#finale" class="section-link" data-i18n="nav_kabeel">Chamber 144</a>
         <a href="#relics" class="section-link" data-i18n="nav_relics">Relics</a>
         <a href="#gallery" class="section-link" data-i18n="nav_gallery">Screenshots</a>
-        <a href="#legend" class="section-link" data-i18n="nav_legend">Legend</a>
       </nav>
 
       <div class="toolbar-actions">
@@ -152,8 +154,8 @@
           <div class="poster-frame" id="hero-poster-frame">
             <img src="assets/logos/RelicMaze-Poster-720x1080.png" alt="RelicMaze Official Poster — The Meridian Awaits: 144 Chambers · 11 Hidden Sanctums" width="720" height="1080">
             <div class="floating-walkthrough-card">
-              <img src="assets/previews/room144-reference-walkthrough.gif" alt="Animated preview of Chamber 144 solver walkthrough" loading="lazy">
-              <div class="floating-walkthrough-tag">CHAMBER 144 · LIVE 12 Hz SIM</div>
+              <img src="assets/previews/room25-reference-walkthrough.gif" alt="Animated preview of Chamber 025 solver walkthrough" loading="lazy">
+              <div class="floating-walkthrough-tag">CHAMBER 025 · LIVE 12 Hz SIM</div>
             </div>
           </div>
         </div>
@@ -286,9 +288,9 @@
               <img src="assets/previews/room101-reference-walkthrough.gif" alt="Chamber 101 walkthrough GIF" loading="lazy">
               <span>ROOM 101</span>
             </button>
-            <button type="button" class="walkthrough-card" data-lightbox-src="assets/previews/room144-reference-walkthrough.gif" data-lightbox-title="Chamber 144 — Throne of Kabeel Final Duel Walkthrough">
-              <img src="assets/previews/room144-reference-walkthrough.gif" alt="Chamber 144 walkthrough GIF" loading="lazy">
-              <span>ROOM 144</span>
+            <button type="button" class="walkthrough-card" data-lightbox-src="assets/previews/selected-rooms-walkthrough.png" data-lightbox-title="Selected Chambers — Deterministic Route Traces">
+              <img src="assets/previews/selected-rooms-walkthrough.png" alt="Selected rooms solver traces" loading="lazy">
+              <span>ROUTE ATLAS</span>
             </button>
           </div>
         </div>
@@ -307,7 +309,7 @@
           </div>
           <h2 class="section-title" data-i18n="pyramid_title">12 Floors · 10 Regions · 144 Chambers</h2>
           <p class="section-sub" data-i18n="pyramid_sub">
-            Select any region or hover over any chamber of the stepped pyramid (1, 3, 5 … 23 chambers per floor) to inspect its Meridian Sigils and East-flank Hidden Sanctums.
+            Select any region or hover over any chamber of the stepped pyramid (1, 3, 5 … 23 chambers per floor) to inspect its Meridian Sigils and inter-floor Sanctum Puzzle Rooms.
           </p>
         </div>
 
@@ -321,15 +323,376 @@
             <div class="pyramid-inspector" aria-live="polite">
               <div class="inspector-num" id="inspector-num">144</div>
               <div class="inspector-body">
-                <h3 class="inspector-title" id="inspector-title">The Last Meridian · Throne of Kabeel</h3>
-                <p class="inspector-meta" id="inspector-meta">Floor 12 of 12 — Kabeel's lava throne &amp; the Heart of the Meridian.</p>
+                <h3 class="inspector-title" id="inspector-title">The Last Meridian · Sealed Behind Nine Sigils</h3>
+                <p class="inspector-meta" id="inspector-meta">Floor 12 of 12 — Deepest vault of the Pyramid. Recover all nine Meridian Sigils to discover what waits within.</p>
               </div>
               <div class="pyramid-legend-pills">
                 <span class="p-pill">● Gold Dot = Meridian Sigil (9)</span>
-                <span class="p-pill">S1–S11 = Hidden Sanctums (11)</span>
-                <span class="p-pill">144 = Kabeel Boss Duel</span>
+                <span class="p-pill">S1–S11 = Sanctum Puzzles (11)</span>
+                <span class="p-pill">144 = Sealed Finale ???</span>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         11 INTER-FLOOR SANCTUM PUZZLE ROOMS (LEVELS 4, 9, 16 .. 144 = 2²..12²)
+         =================================================================== -->
+    <section id="puzzles" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span data-i18n="puzzles_eyebrow">CHAMBERS 4 · 9 · 16 · 25 · 36 · 49 · 64 · 81 · 100 · 121 · 144 (2² TO 12²)</span>
+          </div>
+          <h2 class="section-title" data-i18n="puzzles_title">11 Inter-Floor Sanctum Puzzle Rooms</h2>
+          <p class="section-sub" data-i18n="puzzles_sub">
+            At the exit of every pyramid floor from 2² (Chamber 4) to 12² (Chamber 144), a standalone Sanctum Puzzle Room challenges Milo with bronze glyph dials, electrum mirrors, counterweight rolls, rising flood sluices, and rolling boulders.
+          </p>
+        </div>
+
+        <div class="sanctums-rail reveal" id="sanctums-rail" role="tablist" aria-label="11 Sanctum Puzzle Rooms"></div>
+
+        <div class="temple-frame sanctum-stage reveal" aria-live="polite">
+          <div>
+            <div class="sanctum-meta-row">
+              <span class="sanctum-badge gold" id="sanctum-badge-code">SANCTUM 07 / 11 · CHAMBER 064 (8²)</span>
+              <span class="sanctum-badge" id="sanctum-badge-arch">Mechanical &amp; Trap</span>
+              <span class="sanctum-badge" id="sanctum-badge-region">Floor 8 · Basalt Kitchens</span>
+            </div>
+
+            <h3 class="sanctum-stage-title" id="sanctum-stage-title">The Rolling Boulder Maze</h3>
+            <p class="sanctum-stage-obj" id="sanctum-stage-obj">
+              Push the movable basalt blocks into both side-tunnel pits and trip the upper pressure plate so the rolling boulder smashes the brittle back wall.
+            </p>
+
+            <div class="sanctum-clue-box">
+              <strong>CARVED STELA INSCRIPTION</strong>
+              <span id="sanctum-stage-clue">Plug both open floor chutes with the movable basalt blocks (or race ahead and duck into the sunken alcove as the boulder roars past).</span>
+            </div>
+
+            <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+              <button type="button" class="hud-btn" id="sanctum-prev">◀ Prev Sanctum</button>
+              <button type="button" class="hud-btn" id="sanctum-next">Next Sanctum ▶</button>
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="button"
+              class="sanctum-shot-btn"
+              id="sanctum-shot-btn"
+              data-lightbox-src="assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png"
+              data-lightbox-title="Sanctum S07 (Chamber 64) — The Rolling Boulder Maze"
+            >
+              <img id="sanctum-shot-img" src="assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" alt="Sanctum Puzzle Room screenshot" loading="lazy">
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         ILLUSTRATED BESTIARY: ENEMIES, GUARDIANS & SIGNATURE TRAPS
+         =================================================================== -->
+    <section id="enemies" class="section section-alt">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span data-i18n="enemies_eyebrow">17 CREATURE TYPES · 5 SIGNATURE HAZARDS · 5 DEEP PYRAMID ARCHETYPES</span>
+          </div>
+          <h2 class="section-title" data-i18n="enemies_title">Creatures and Traps</h2>
+          <p class="section-sub" data-i18n="enemies_sub">
+            Every creature in RelicMaze runs on a readable, contrast-audited warning loop or reactive trigger—mastered through jump timing, lever channels, the Sun Blade, the Sun Scepter, or the Arc Wand.
+          </p>
+        </div>
+
+        <!-- Wide In-Game Illustrated Bestiary Plates -->
+        <div class="bestiary-banners reveal">
+          <button type="button" class="bestiary-plate-btn" data-lightbox-src="assets/enemies/plate-creatures-lineup.png" data-lightbox-title="In-Game Bestiary Plate — Classic Temple Guardians &amp; Timed Machinery">
+            <img src="assets/enemies/plate-creatures-lineup.png" alt="Illustrated stone niches showing Bone Skull, Rope Spider, Coiled Snake, Bat, Spark Dart, Laser Gate, Spiked Wall and Mummy" loading="lazy">
+            <div class="gallery-caption"><strong>The Eight Arched Niches — Temple Guardians</strong><span>BESTIARY PLATE I</span></div>
+          </button>
+
+          <button type="button" class="bestiary-plate-btn" data-lightbox-src="assets/enemies/plate-spectral-deep.png" data-lightbox-title="In-Game Field Guide Plate — Spectral Relics, Astral Veil &amp; Silt Crocodile">
+            <img src="assets/enemies/plate-spectral-deep.png" alt="Eight Deep Pyramid relics above an Astral Bridge, Phase Wall, Wraith-Mummy and Silt Crocodile" loading="lazy">
+            <div class="gallery-caption"><strong data-i18n="spectral_title">Spectral Relics and Deep Hazards</strong><span>BESTIARY PLATE II</span></div>
+          </button>
+        </div>
+
+        <div class="filter-bar reveal" role="tablist" aria-label="Filter enemy archetypes">
+          <button type="button" class="filter-btn active" data-enemy-filter="all">All Threats (12)</button>
+          <button type="button" class="filter-btn" data-enemy-filter="guardians">Classic &amp; Reactive Guardians</button>
+          <button type="button" class="filter-btn" data-enemy-filter="signature">5 Signature Traps</button>
+          <button type="button" class="filter-btn" data-enemy-filter="deep">Deep Pyramid Fauna (Schema 8)</button>
+        </div>
+
+        <div class="enemies-grid reveal">
+          <!-- 1. Skulls -->
+          <article class="enemy-card" data-enemy-group="guardians">
+            <div class="enemy-portrait-wrap" data-lightbox-src="assets/enemies/hunter-skull.png" data-lightbox-title="Hunter, Bone &amp; Rolling Skulls — Patrol, Alert &amp; Floor Charge (2,000 pts with Sun Blade)">
+              <img src="assets/enemies/hunter-skull.png" alt="Hunter Skull charging toward Milo across basalt masonry" loading="lazy">
+              <span class="enemy-bounty">SUN BLADE · 2,000 PTS</span>
+            </div>
+            <div class="enemy-body">
+              <h3 data-i18n="en_skulls_name">Skulls</h3>
+              <p data-i18n="en_skulls_desc">They roll or bounce along a floor, while Hunter Skulls flash an alert and charge across their sight lane. Time your jump, bait the stun, or smash one with the Sun Blade.</p>
+              <div class="enemy-chips">
+                <span class="enemy-chip">Bone · Rolling · Hunter</span>
+                <span class="enemy-chip">Sun Blade Vulnerable</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 2. Spiders -->
+          <article class="enemy-card" data-enemy-group="guardians">
+            <div class="enemy-portrait-wrap" data-lightbox-src="assets/enemies/web-weaver.png" data-lightbox-title="Web Weaver, Rope Spider &amp; Crawler — Vertical Silk Ambush (3,000 pts with Sun Blade)">
+              <img src="assets/enemies/web-weaver.png" alt="Web Weaver spider dropping down silk thread above Milo" loading="lazy">
+              <span class="enemy-bounty">SUN BLADE · 3,000 PTS</span>
+            </div>
+            <div class="enemy-body">
+              <h3 data-i18n="en_spiders_name">Spiders</h3>
+              <p data-i18n="en_spiders_desc">Rope Spiders sweep ladders, Crawlers pace web bottlenecks, and Web Weavers drop from the ceiling when you linger below. Slash with the Sun Blade or slip past on the recoil climb.</p>
+              <div class="enemy-chips">
+                <span class="enemy-chip">Rope · Crawler · Weaver</span>
+                <span class="enemy-chip">Sun Blade Vulnerable</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 3. Pit Vipers & Snakes -->
+          <article class="enemy-card" data-enemy-group="guardians">
+            <div class="enemy-portrait-wrap" data-lightbox-src="assets/enemies/pit-viper.png" data-lightbox-title="Pit Viper &amp; Coiled Snake — Armored Scales Immune to the Sun Blade">
+              <img src="assets/enemies/pit-viper.png" alt="Pit Viper lunging across stone floor toward Milo" loading="lazy">
+              <span class="enemy-bounty immune">BLADE IMMUNE</span>
+            </div>
+            <div class="enemy-body">
+              <h3 data-i18n="en_snakes_name">Snakes</h3>
+              <p data-i18n="en_snakes_desc">Coiled near vital ladders and seals, Vipers rattle for 4 ticks when approached and lunge. Armored scales deflect the Sun Blade—bait the strike and cross during recoil, or fire the Arc Wand.</p>
+              <div class="enemy-chips">
+                <span class="enemy-chip">4-Tick Rattle Warning</span>
+                <span class="enemy-chip">Arc Wand / Lever</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 4. Bats, Serpents, Darts & Beams -->
+          <article class="enemy-card" data-enemy-group="guardians">
+            <div class="enemy-portrait-wrap" data-lightbox-src="assets/enemies/vault-serpent-torch.png" data-lightbox-title="Vault Guardians, Ambush Bats &amp; Channel-Gated Force Fields">
+              <img src="assets/enemies/vault-serpent-torch.png" alt="Shrouded Vault guardian, glowing lantern radius and channel force field" loading="lazy">
+              <span class="enemy-bounty immune">48-TICK RHYTHM</span>
+            </div>
+            <div class="enemy-body">
+              <h3 data-i18n="en_bats_name">Bats</h3>
+              <p data-i18n="en_bats_desc">Crown Bats patrol upper circuits while Ambush Bats lock onto lingering delvers and dive. Paired with Spark Darts, Sun Idols, Ash Jets, and Laser Gates, every shot telegraphs its wind-up first.</p>
+              <div class="enemy-chips">
+                <span class="enemy-chip">Anti-Lingering Dive</span>
+                <span class="enemy-chip">Latch Channel Gating</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 5. Swinging Obsidian Blade -->
+          <article class="enemy-card" data-enemy-group="signature">
+            <div class="enemy-portrait-wrap" data-lightbox-src="assets/enemies/obsidian-blade.png" data-lightbox-title="Signature Hazard #1 — Swinging Obsidian Pendulum Blade">
+              <img src="assets/enemies/obsidian-blade.png" alt="Swinging volcanic glass pendulum blade sweeping above stone floor" loading="lazy">
+              <span class="enemy-bounty immune">SIGNATURE TRAP</span>
+            </div>
+            <div class="enemy-body">
+              <h3>Swinging Obsidian Blade</h3>
+              <p>A crescent of black volcanic glass swinging on a 24- or 48-tick pendulum arc over platforms and conveyor belts. Cross underneath while the blade rises to the far apex of its swing.</p>
+              <div class="enemy-chips">
+                <span class="enemy-chip">Pendulum Arc</span>
+                <span class="enemy-chip">Indestructible</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 6. Quetzal Bird -->
+          <article class="enemy-card" data-enemy-group="signature">
+            <div class="enemy-portrait-wrap" data-lightbox-src="assets/enemies/quetzal-bird.png" data-lightbox-title="Signature Hazard #2 — Quetzal Bird (Jump-Apex Patroller)">
+              <img src="assets/enemies/quetzal-bird.png" alt="Emerald and crimson Quetzal bird patrolling at Milo's jump apex height above floor spikes" loading="lazy">
+              <span class="enemy-bounty immune">SIGNATURE TRAP</span>
+            </div>
+            <div class="enemy-body">
+              <h3>Quetzal Bird</h3>
+              <p>An emerald-and-crimson plumed flyer patrolling exactly 9 half-tiles high—the exact peak of Milo's jump over floor spikes or fire. Leap only while the Quetzal is at the far end of its lane.</p>
+              <div class="enemy-chips">
+                <span class="enemy-chip">Jump-Apex Lane</span>
+                <span class="enemy-chip">24-Tick Sweep</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 7. Cursed Ladder Idol -->
+          <article class="enemy-card" data-enemy-group="signature">
+            <div class="enemy-portrait-wrap" data-lightbox-src="assets/enemies/cursed-idol.png" data-lightbox-title="Signature Hazard #3 — Cursed Stone Idol (Ladder Blocker)">
+              <img src="assets/enemies/cursed-idol.png" alt="Carved stone idol with glowing eyes dropping a skull straight down ladder rungs" loading="lazy">
+              <span class="enemy-bounty immune">SIGNATURE TRAP</span>
+            </div>
+            <div class="enemy-body">
+              <h3>Cursed Ladder Idol</h3>
+              <p>Perched atop key ladders, its carved eyes flare for 8 ticks before dropping a rolling skull straight down the rungs once every 4 seconds—leaving a clean 2-second climbing window behind it.</p>
+              <div class="enemy-chips">
+                <span class="enemy-chip">8-Tick Eye Flare</span>
+                <span class="enemy-chip">Vertical Rung Drop</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 8. Army Ants -->
+          <article class="enemy-card" data-enemy-group="signature">
+            <div class="enemy-portrait-wrap" data-lightbox-src="assets/enemies/army-ants.png" data-lightbox-title="Signature Hazard #4 — Marching Army Ants">
+              <img src="assets/enemies/army-ants.png" alt="Column of crimson and obsidian army ants marching across flat masonry between wall fissures" loading="lazy">
+              <span class="enemy-bounty immune">SIGNATURE TRAP</span>
+            </div>
+            <div class="enemy-body">
+              <h3>Marching Army Ants</h3>
+              <p>A crimson-and-obsidian column pours from a wall fissure for 12 ticks, then vanishes completely for 3 full seconds (36 ticks), turning flat corridors into rhythmic safe-window sprints.</p>
+              <div class="enemy-chips">
+                <span class="enemy-chip">1s March / 3s Clear</span>
+                <span class="enemy-chip">Wall Fissure Dust</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 9. Bosnian Stone Sphere -->
+          <article class="enemy-card" data-enemy-group="signature">
+            <div class="enemy-portrait-wrap" data-lightbox-src="assets/enemies/stone-sphere.png" data-lightbox-title="Signature Hazard #5 — Giant Bosnian Stone Sphere (Zavidovići Concretion)">
+              <img src="assets/enemies/stone-sphere.png" alt="Massive 2x2-tile Bosnian stone sphere rumbling out of a glowing chevron chute" loading="lazy">
+              <span class="enemy-bounty immune">SIGNATURE TRAP</span>
+            </div>
+            <div class="enemy-body">
+              <h3 data-i18n="en_sig_name">Stone spheres and signature traps</h3>
+              <p>Inspired by Bosnia's real 37.32-tonne Zavidovići sphere: the chute trembles for 8 ticks before a 96×96 px boulder accelerates quadratically down the corridor. Vault it at jump peak where headroom allows!</p>
+              <div class="enemy-chips">
+                <span class="enemy-chip">Quadratic Acceleration</span>
+                <span class="enemy-chip">Apex Vaultable</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 10. Wraith-Mummies -->
+          <article class="enemy-card" data-enemy-group="deep">
+            <div class="enemy-portrait-wrap" data-lightbox-src="assets/enemies/astral-wraith-chamber.png" data-lightbox-title="Deep Pyramid Threat — Wraith-Mummies of the Astral Veil">
+              <img src="assets/enemies/astral-wraith-chamber.png" alt="Spectral Astral Veil chamber with glowing Astral Lantern and Wraith-Mummy" loading="lazy">
+              <span class="enemy-bounty spectral">ASTRAL STALKER</span>
+            </div>
+            <div class="enemy-body">
+              <h3>Wraith-Mummies</h3>
+              <p>Harmless drifting ectoplasm in the Physical Tomb—until Milo triggers an Astral Lantern or enters an Astral Veil chamber, solidifying them into relentless horizontal stalkers banished only by the Arc Wand.</p>
+              <div class="enemy-chips">
+                <span class="enemy-chip">Phase-State Bound</span>
+                <span class="enemy-chip">Arc Wand / Sun Scepter</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 11. Wall Geckos & Temple Macaques -->
+          <article class="enemy-card" data-enemy-group="deep">
+            <div class="enemy-portrait-wrap" data-lightbox-src="assets/enemies/gecko-macaque-shaft.png" data-lightbox-title="Deep Pyramid Fauna — Wall Geckos &amp; Climbing Temple Macaques">
+              <img src="assets/enemies/gecko-macaque-shaft.png" alt="Vertical Mothscript shaft with climbing Milo, Wall Gecko, Temple Macaque and Mummy" loading="lazy">
+              <span class="enemy-bounty spectral">VERTICAL HUNTERS</span>
+            </div>
+            <div class="enemy-body">
+              <h3 data-i18n="en_deep_name">Deep Pyramid fauna</h3>
+              <p>Wall Geckos cling beside shafts and lunge sideways across ladder rungs, while agile Temple Macaques patrol vertical ropes and ladders—turning every slow climb into a calculated commitment.</p>
+              <div class="enemy-chips">
+                <span class="enemy-chip">Wall Gecko Lunges</span>
+                <span class="enemy-chip">Rope Macaques</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 12. Silt Crocodiles & Scarab Rats -->
+          <article class="enemy-card" data-enemy-group="deep">
+            <div class="enemy-portrait-wrap" data-lightbox-src="assets/enemies/cenote-flooded-guardians.png" data-lightbox-title="Submerged Cenote Threats — Silt Crocodiles &amp; Scarab Rats">
+              <img src="assets/enemies/cenote-flooded-guardians.png" alt="Flooded cenote lower basin with Milo, breath gauge water surface and lower guardians" loading="lazy">
+              <span class="enemy-bounty spectral">CENOTE AMBUSH</span>
+            </div>
+            <div class="enemy-body">
+              <h3>Silt Crocodiles &amp; Scarab Rats</h3>
+              <p>Heavy Silt Crocodiles lurk in flooded lower basins and lunge when spotted while your breath gauge ticks down; swift Scarab Rats scurry through tight lower tunnels demanding crisp hops.</p>
+              <div class="enemy-chips">
+                <span class="enemy-chip">Flooded Sluices</span>
+                <span class="enemy-chip">Sun Scepter Petrifies</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         CHAMBER 144: SEALED FINALE MYSTERY TEASER (ZERO BOSS SPOILERS!)
+         =================================================================== -->
+    <section id="finale" class="section kabeel-section">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="eyebrow" style="border-color:rgba(255,133,51,0.5); color:#ffb088; background:rgba(255,107,31,0.12);">
+            <span class="eyebrow-dot" style="background:#ff6b1f; box-shadow:0 0 10px #ff6b1f;"></span>
+            <span data-i18n="kabeel_eyebrow">CHAMBER 144 · SEALED BEHIND NINE MERIDIAN SIGILS</span>
+          </div>
+          <h2 class="section-title" data-i18n="kabeel_title">What Sleeps Beyond the Last Door?</h2>
+          <p class="section-sub" data-i18n="kabeel_sub">
+            Nine Meridian Sigils lock the deepest hall at the base of the pyramid. Ancient tablets whisper a single name in the dark—recover every mark across all twelve floors to uncover the surprise climax for yourself.
+          </p>
+        </div>
+
+        <div class="kabeel-grid reveal">
+          <div class="temple-frame kabeel-sim-box">
+            <canvas id="kabeel-duel-canvas" width="640" height="360" aria-label="Interactive Sealed Meridian Vault Door with 9 Sigils"></canvas>
+
+            <div class="kabeel-meters">
+              <div class="kabeel-stat">
+                <strong id="kabeel-hits-val">3 / 9</strong>
+                <span>SIGILS LIT</span>
+              </div>
+              <div class="kabeel-stat">
+                <strong id="kabeel-score-val">FLOOR 12 · 144</strong>
+                <span>DEPTH</span>
+              </div>
+              <div class="kabeel-stat">
+                <strong id="kabeel-horn-val">LOCKED</strong>
+                <span>GREAT SEAL</span>
+              </div>
+              <div class="kabeel-stat">
+                <strong id="kabeel-bridge-val">???</strong>
+                <span>FINAL ENCOUNTER</span>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
+              <button type="button" id="btn-throw-stone" class="btn-primary">
+                <span>✦</span>
+                <span data-i18n="btn_throw_stone">Awaken Meridian Sigil</span>
+              </button>
+              <button type="button" id="btn-reset-duel" class="hud-btn" data-i18n="btn_reset_duel">
+                Re-Seal Vault
+              </button>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            <article class="temple-frame doc-card">
+              <h2>Nine Floors, Nine Marks, One Unspoiled Ending</h2>
+              <p>
+                Every fifteenth chamber (<kbd>15</kbd>, <kbd>30</kbd>, <kbd>45</kbd>, <kbd>60</kbd>, <kbd>75</kbd>, <kbd>90</kbd>, <kbd>105</kbd>, <kbd>120</kbd>, <kbd>135</kbd>) holds a sacred <strong>Meridian Sigil</strong> at the end of its region. None can be skipped if you wish to open the final escape.
+              </p>
+              <p>
+                At the bottom of the 12th floor waits <strong>Chamber 144</strong>—where conventional weapons are absent, the rules of the pyramid culminate in a unique final trial, and an animated ending awaits those who claim the <strong>Heart of the Meridian</strong>. We keep its guardian and ending off this page so your first descent remains a true surprise.
+              </p>
+            </article>
+
+            <article class="temple-frame doc-card">
+              <h2>New in Schema 8: Three Crowns &amp; Solution Playback</h2>
+              <p>
+                Every chamber now tracks <strong>Three-Crown Mastery</strong> (Completion, All Optional Treasures &amp; Deity Masks, and Par Time). Stuck after 19 attempts in any chamber or Sanctum puzzle? Click the optional top-toolbar bulb to watch the recorded 12 Hz solution—and press any movement key at any moment to take live control back!
+              </p>
+            </article>
           </div>
         </div>
       </div>
@@ -453,12 +816,30 @@
           </p>
         </div>
 
+        <!-- Official Brand Logos & Key Art Trio -->
+        <div class="logos-trio reveal">
+          <button type="button" class="logo-showcase-card" data-lightbox-src="assets/logos/RelicMaze-Logo-1920x1080.png" data-lightbox-title="RelicMaze Official Widescreen Logo &amp; Key Art (1920×1080)">
+            <img src="assets/logos/RelicMaze-Logo-1920x1080.png" alt="RelicMaze Widescreen Key Art 1920x1080" loading="lazy">
+            <div class="gallery-caption"><strong>Official Widescreen Key Art</strong><span>1920×1080</span></div>
+          </button>
+
+          <button type="button" class="logo-showcase-card" data-lightbox-src="assets/logos/RelicMaze-BoxArt-1080x1080.png" data-lightbox-title="RelicMaze Official Square Box Art (1080×1080)">
+            <img src="assets/logos/RelicMaze-BoxArt-1080x1080.png" alt="RelicMaze Square Box Art 1080x1080" loading="lazy">
+            <div class="gallery-caption"><strong>Official Square Box Art</strong><span>1080×1080</span></div>
+          </button>
+
+          <button type="button" class="logo-showcase-card" data-lightbox-src="assets/logos/RelicMaze-Poster-720x1080.png" data-lightbox-title="RelicMaze Official Vertical Poster (720×1080)">
+            <img src="assets/logos/RelicMaze-Poster-720x1080.png" alt="RelicMaze Official Poster 720x1080" loading="lazy">
+            <div class="gallery-caption"><strong>Official Poster</strong><span>720×1080</span></div>
+          </button>
+        </div>
+
         <div class="filter-bar reveal" role="tablist" aria-label="Filter gallery">
           <button type="button" class="filter-btn active" data-filter="all" data-i18n="filter_all">All Media</button>
           <button type="button" class="filter-btn" data-filter="gameplay" data-i18n="filter_gameplay">Gameplay</button>
-          <button type="button" class="filter-btn" data-filter="boss" data-i18n="filter_boss">Boss &amp; Sanctums</button>
+          <button type="button" class="filter-btn" data-filter="boss" data-i18n="filter_boss">Sanctum Puzzles</button>
           <button type="button" class="filter-btn" data-filter="ui" data-i18n="filter_ui">Journal &amp; Book</button>
-          <button type="button" class="filter-btn" data-filter="art" data-i18n="filter_art">Logos &amp; Key Art</button>
+          <button type="button" class="filter-btn" data-filter="art" data-i18n="filter_art">Logos &amp; Atlas</button>
         </div>
 
         <div class="gallery-grid reveal">
@@ -467,14 +848,24 @@
             <div class="gallery-caption"><strong>Veil of the Soul Prism</strong><span>CHAMBER 035</span></div>
           </button>
 
-          <button type="button" class="gallery-item" data-category="boss" data-lightbox-src="assets/screenshots/06-Gameplay-Boss-Heart-Of-Meridian.png" data-lightbox-title="144 Throne of Kabeel — 20-Stone Duel &amp; Heart of the Meridian">
-            <img class="gallery-thumb" src="assets/screenshots/06-Gameplay-Boss-Heart-Of-Meridian.png" alt="Chamber 144 Throne of Kabeel boss duel screenshot" loading="lazy">
-            <div class="gallery-caption"><strong>Throne of Kabeel</strong><span>CHAMBER 144</span></div>
+          <button type="button" class="gallery-item" data-category="boss" data-lightbox-src="assets/screenshots/sanctum-04-dial.png" data-lightbox-title="Sanctum 1 / 11 (Chamber 004) — The Tilted Dial">
+            <img class="gallery-thumb" src="assets/screenshots/sanctum-04-dial.png" alt="Sanctum S01 The Tilted Dial puzzle room screenshot" loading="lazy">
+            <div class="gallery-caption"><strong>The Tilted Dial</strong><span>SANCTUM S01 · 004</span></div>
           </button>
 
-          <button type="button" class="gallery-item" data-category="boss" data-lightbox-src="assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" data-lightbox-title="Sanctum 7 / 11 — The Rolling Boulder Maze (Mechanical &amp; Trap)">
+          <button type="button" class="gallery-item" data-category="boss" data-lightbox-src="assets/screenshots/sanctum-25-prism.png" data-lightbox-title="Sanctum 4 / 11 (Chamber 025) — The Prism and Sunbeam">
+            <img class="gallery-thumb" src="assets/screenshots/sanctum-25-prism.png" alt="Sanctum S04 The Prism and Sunbeam puzzle room screenshot" loading="lazy">
+            <div class="gallery-caption"><strong>The Prism and Sunbeam</strong><span>SANCTUM S04 · 025</span></div>
+          </button>
+
+          <button type="button" class="gallery-item" data-category="boss" data-lightbox-src="assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" data-lightbox-title="Sanctum 7 / 11 (Chamber 064) — The Rolling Boulder Maze">
             <img class="gallery-thumb" src="assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" alt="Hidden Sanctum S07 Rolling Boulder Maze screenshot" loading="lazy">
-            <div class="gallery-caption"><strong>The Rolling Boulder Maze</strong><span>SANCTUM S07</span></div>
+            <div class="gallery-caption"><strong>The Rolling Boulder Maze</strong><span>SANCTUM S07 · 064</span></div>
+          </button>
+
+          <button type="button" class="gallery-item" data-category="boss" data-lightbox-src="assets/screenshots/sanctum-144-synthesis.png" data-lightbox-title="Sanctum 11 / 11 (Chamber 144) — The Final Synthesis">
+            <img class="gallery-thumb" src="assets/screenshots/sanctum-144-synthesis.png" alt="Sanctum S11 The Final Synthesis puzzle room screenshot" loading="lazy">
+            <div class="gallery-caption"><strong>The Final Synthesis</strong><span>SANCTUM S11 · 144</span></div>
           </button>
 
           <button type="button" class="gallery-item" data-category="gameplay" data-lightbox-src="assets/screenshots/02-Gameplay-Gecko-Spire-Shafts.png" data-lightbox-title="057 Spire of the Climbing Gecko — Mothscript Archive">
@@ -517,14 +908,9 @@
             <div class="gallery-caption"><strong data-i18n="settings">Settings</strong><span>20 LANGUAGES</span></div>
           </button>
 
-          <button type="button" class="gallery-item" data-category="art" data-lightbox-src="assets/logos/RelicMaze-Logo-1920x1080.png" data-lightbox-title="RelicMaze Official Widescreen Key Art (1920×1080)">
-            <img class="gallery-thumb" src="assets/logos/RelicMaze-Logo-1920x1080.png" alt="RelicMaze 1920x1080 Official Key Art" loading="lazy">
-            <div class="gallery-caption"><strong>Official Key Art Banner</strong><span>1920×1080</span></div>
-          </button>
-
-          <button type="button" class="gallery-item" data-category="art" data-lightbox-src="assets/logos/RelicMaze-BoxArt-1080x1080.png" data-lightbox-title="RelicMaze Official Square Box Art (1080×1080)">
-            <img class="gallery-thumb" src="assets/logos/RelicMaze-BoxArt-1080x1080.png" alt="RelicMaze Box Art 1080x1080" loading="lazy">
-            <div class="gallery-caption"><strong>Official Box Art</strong><span>1080×1080</span></div>
+          <button type="button" class="gallery-item" data-category="art" data-lightbox-src="assets/logos/RelicMaze-Logo-1024x1024.png" data-lightbox-title="RelicMaze Official Emblem Crest (1024×1024)">
+            <img class="gallery-thumb" src="assets/logos/RelicMaze-Logo-1024x1024.png" alt="RelicMaze Official Crest 1024x1024" loading="lazy">
+            <div class="gallery-caption"><strong>Official Emblem Crest</strong><span>1024×1024</span></div>
           </button>
 
           <button type="button" class="gallery-item" data-category="art" data-lightbox-src="assets/previews/all-144-rooms.png" data-lightbox-title="Complete 144-Chamber Architectural Contact Sheet">
@@ -588,10 +974,10 @@
           </article>
 
           <article class="cast-card reveal">
-            <span class="cast-role">CHAMBER 144 GUARDIAN</span>
-            <h3 data-i18n="hero_kabeel_name">Kabeel</h3>
+            <span class="cast-role">SEALED FINALE</span>
+            <h3 data-i18n="hero_kabeel_name">Chamber 144 — ???</h3>
             <p data-i18n="hero_kabeel_desc">
-              The fire giant who guards the Heart of the Meridian. A basalt and obsidian idol-god with molten veins, a crown of flames and a sun disc behind his head.
+              Sealed beneath eleven floors of stone and guarded by nine Meridian Sigils. No ordinary blade will answer what waits beyond the final threshold.
             </p>
           </article>
 
@@ -752,8 +1138,8 @@
     </div>
   </footer>
 
-  <script src="assets/js/i18n-data.js"></script>
-  <script src="assets/js/meridian-canvas.js"></script>
-  <script src="assets/js/app.js"></script>
+  <script src="assets/js/i18n-data.js?v=3"></script>
+  <script src="assets/js/meridian-canvas.js?v=3"></script>
+  <script src="assets/js/app.js?v=3"></script>
 </body>
 </html>

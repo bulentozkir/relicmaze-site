@@ -1664,6 +1664,345 @@ kbd {
 }
 
 /* ==========================================================================
+   11 SANCTUM PUZZLE ROOMS (LEVELS 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144)
+   ========================================================================== */
+.sanctums-rail {
+  display: grid;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin-bottom: 1.5rem;
+}
+.sanctum-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.35rem;
+  border-radius: 8px;
+  border: 1.5px solid rgba(157, 125, 255, 0.35);
+  background: rgba(16, 20, 38, 0.85);
+  color: var(--text);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  transition: transform 0.18s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.sanctum-tab:hover {
+  transform: translateY(-3px);
+  border-color: var(--cyan);
+}
+.sanctum-tab.active {
+  background: linear-gradient(180deg, rgba(84, 62, 136, 0.88), rgba(32, 24, 64, 0.96));
+  border-color: var(--gold);
+  box-shadow: 0 0 18px rgba(157, 125, 255, 0.42);
+}
+.sanctum-tab-code {
+  font-size: 0.7rem;
+  color: var(--cyan);
+  font-weight: 700;
+}
+.sanctum-tab-room {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1.15;
+}
+.sanctum-tab-sq {
+  font-size: 0.64rem;
+  color: var(--text-muted);
+}
+
+.sanctum-stage {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 1.6rem;
+  padding: 1.6rem;
+  align-items: center;
+}
+.sanctum-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.sanctum-badge {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  padding: 0.26rem 0.68rem;
+  border-radius: 999px;
+  border: 1px solid rgba(157, 125, 255, 0.5);
+  background: rgba(157, 125, 255, 0.14);
+  color: #dfd2ff;
+}
+.sanctum-badge.gold {
+  border-color: var(--gold-edge-strong);
+  background: rgba(255, 212, 107, 0.12);
+  color: var(--gold);
+}
+.sanctum-stage-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  color: var(--gold);
+  margin: 0 0 0.65rem;
+}
+.sanctum-stage-obj {
+  color: var(--text);
+  font-size: 0.98rem;
+  margin: 0 0 1rem;
+}
+.sanctum-clue-box {
+  padding: 0.9rem 1.05rem;
+  border-radius: 9px;
+  background: rgba(8, 11, 20, 0.85);
+  border-inline-start: 4px solid var(--cyan);
+  font-size: 0.89rem;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+}
+.sanctum-clue-box strong {
+  color: var(--cyan);
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.2rem;
+}
+.sanctum-shot-btn {
+  padding: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid var(--gold-edge-strong);
+  background: #060811;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.sanctum-shot-btn:hover {
+  transform: scale(1.015);
+  border-color: var(--cyan);
+}
+.sanctum-shot-btn img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* ==========================================================================
+   ILLUSTRATED ENEMIES, GUARDIANS & SIGNATURE TRAPS BESTIARY
+   ========================================================================== */
+.bestiary-banners {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+.bestiary-plate-btn {
+  padding: 0;
+  background: var(--bg-card);
+  border: 1.5px solid var(--gold-edge);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: start;
+  color: var(--text);
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+.bestiary-plate-btn:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold-bright);
+  box-shadow: var(--glow-gold);
+}
+.bestiary-plate-btn img {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+}
+
+.enemies-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+.enemy-card {
+  background: var(--bg-card);
+  border: 1.5px solid rgba(255, 212, 107, 0.22);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.22s ease, box-shadow 0.22s ease;
+}
+.enemy-card[hidden] {
+  display: none;
+}
+.enemy-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.72), var(--glow-gold);
+}
+.enemy-portrait-wrap {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: #070912;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 212, 107, 0.2);
+  cursor: pointer;
+}
+.enemy-portrait-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.enemy-card:hover .enemy-portrait-wrap img {
+  transform: scale(1.06);
+}
+.enemy-bounty {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.22rem 0.58rem;
+  border-radius: 999px;
+  background: rgba(7, 8, 15, 0.88);
+  border: 1px solid var(--gold);
+  color: var(--gold-bright);
+}
+.enemy-bounty.immune {
+  border-color: var(--lava);
+  color: #ffb088;
+}
+.enemy-bounty.spectral {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+.enemy-body {
+  padding: 1.15rem 1.25rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.enemy-body h3 {
+  font-family: var(--font-serif);
+  font-size: 1.18rem;
+  color: var(--gold);
+  margin: 0 0 0.45rem;
+}
+.enemy-body p {
+  margin: 0 0 0.85rem;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  flex: 1;
+}
+.enemy-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.38rem;
+}
+.enemy-chip {
+  font-family: var(--font-mono);
+  font-size: 0.69rem;
+  padding: 0.18rem 0.52rem;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 212, 107, 0.2);
+  color: var(--text);
+}
+
+/* ==========================================================================
+   CHAMBER 144: KABEEL, THE LAVA-BORN GIANT & 20-STONE DUEL SIMULATOR
+   ========================================================================== */
+.kabeel-section {
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 15%, rgba(255, 107, 31, 0.16) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(16, 10, 14, 0.92), rgba(7, 8, 15, 0.96));
+  border-block: 1.5px solid rgba(255, 107, 31, 0.35);
+}
+.kabeel-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 1.75rem;
+  align-items: start;
+}
+.kabeel-sim-box {
+  padding: 1.35rem;
+  border-color: rgba(255, 133, 51, 0.65);
+}
+#kabeel-duel-canvas {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  background: #0a060a;
+  border: 1px solid rgba(255, 133, 51, 0.45);
+  display: block;
+}
+.kabeel-meters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin: 0.95rem 0;
+}
+.kabeel-stat {
+  background: rgba(8, 6, 10, 0.85);
+  border: 1px solid rgba(255, 133, 51, 0.3);
+  border-radius: 8px;
+  padding: 0.5rem 0.6rem;
+  text-align: center;
+}
+.kabeel-stat strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--gold-bright);
+}
+.kabeel-stat span {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+.kabeel-shots-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+  margin-top: 1.15rem;
+}
+
+/* Official Brand Logos Trio */
+.logos-trio {
+  display: grid;
+  grid-template-columns: 1.35fr 0.82fr 0.65fr;
+  gap: 1.15rem;
+  margin-bottom: 2rem;
+  align-items: stretch;
+}
+.logo-showcase-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--gold-edge);
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 0;
+  cursor: pointer;
+  color: var(--text);
+  text-align: start;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+.logo-showcase-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold-bright);
+  box-shadow: var(--glow-gold);
+}
+.logo-showcase-card img {
+  width: 100%;
+  flex: 1;
+  object-fit: cover;
+}
+
+/* ==========================================================================
    SCROLL REVEAL CHOREOGRAPHY & REDUCED MOTION
    ========================================================================== */
 .reveal {
@@ -1705,14 +2044,22 @@ body.reduced-motion .reveal {
   }
   .hero-grid,
   .a11y-split,
-  .pyramid-explorer {
+  .pyramid-explorer,
+  .sanctum-stage,
+  .kabeel-grid,
+  .logos-trio {
     grid-template-columns: 1fr;
+  }
+  .sanctums-rail {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
   .stats-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .relics-grid,
   .gallery-grid,
+  .enemies-grid,
+  .bestiary-banners,
   .voices-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1727,11 +2074,18 @@ body.reduced-motion .reveal {
 
 @media (max-width: 680px) {
   .stats-grid,
-  .diorama-track {
+  .diorama-track,
+  .kabeel-meters {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .sanctums-rail {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   .relics-grid,
   .gallery-grid,
+  .enemies-grid,
+  .bestiary-banners,
+  .kabeel-shots-pair,
   .voices-grid,
   .a11y-pills,
   .region-list,
