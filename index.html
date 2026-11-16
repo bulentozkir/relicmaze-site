@@ -12,7 +12,7 @@
   <meta name="theme-color" content="#07080F">
   <link rel="icon" type="image/png" sizes="44x44" href="assets/logos/RelicMaze-Logo-44x44.png">
   <link rel="apple-touch-icon" href="assets/logos/RelicMaze-Logo-150x150.png">
-  <link rel="stylesheet" href="assets/css/styles.css?v=3">
+  <link rel="stylesheet" href="assets/css/styles.css?v=4">
 </head>
 <body>
   <div class="lantern-aura" aria-hidden="true"></div>
@@ -424,7 +424,7 @@
         </div>
 
         <div class="filter-bar reveal" role="tablist" aria-label="Filter enemy archetypes">
-          <button type="button" class="filter-btn active" data-enemy-filter="all">All Threats (12)</button>
+          <button type="button" class="filter-btn active" data-enemy-filter="all">All Threats (13)</button>
           <button type="button" class="filter-btn" data-enemy-filter="guardians">Classic &amp; Reactive Guardians</button>
           <button type="button" class="filter-btn" data-enemy-filter="signature">5 Signature Traps</button>
           <button type="button" class="filter-btn" data-enemy-filter="deep">Deep Pyramid Fauna (Schema 8)</button>
@@ -622,76 +622,109 @@
               </div>
             </div>
           </article>
+
+          <!-- 13. Kabeel — Satanic Archfiend Boss -->
+          <article class="enemy-card" data-enemy-group="guardians">
+            <div class="enemy-portrait-wrap" data-lightbox-src="assets/enemies/kabeel-visage.png" data-lightbox-title="Kabeel — Satanic Lava-Born Archfiend (Updated In-Game Visage)">
+              <img src="assets/enemies/kabeel-visage.png" alt="Close-up visage of Kabeel the satanic horned lava beast with pentagram crown and black-sun wheel" loading="lazy">
+              <span class="enemy-bounty immune">ARCHFIEND · +7,000 PTS</span>
+            </div>
+            <div class="enemy-body">
+              <h3 data-i18n="hero_kabeel_name">Kabeel</h3>
+              <p>Nine times Milo's height: a winged basalt-and-obsidian satanic beast crowned with four horns, an iron pentagram, and an eclipsed Black-Sun wheel. Immune to all blades—felled only by 20 hurled sun-stones.</p>
+              <div class="enemy-chips">
+                <span class="enemy-chip">3 Hell-Fire Lanes</span>
+                <span class="enemy-chip">20 Sun-Stones</span>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
     <!-- ===================================================================
-         CHAMBER 144: SEALED FINALE MYSTERY TEASER (ZERO BOSS SPOILERS!)
+         KABEEL: SATANIC LAVA-BORN ARCHFIEND SPOTLIGHT (PORTRAIT ONLY · NO ROOM 144!)
          =================================================================== -->
     <section id="finale" class="section kabeel-section">
       <div class="container">
         <div class="section-header reveal">
           <div class="eyebrow" style="border-color:rgba(255,133,51,0.5); color:#ffb088; background:rgba(255,107,31,0.12);">
             <span class="eyebrow-dot" style="background:#ff6b1f; box-shadow:0 0 10px #ff6b1f;"></span>
-            <span data-i18n="kabeel_eyebrow">CHAMBER 144 · SEALED BEHIND NINE MERIDIAN SIGILS</span>
+            <span data-i18n="kabeel_eyebrow">CHAMBER 144 · SATANIC ARCHFIEND OF THE MERIDIAN</span>
           </div>
-          <h2 class="section-title" data-i18n="kabeel_title">What Sleeps Beyond the Last Door?</h2>
+          <h2 class="section-title" data-i18n="kabeel_title">Kabeel, the Satanic Lava-Born Beast</h2>
           <p class="section-sub" data-i18n="kabeel_sub">
-            Nine Meridian Sigils lock the deepest hall at the base of the pyramid. Ancient tablets whisper a single name in the dark—recover every mark across all twelve floors to uncover the surprise climax for yourself.
+            Towering nine times Milo's height above twin lakes of hell-fire: a winged basalt-and-obsidian archfiend crowned with four horns, an iron pentagram brow-band, an eclipsed Black-Sun wheel, and a ripped bone ribcage gripping his pulsing molten heart.
           </p>
         </div>
 
         <div class="kabeel-grid reveal">
           <div class="temple-frame kabeel-sim-box">
-            <canvas id="kabeel-duel-canvas" width="640" height="360" aria-label="Interactive Sealed Meridian Vault Door with 9 Sigils"></canvas>
+            <div style="display:flex; justify-content:center; gap:0.5rem; margin-bottom:0.85rem; flex-wrap:wrap;">
+              <button type="button" class="filter-btn active" id="kabeel-view-full">Winged Archfiend Portrait</button>
+              <button type="button" class="filter-btn" id="kabeel-view-visage">Horned Visage Close-Up</button>
+            </div>
+
+            <div class="kabeel-portrait-stage" id="kabeel-portrait-stage">
+              <img
+                id="kabeel-main-img"
+                src="assets/enemies/kabeel-portrait.png"
+                alt="Kabeel, the Satanic Lava-Born Archfiend — Official Updated In-Game Portrait"
+                width="776"
+                height="776"
+              >
+            </div>
 
             <div class="kabeel-meters">
               <div class="kabeel-stat">
-                <strong id="kabeel-hits-val">3 / 9</strong>
-                <span>SIGILS LIT</span>
+                <strong id="kabeel-hits-val">0 / 20</strong>
+                <span>SUN-STONE HITS</span>
               </div>
               <div class="kabeel-stat">
-                <strong id="kabeel-score-val">FLOOR 12 · 144</strong>
-                <span>DEPTH</span>
+                <strong id="kabeel-score-val">+0 PTS</strong>
+                <span>DUEL BOUNTY</span>
               </div>
               <div class="kabeel-stat">
-                <strong id="kabeel-horn-val">LOCKED</strong>
-                <span>GREAT SEAL</span>
+                <strong id="kabeel-horn-val">4 HORNS INTACT</strong>
+                <span>HORN ARMOR</span>
               </div>
               <div class="kabeel-stat">
-                <strong id="kabeel-bridge-val">???</strong>
-                <span>FINAL ENCOUNTER</span>
+                <strong id="kabeel-bridge-val">ENTHRONED</strong>
+                <span>ARCHFIEND STATE</span>
               </div>
             </div>
 
             <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
               <button type="button" id="btn-throw-stone" class="btn-primary">
-                <span>✦</span>
-                <span data-i18n="btn_throw_stone">Awaken Meridian Sigil</span>
+                <span>🪨</span>
+                <span data-i18n="btn_throw_stone">Strike with Sun-Stone (E)</span>
               </button>
               <button type="button" id="btn-reset-duel" class="hud-btn" data-i18n="btn_reset_duel">
-                Re-Seal Vault
+                Reset Hits
               </button>
             </div>
           </div>
 
           <div style="display:flex; flex-direction:column; gap:1rem;">
             <article class="temple-frame doc-card">
-              <h2>Nine Floors, Nine Marks, One Unspoiled Ending</h2>
+              <h2>Anatomy of the Satanic Archfiend</h2>
               <p>
-                Every fifteenth chamber (<kbd>15</kbd>, <kbd>30</kbd>, <kbd>45</kbd>, <kbd>60</kbd>, <kbd>75</kbd>, <kbd>90</kbd>, <kbd>105</kbd>, <kbd>120</kbd>, <kbd>135</kbd>) holds a sacred <strong>Meridian Sigil</strong> at the end of its region. None can be skipped if you wish to open the final escape.
+                Sculpted procedurally in zero-allocation vector geometry (<kbd>KabeelArt</kbd>), Kabeel stands <strong>nine times Milo's height</strong> (<kbd>6 × 13</kbd> chamber tiles) enthroned above the inferno:
               </p>
-              <p>
-                At the bottom of the 12th floor waits <strong>Chamber 144</strong>—where conventional weapons are absent, the rules of the pyramid culminate in a unique final trial, and an animated ending awaits those who claim the <strong>Heart of the Meridian</strong>. We keep its guardian and ending off this page so your first descent remains a true surprise.
-              </p>
+              <ul>
+                <li><strong>Horned Skull &amp; Iron Pentagram:</strong> Sweeping Baphomet arch-horns, coiled lower ram-horns, pierced bat-goat ears with blood-ruby rings, vertical-slit bloodshot hell-eyes, a spiked iron pentagram brow-crown, and a snarling fanged maw breathing hell-fire.</li>
+                <li><strong>Infernal Wings &amp; Black-Sun Halo:</strong> Colossal scalloped bat-wings lit with crimson subsurface blood-veins unfurl before a counter-rotating <strong>Eclipsed Black-Sun Sigil</strong> ringed by 16 scythe spikes and 36 brimstone corona tongues.</li>
+                <li><strong>Living Ribcage &amp; Cloven Hooves:</strong> A ripped-open bone ribcage grips his pulsing two-chambered molten heart above digitigrade beast legs, cloven obsidian hooves, and a lashing spade-tipped barbed tail.</li>
+              </ul>
             </article>
 
             <article class="temple-frame doc-card">
-              <h2>New in Schema 8: Three Crowns &amp; Solution Playback</h2>
-              <p>
-                Every chamber now tracks <strong>Three-Crown Mastery</strong> (Completion, All Optional Treasures &amp; Deity Masks, and Par Time). Stuck after 19 attempts in any chamber or Sanctum puzzle? Click the optional top-toolbar bulb to watch the recorded 12 Hz solution—and press any movement key at any moment to take live control back!
-              </p>
+              <h2>Combat Profile: Three Hell-Fire Lanes &amp; 20 Sun-Stones</h2>
+              <ul>
+                <li><strong>Attack Profile:</strong> Unleashes three lanes of lethal hell-fire—a surging lava wave along the floor, a blazing orb from his clawed fist, and a roaring bolt from his maw—each telegraphed <strong>7 ticks</strong> ahead.</li>
+                <li><strong>Defense Profile:</strong> Completely unreachable across twin lakes of lava; no Sun Blade exists in his hall, and he cannot be bypassed until felled.</li>
+                <li><strong>Defeat Profile:</strong> Gather scattered <strong>sun-stones</strong> and hurl <strong>20 hits</strong> from marked ledges (<kbd>+100 pts</kbd> per stone; roars every 5th hit; shatters a horn at 10 hits; <kbd>+5,000 pts</kbd> on the 20th strike to his molten heart). <em>Chamber 144's room layout itself is kept hidden here so your final descent stays unspoiled!</em></li>
+              </ul>
             </article>
           </div>
         </div>
@@ -863,9 +896,9 @@
             <div class="gallery-caption"><strong>The Rolling Boulder Maze</strong><span>SANCTUM S07 · 064</span></div>
           </button>
 
-          <button type="button" class="gallery-item" data-category="boss" data-lightbox-src="assets/screenshots/sanctum-144-synthesis.png" data-lightbox-title="Sanctum 11 / 11 (Chamber 144) — The Final Synthesis">
-            <img class="gallery-thumb" src="assets/screenshots/sanctum-144-synthesis.png" alt="Sanctum S11 The Final Synthesis puzzle room screenshot" loading="lazy">
-            <div class="gallery-caption"><strong>The Final Synthesis</strong><span>SANCTUM S11 · 144</span></div>
+          <button type="button" class="gallery-item" data-category="boss" data-lightbox-src="assets/enemies/kabeel-portrait.png" data-lightbox-title="Kabeel — Satanic Lava-Born Archfiend Portrait (Updated In-Game Art)">
+            <img class="gallery-thumb" src="assets/enemies/kabeel-portrait.png" alt="Kabeel Satanic Lava-Born Beast Portrait" loading="lazy">
+            <div class="gallery-caption"><strong>Kabeel — Satanic Archfiend</strong><span>BOSS PORTRAIT</span></div>
           </button>
 
           <button type="button" class="gallery-item" data-category="gameplay" data-lightbox-src="assets/screenshots/02-Gameplay-Gecko-Spire-Shafts.png" data-lightbox-title="057 Spire of the Climbing Gecko — Mothscript Archive">
@@ -974,10 +1007,10 @@
           </article>
 
           <article class="cast-card reveal">
-            <span class="cast-role">SEALED FINALE</span>
-            <h3 data-i18n="hero_kabeel_name">Chamber 144 — ???</h3>
+            <span class="cast-role">SATANIC ARCHFIEND</span>
+            <h3 data-i18n="hero_kabeel_name">Kabeel</h3>
             <p data-i18n="hero_kabeel_desc">
-              Sealed beneath eleven floors of stone and guarded by nine Meridian Sigils. No ordinary blade will answer what waits beyond the final threshold.
+              The satanic lava-born beast who guards the Heart of the Meridian. Winged in scorched crimson membrane, crowned with Baphomet horns and an iron pentagram, he hurls three lanes of hell-fire and yields only to twenty hurled sun-stones.
             </p>
           </article>
 
@@ -1138,8 +1171,8 @@
     </div>
   </footer>
 
-  <script src="assets/js/i18n-data.js?v=3"></script>
-  <script src="assets/js/meridian-canvas.js?v=3"></script>
-  <script src="assets/js/app.js?v=3"></script>
+  <script src="assets/js/i18n-data.js?v=4"></script>
+  <script src="assets/js/meridian-canvas.js?v=4"></script>
+  <script src="assets/js/app.js?v=4"></script>
 </body>
 </html>

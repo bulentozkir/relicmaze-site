@@ -440,7 +440,7 @@
     { idx: 6, start: 91, end: 105, color: "#5a9be6", sigil: 105, vibe: "Flooded rainclock basins, breath gauges & hanging conduits." },
     { idx: 7, start: 106, end: 120, color: "#d4b85a", sigil: 120, vibe: "Shrouded astronomical vaults, portals & precision beam instruments." },
     { idx: 8, start: 121, end: 135, color: "#e05568", sigil: 135, vibe: "Ash-lined gauntlets, reactive guardians & spectral trials." },
-    { idx: 9, start: 136, end: 144, color: "#ff8533", sigil: null, vibe: "Deepest base of the Pyramid: nine Meridian Sigils converge upon a sealed obsidian vault. What sleeps inside awaits your arrival." },
+    { idx: 9, start: 136, end: 144, color: "#ff8533", sigil: null, vibe: "Deepest inferno of the Pyramid: Kabeel, the winged satanic lava-born beast, guards the Heart of the Meridian." },
   ];
 
   const SANCTUMS = {
@@ -507,7 +507,7 @@
 
     numEl.textContent = String(n).padStart(3, "0");
     let badge = "";
-    if (n === 144) badge = " · Sealed Behind Nine Meridian Sigils · ???";
+    if (n === 144) badge = " · Kabeel, the Satanic Lava-Born Beast (20-Stone Duel)";
     else if (SIGIL_ROOMS.has(n)) badge = ` · Meridian Sigil #${n / 15} Chamber`;
     else if (SANCTUMS[n]) badge = ` · Gateway to Sanctum ${SANCTUMS[n].code} (${SANCTUMS[n].name})`;
 
@@ -765,8 +765,8 @@
     { order: 7, room: 64, floor: 8, regIdx: 4, shot: "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" },
     { order: 8, room: 81, floor: 9, regIdx: 5, shot: "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" },
     { order: 9, room: 100, floor: 10, regIdx: 6, shot: "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" },
-    { order: 10, room: 121, floor: 11, regIdx: 8, shot: "assets/screenshots/sanctum-144-synthesis.png" },
-    { order: 11, room: 144, floor: 12, regIdx: 9, shot: "assets/screenshots/sanctum-144-synthesis.png" },
+    { order: 10, room: 121, floor: 11, regIdx: 8, shot: "assets/screenshots/sanctum-25-prism.png" },
+    { order: 11, room: 144, floor: 12, regIdx: 9, shot: "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" },
   ];
   let activeSanctumIdx = 6; // Default S07 (Chamber 64 — Rolling Boulder Maze)
 
@@ -873,209 +873,68 @@
   }
 
   // --------------------------------------------------------------------------
-  // 11. CHAMBER 144: SEALED MERIDIAN VAULT MYSTERY TEASER (NO SPOILERS!)
+  // 11. KABEEL SATANIC ARCHFIEND PORTRAIT ALTAR (UPDATED ART · NO ROOM IMAGE!)
   // --------------------------------------------------------------------------
-  function initFinalSealMystery() {
-    const kCanvas = document.getElementById("kabeel-duel-canvas");
-    if (!kCanvas) return;
-    const kctx = kCanvas.getContext("2d");
-    const igniteBtn = document.getElementById("btn-throw-stone");
+  function initKabeelAltar() {
+    const portraitImg = document.getElementById("kabeel-main-img");
+    const stageWrap = document.getElementById("kabeel-portrait-stage");
+    const viewFullBtn = document.getElementById("kabeel-view-full");
+    const viewVisageBtn = document.getElementById("kabeel-view-visage");
+    const strikeBtn = document.getElementById("btn-throw-stone");
     const resetBtn = document.getElementById("btn-reset-duel");
-    const elSigils = document.getElementById("kabeel-hits-val");
-    const elDepth = document.getElementById("kabeel-score-val");
-    const elSeal = document.getElementById("kabeel-horn-val");
-    const elFate = document.getElementById("kabeel-bridge-val");
+    const elHits = document.getElementById("kabeel-hits-val");
+    const elScore = document.getElementById("kabeel-score-val");
+    const elHorn = document.getElementById("kabeel-horn-val");
+    const elState = document.getElementById("kabeel-bridge-val");
 
-    const SIGIL_FLOORS = [15, 30, 45, 60, 75, 90, 105, 120, 135];
-    let litSigils = 3;
-    let pulseBurst = 0;
-    let crackGlow = 0;
-    const embers = Array.from({ length: 28 }, (_, i) => ({
-      x: 0.25 + ((i * 37) % 50) / 100,
-      y: ((i * 19) % 100) / 100,
-      sp: 0.06 + (i % 5) * 0.025,
-      sz: 1.2 + (i % 3) * 0.9,
-    }));
+    if (!portraitImg) return;
+    let hits = 0;
 
-    function syncMysteryUi() {
-      const allLit = litSigils >= 9;
-      if (elSigils) elSigils.textContent = `${litSigils} / 9`;
-      if (elDepth) elDepth.textContent = "FLOOR 12 · 144";
-      if (elSeal) elSeal.textContent = allLit ? "TREMBLING" : "LOCKED";
-      if (elFate) elFate.textContent = "???";
-      if (igniteBtn) igniteBtn.disabled = allLit;
+    function syncStats() {
+      const felled = hits >= 20;
+      const pts = hits * 100 + (felled ? 5000 : 0);
+      if (elHits) elHits.textContent = `${hits} / 20`;
+      if (elScore) elScore.textContent = `+${pts.toLocaleString()} PTS`;
+      if (elHorn) elHorn.textContent = hits >= 10 ? "SHATTERED" : "4 HORNS INTACT";
+      if (elState) elState.textContent = felled ? "CRUMBLED" : hits > 0 && hits % 5 === 0 ? "ROARING!" : "ENTHRONED";
+      if (strikeBtn) strikeBtn.disabled = felled;
+      if (stageWrap) stageWrap.classList.toggle("kabeel-felled", felled);
     }
 
-    function awakenSigil() {
-      if (litSigils >= 9) return;
-      litSigils++;
-      pulseBurst = 1;
-      syncMysteryUi();
-    }
-
-    if (igniteBtn) igniteBtn.addEventListener("click", awakenSigil);
-    kCanvas.addEventListener("click", awakenSigil);
-    if (resetBtn) {
-      resetBtn.addEventListener("click", () => {
-        litSigils = 0;
-        pulseBurst = 0;
-        crackGlow = 0;
-        syncMysteryUi();
+    if (viewFullBtn && viewVisageBtn) {
+      viewFullBtn.addEventListener("click", () => {
+        portraitImg.src = "assets/enemies/kabeel-portrait.png";
+        viewFullBtn.classList.add("active");
+        viewVisageBtn.classList.remove("active");
+      });
+      viewVisageBtn.addEventListener("click", () => {
+        portraitImg.src = "assets/enemies/kabeel-visage.png";
+        viewVisageBtn.classList.add("active");
+        viewFullBtn.classList.remove("active");
       });
     }
 
-    let prev = performance.now();
-    let t = 0;
-    function drawVault(now) {
-      const dt = Math.min(0.05, (now - prev) / 1000);
-      prev = now;
-      const still = document.body.classList.contains("reduced-motion");
-      if (!still) t += dt;
-
-      const W = kCanvas.width;
-      const H = kCanvas.height;
-      kctx.clearRect(0, 0, W, H);
-
-      const allLit = litSigils >= 9;
-      if (allLit) crackGlow = Math.min(1, crackGlow + dt * 0.9);
-      else crackGlow = Math.max(0, crackGlow - dt * 2);
-      pulseBurst = Math.max(0, pulseBurst - dt * 2.2);
-
-      // Deep subterranean abyss backdrop
-      const bg = kctx.createRadialGradient(W * 0.5, H * 0.54, 12, W * 0.5, H * 0.54, W * 0.62);
-      bg.addColorStop(0, allLit ? "#381814" : "#1c1224");
-      bg.addColorStop(0.6, "#0c0a14");
-      bg.addColorStop(1, "#05060b");
-      kctx.fillStyle = bg;
-      kctx.fillRect(0, 0, W, H);
-
-      const cx = W * 0.5 + (allLit && !still ? Math.sin(t * 36) * 1.4 : 0);
-      const cy = H * 0.53;
-      const R = Math.min(W, H) * 0.34;
-
-      // Monolithic Sealed Obsidian Double Doors
-      const doorW = R * 1.55;
-      const doorH = R * 1.72;
-      kctx.fillStyle = "#11101a";
-      kctx.strokeStyle = "rgba(255, 212, 107, 0.45)";
-      kctx.lineWidth = 2.2;
-      kctx.fillRect(cx - doorW / 2, cy - doorH / 2, doorW, doorH);
-      kctx.strokeRect(cx - doorW / 2, cy - doorH / 2, doorW, doorH);
-
-      // Stepped Pyramid Relief carved on the sealed doors
-      for (let s = 0; s < 5; s++) {
-        const sw = doorW * (0.28 + s * 0.13);
-        const sy = cy - doorH * 0.24 + s * 22;
-        kctx.strokeStyle = `rgba(255, 212, 107, ${0.14 + s * 0.03})`;
-        kctx.lineWidth = 1.2;
-        kctx.strokeRect(cx - sw / 2, sy, sw, 18);
-      }
-
-      // Center Door Seam — glows mysteriously when all 9 Sigils awaken, never opening to spoil!
-      const seamAlpha = 0.2 + crackGlow * 0.75;
-      const seamGrad = kctx.createLinearGradient(cx, cy - doorH / 2, cx, cy + doorH / 2);
-      seamGrad.addColorStop(0, `rgba(86, 246, 234, ${seamAlpha * 0.5})`);
-      seamGrad.addColorStop(0.5, `rgba(255, 120, 40, ${seamAlpha})`);
-      seamGrad.addColorStop(1, `rgba(255, 212, 107, ${seamAlpha * 0.8})`);
-      kctx.strokeStyle = seamGrad;
-      kctx.lineWidth = 2 + crackGlow * 4;
-      kctx.beginPath();
-      kctx.moveTo(cx, cy - doorH / 2 + 6);
-      kctx.lineTo(cx, cy + doorH / 2 - 6);
-      kctx.stroke();
-
-      if (crackGlow > 0.05) {
-        const halo = kctx.createRadialGradient(cx, cy, 4, cx, cy, R * 1.15);
-        halo.addColorStop(0, `rgba(255, 115, 36, ${0.32 * crackGlow})`);
-        halo.addColorStop(0.5, `rgba(255, 212, 107, ${0.14 * crackGlow})`);
-        halo.addColorStop(1, "rgba(0,0,0,0)");
-        kctx.fillStyle = halo;
-        kctx.beginPath();
-        kctx.arc(cx, cy, R * 1.15, 0, Math.PI * 2);
-        kctx.fill();
-      }
-
-      // Great Astrolabe Seal Ring + 9 Sigil Sockets (Chambers 15..135)
-      kctx.strokeStyle = "rgba(255, 212, 107, 0.42)";
-      kctx.lineWidth = 2;
-      kctx.beginPath();
-      kctx.arc(cx, cy, R, 0, Math.PI * 2);
-      kctx.stroke();
-
-      for (let i = 0; i < 9; i++) {
-        const ang = -Math.PI / 2 + (i / 9) * Math.PI * 2 + (still ? 0 : t * 0.06);
-        const sx = cx + Math.cos(ang) * R;
-        const sy = cy + Math.sin(ang) * R;
-        const isLit = i < litSigils;
-
-        if (isLit) {
-          const g = kctx.createRadialGradient(sx, sy, 2, sx, sy, 18);
-          g.addColorStop(0, i % 2 === 0 ? "rgba(255, 216, 112, 0.95)" : "rgba(86, 246, 234, 0.95)");
-          g.addColorStop(1, "rgba(255, 212, 107, 0)");
-          kctx.fillStyle = g;
-          kctx.beginPath();
-          kctx.arc(sx, sy, 18, 0, Math.PI * 2);
-          kctx.fill();
+    if (strikeBtn) {
+      strikeBtn.addEventListener("click", () => {
+        if (hits >= 20) return;
+        hits++;
+        syncStats();
+        if (stageWrap && !document.body.classList.contains("reduced-motion")) {
+          stageWrap.classList.remove("kabeel-flinch");
+          void stageWrap.offsetWidth;
+          stageWrap.classList.add("kabeel-flinch");
         }
-
-        kctx.fillStyle = isLit ? (i % 2 === 0 ? "#ffd46b" : "#56f6ea") : "#161829";
-        kctx.strokeStyle = "#ffd46b";
-        kctx.lineWidth = 1.6;
-        kctx.beginPath();
-        kctx.arc(sx, sy, 7, 0, Math.PI * 2);
-        kctx.fill();
-        kctx.stroke();
-      }
-
-      // Center Mystery "?" Lock Medallion
-      kctx.fillStyle = "#14111d";
-      kctx.strokeStyle = allLit ? "#ff7828" : "#ffd46b";
-      kctx.lineWidth = 2.4;
-      kctx.beginPath();
-      kctx.arc(cx, cy, 24 + pulseBurst * 5, 0, Math.PI * 2);
-      kctx.fill();
-      kctx.stroke();
-
-      kctx.fillStyle = allLit ? "#ffd46b" : "#56f6ea";
-      kctx.font = "bold 20px Georgia, serif";
-      kctx.textAlign = "center";
-      kctx.textBaseline = "middle";
-      kctx.fillText("?", cx, cy + 1);
-
-      // Rising subterranean embers from beneath the threshold
-      for (let i = 0; i < embers.length; i++) {
-        const em = embers[i];
-        if (!still) {
-          em.y -= em.sp * dt;
-          if (em.y < 0.08) em.y = 0.95;
-        }
-        kctx.fillStyle = i % 3 === 0 ? "rgba(86, 246, 234, 0.45)" : "rgba(255, 140, 56, 0.55)";
-        kctx.beginPath();
-        kctx.arc(em.x * W, em.y * H, em.sz, 0, Math.PI * 2);
-        kctx.fill();
-      }
-
-      // Cryptic Non-Spoiler Inscription Banner
-      kctx.fillStyle = "rgba(7, 8, 15, 0.82)";
-      kctx.fillRect(W * 0.14, H - 40, W * 0.72, 28);
-      kctx.strokeStyle = allLit ? "rgba(255, 133, 51, 0.7)" : "rgba(255, 212, 107, 0.35)";
-      kctx.lineWidth = 1;
-      kctx.strokeRect(W * 0.14, H - 40, W * 0.72, 28);
-      kctx.fillStyle = allLit ? "#ffd46b" : "#b8b2ad";
-      kctx.font = "600 12px Segoe UI, sans-serif";
-      kctx.fillText(
-        allLit
-          ? "9 / 9 SIGILS LIT · SOMETHING ANCIENT STIRS IN CHAMBER 144 — DISCOVER IT IN-GAME"
-          : "CLICK TO IGNITE THE 9 MERIDIAN SIGILS SEALING THE FINAL CHAMBER",
-        W * 0.5,
-        H - 25
-      );
-
-      requestAnimationFrame(drawVault);
+      });
     }
 
-    syncMysteryUi();
-    requestAnimationFrame(drawVault);
+    if (resetBtn) {
+      resetBtn.addEventListener("click", () => {
+        hits = 0;
+        syncStats();
+      });
+    }
+
+    syncStats();
   }
 
   // Boot!
@@ -1083,6 +942,6 @@
   initPyramidExplorer();
   initSanctumExplorer();
   initEnemyFilters();
-  initFinalSealMystery();
+  initKabeelAltar();
   applyLanguage(currentLang);
 })();
