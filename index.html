@@ -13,7 +13,7 @@
   <link rel="icon" type="image/png" sizes="44x44" href="assets/logos/RelicMaze-Logo-44x44.png">
   <link rel="icon" type="image/png" sizes="128x128" href="assets/logos/RelicMaze-Logo-128x128.png">
   <link rel="apple-touch-icon" href="assets/logos/RelicMaze-Logo-150x150.png">
-  <link rel="stylesheet" href="assets/css/styles.css?v=8">
+  <link rel="stylesheet" href="assets/css/styles.css?v=11">
 </head>
 <body>
   <div class="lantern-aura" aria-hidden="true"></div>
@@ -37,7 +37,8 @@
         <a href="#puzzles" class="section-link" data-i18n="nav_puzzles">Puzzle Rooms</a>
         <a href="#enemies" class="section-link" data-i18n="nav_enemies">Enemies</a>
         <a href="#finale" class="section-link" data-i18n="nav_kabeel">Chamber 144</a>
-        <a href="#relics" class="section-link" data-i18n="nav_relics">Relics</a>
+        <a href="#help" class="section-link" data-i18n="nav_help">Help</a>
+        <a href="#legend" class="section-link" data-i18n="nav_legend">Legend</a>
         <a href="#gallery" class="section-link" data-i18n="nav_gallery">Screenshots</a>
       </nav>
 
@@ -184,7 +185,7 @@
               <div class="legend-dots" id="legend-dots"></div>
             </div>
             <p class="legend-ticker-line" id="legend-ticker-line" data-i18n="lore_0">
-              Beneath the hill Visočica, above the town of Visoko in Bosnia, the legend says a pyramid sleeps. Read it all under Help &amp; Legend.
+              Above the town of Visoko in Bosnia stands a hill called Visočica. The legend says a pyramid sleeps inside it. Read the whole file under Legend.
             </p>
           </div>
         </div>
@@ -490,6 +491,7 @@
             <span class="enemy-chip">Track-Turn Hunters</span>
             <span class="enemy-chip">Lead-Aiming Bats</span>
             <span class="enemy-chip">701 EnemyAudit Verified</span>
+            <span class="enemy-chip">SwitchAudit Verified</span>
           </div>
         </div>
 
@@ -778,7 +780,7 @@
 
           <div style="display:flex; flex-direction:column; gap:1rem;">
             <article class="temple-frame doc-card">
-              <h2>Volumetric Anatomy &amp; Flesh-to-Bone Decay (v0.0.7)</h2>
+              <h2>Volumetric Anatomy &amp; Flesh-to-Bone Decay (v0.0.8)</h2>
               <p>
                 Sculpted procedurally in zero-allocation 3D-shaded vector geometry (<kbd>KabeelArt</kbd>), Kabeel towers <strong>nine times Milo's height</strong> (<kbd>6 × 13</kbd> chamber tiles) above twin boiling lava lakes:
               </p>
@@ -792,9 +794,9 @@
             <article class="temple-frame doc-card">
               <h2>Combat Profile: 50 Sun-Stones &amp; Counter-Wired Logic</h2>
               <ul>
-                <li><strong>Staggered Hell-Fire Comets:</strong> Unleashes three lanes of lethal hell-fire—a surging lava wave, a clawed-fist comet, and a roaring maw bolt—each telegraphed <strong>7 ticks</strong> ahead across a campaign packing <strong>701 EnemyAudit-verified hazard/guardian instances</strong>, <strong>30 hand-crafted chambers</strong>, and <strong>119 counter-wired toggle-lever chambers</strong>.</li>
-                <li><strong>50-Stone Finale &amp; Persistent Wounds (<kbd>+10,000 PTS</kbd>):</strong> Gather all three sun-stone caches, reverse counter-wired toggle gates to reach elevated sun-disc altars, and hurl <strong>50 hits</strong> (<kbd>+100 pts</kbd> each + <kbd>+5,000 pts</kbd> heart-shattering blow). Every landed stone wound stays kept across deaths and re-entries—while starting a Journal <strong>Time Trial</strong> (<kbd>T</kbd>) resets the duel clean for par-time mastery!</li>
-                <li><strong>Golden Bulb Assist:</strong> Stuck after 19 attempts in any chamber or Sanctum? A golden Bulb button appears on the top toolbar to demonstrate the full recorded 12 Hz solution—press any key to take back live control! <em>(Chamber 144's room layout stays hidden here so your first arrival remains unspoiled.)</em></li>
+                <li><strong>Staggered Hell-Fire Comets:</strong> Unleashes three lanes of lethal hell-fire—a surging lava wave, a clawed-fist comet, and a roaring maw bolt—each telegraphed <strong>7 ticks</strong> ahead across a campaign packing <strong>701 EnemyAudit-verified hazard/guardian instances</strong>, <strong>SwitchAudit-verified switches</strong>, <strong>30 hand-crafted chambers</strong>, and <strong>119 counter-wired toggle-lever chambers</strong>.</li>
+                <li><strong>50-Stone Finale &amp; Persistent Wounds (<kbd>+10,000 PTS</kbd>):</strong> Gather three sun-stone caches (16, 18, and 18 stones), reverse counter-wired toggle gates to reach two marked throwing ledges, and hurl <strong>50 hits</strong> (<kbd>+100 pts</kbd> each + <kbd>+5,000 pts</kbd> heart-shattering blow). Every landed stone wound stays kept across deaths and re-entries—while starting a Journal <strong>Time Trial</strong> (<kbd>T</kbd>) resets the duel clean for par-time mastery!</li>
+                <li><strong>Golden Bulb Assist:</strong> Available right from the start in Chambers 1–10 (and their first two Sanctums), and unlocked after <strong>19 failed attempts</strong> in any later chamber or Sanctum—demonstrating the full recorded 12 Hz solution until you press any move key to take over! <em>(Chamber 144's room layout stays hidden here so your first arrival remains unspoiled.)</em></li>
               </ul>
             </article>
           </div>
@@ -897,7 +899,7 @@
             <div class="relic-icon" aria-hidden="true">♾️</div>
             <h3 data-i18n="play_death_name">Dying costs nothing</h3>
             <p data-i18n="play_death_desc">
-              Touch anything lethal and you are sent back to the chamber's entry door. There are no lives to lose, nothing is taken from you, and the seals and levers you have already won stay won. Every chamber is solver-verified free of softlocks and stuck standing pockets (<kbd>PositionTraps</kbd>).
+              Touch anything lethal and you are sent back to the chamber's entry door in half a second—no hearts, no lives, and every seal or one-way lever stays won. Every chamber passes <kbd>PositionTraps</kbd>, <kbd>EnemyAudit</kbd>, and <kbd>SwitchAudit</kbd> across 1,308 automated tests.
             </p>
           </article>
         </div>
@@ -987,9 +989,9 @@
             <div class="gallery-caption"><strong>Brazier of the Shrouded Vault</strong><span>CHAMBER 114</span></div>
           </button>
 
-          <button type="button" class="gallery-item" data-category="ui" data-lightbox-src="assets/screenshots/07-Game-Opening-Page.png" data-lightbox-title="Animated Opening Title Screen — Meridian Ring &amp; Legend Plate">
-            <img class="gallery-thumb" src="assets/screenshots/07-Game-Opening-Page.png" alt="RelicMaze Opening Title Screen screenshot" loading="lazy">
-            <div class="gallery-caption"><strong>Opening Monument Screen</strong><span>TITLE UI</span></div>
+          <button type="button" class="gallery-item" data-category="ui" data-lightbox-src="assets/screenshots/07-Game-Opening-Page.png?v=11" data-lightbox-title="v0.0.8 Opening Title Screen — Native Globe Language Chip, StatBox &amp; Separated Help / Legend Books">
+            <img class="gallery-thumb" src="assets/screenshots/07-Game-Opening-Page.png?v=11" alt="RelicMaze v0.0.8 Opening Title Screen with Globe Language selector and Help and Legend buttons" loading="lazy">
+            <div class="gallery-caption"><strong>Opening Monument (v0.0.8)</strong><span>TITLE UI</span></div>
           </button>
 
           <button type="button" class="gallery-item" data-category="ui" data-lightbox-src="assets/screenshots/10-Journal-Page.png" data-lightbox-title="Chamber Journal — 12-Floor Pyramid &amp; 11 Hidden Sanctums">
@@ -997,14 +999,14 @@
             <div class="gallery-caption"><strong data-i18n="chamber_journal">Chamber Journal</strong><span>144 PYRAMID</span></div>
           </button>
 
-          <button type="button" class="gallery-item" data-category="ui" data-lightbox-src="assets/screenshots/11-Game-Story-Page.png" data-lightbox-title="Illustrated Story — The Hill That Looks Back (Visoko, Bosnia)">
-            <img class="gallery-thumb" src="assets/screenshots/11-Game-Story-Page.png" alt="The Hill That Looks Back story plate screenshot" loading="lazy">
-            <div class="gallery-caption"><strong>The Hill That Looks Back</strong><span>STORY BOOK</span></div>
+          <button type="button" class="gallery-item" data-category="ui" data-lightbox-src="assets/screenshots/11-Game-Story-Page.png?v=11" data-lightbox-title="Studio-Voiced Verbal Animated Story — Live Word-by-Word Karaoke Highlighting">
+            <img class="gallery-thumb" src="assets/screenshots/11-Game-Story-Page.png?v=11" alt="The Hill That Looks Back studio-voiced story stage with word-by-word highlighting" loading="lazy">
+            <div class="gallery-caption"><strong data-i18n="prologue_title">The Hill That Looks Back</strong><span>STUDIO VOICE</span></div>
           </button>
 
-          <button type="button" class="gallery-item" data-category="ui" data-lightbox-src="assets/screenshots/09-Help-Page.png" data-lightbox-title="Help &amp; Legend Field Guide — Spectral Relics and Deep Hazards">
-            <img class="gallery-thumb" src="assets/screenshots/09-Help-Page.png" alt="Help and Legend Spectral Relics page screenshot" loading="lazy">
-            <div class="gallery-caption"><strong data-i18n="help_legend">Help &amp; Legend</strong><span>FIELD GUIDE</span></div>
+          <button type="button" class="gallery-item" data-category="ui" data-lightbox-src="assets/screenshots/09-Help-Page.png?v=11" data-lightbox-title="The Book 'Help' (Page 2 of 14) — Reading the Screen &amp; Gold Numbered Callouts">
+            <img class="gallery-thumb" src="assets/screenshots/09-Help-Page.png?v=11" alt="The Book Help Reading the Screen page with numbered markers 1 to 6" loading="lazy">
+            <div class="gallery-caption"><strong data-i18n="book_help">Help</strong><span>14-PAGE BOOK</span></div>
           </button>
 
           <button type="button" class="gallery-item" data-category="ui" data-lightbox-src="assets/screenshots/08-Settings-Page.png" data-lightbox-title="Settings — 20 Languages, Audio, Rebindable Controls &amp; Accessibility">
@@ -1017,6 +1019,11 @@
             <div class="gallery-caption"><strong>Official Emblem Crest</strong><span>1024×1024</span></div>
           </button>
 
+          <button type="button" class="gallery-item" data-category="art" data-lightbox-src="assets/logos/RelicMaze-Logo-703x368.png?v=11" data-lightbox-title="RelicMaze Official Social &amp; Store Banner (703×368)">
+            <img class="gallery-thumb" src="assets/logos/RelicMaze-Logo-703x368.png?v=11" alt="RelicMaze Official Banner Logo 703x368" loading="lazy">
+            <div class="gallery-caption"><strong>Official Store Banner</strong><span>703×368</span></div>
+          </button>
+
           <button type="button" class="gallery-item" data-category="art" data-lightbox-src="assets/previews/all-144-rooms.png?v=10" data-lightbox-title="Complete 144-Chamber Architectural Contact Sheet">
             <img class="gallery-thumb" src="assets/previews/all-144-rooms.png?v=10" alt="All 144 Chambers architectural mosaic" loading="lazy">
             <div class="gallery-caption"><strong>All 144 Chambers Mosaic</strong><span>FULL CAMPAIGN</span></div>
@@ -1026,18 +1033,114 @@
     </section>
 
     <!-- ===================================================================
-         HELP & LEGEND: VISOKO CLAIM vs EVIDENCE & CAST OF THE MERIDIAN
+         THE BOOK "HELP": 14 ILLUSTRATED PAGES, NUMBERED PLATES & v0.0.8 POLISH
          =================================================================== -->
-    <section id="legend" class="section">
+    <section id="help" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span>v0.0.8 · 14 ILLUSTRATED PAGES · 4 PARTS · ? BUTTON &amp; / SHORTCUT</span>
+          </div>
+          <h2 class="section-title" data-i18n="book_help">Help</h2>
+          <p class="section-sub" data-i18n="help_intro">
+            How to play RelicMaze, who and what you meet, what every symbol means and a few things worth knowing. Open this book again from the title page, the pause menu or, in a chamber, the ? button.
+          </p>
+        </div>
+
+        <div class="help-tabs-rail reveal" id="help-tabs-rail" role="tablist" aria-label="Help Book Illustrated Chapters"></div>
+
+        <div class="temple-frame help-book-stage reveal" aria-live="polite">
+          <div>
+            <div class="sanctum-meta-row" style="margin-bottom:0.65rem;">
+              <span class="sanctum-badge gold" id="help-badge-page">PAGE 02 / 14</span>
+              <span class="sanctum-badge" id="help-badge-part" data-i18n="help_part1">PART ONE · THE BASICS</span>
+            </div>
+            <h3 class="sanctum-stage-title" id="help-stage-title" style="margin-bottom:0.85rem;" data-i18n="help_p2_title">Reading the Screen</h3>
+            <button
+              type="button"
+              class="help-plate-frame"
+              id="help-plate-btn"
+              data-lightbox-src="assets/help/help-screen.png?v=11"
+              data-lightbox-title="Help (PAGE 02 / 14) — Reading the Screen"
+            >
+              <img id="help-plate-img" src="assets/help/help-screen.png?v=11" alt="Reading the Screen — RelicMaze Help Book Plate" loading="lazy">
+            </button>
+          </div>
+
+          <div class="help-callouts" id="help-callouts"></div>
+        </div>
+
+        <div class="engine-proofs-grid reveal">
+          <article class="proof-card">
+            <span class="proof-tag">CAUSE &amp; EFFECT</span>
+            <h3>Signal Sparks &amp; Lever Wires</h3>
+            <p>Standing near a lever previews a dotted channel wire to what it controls; pulling a lever, plate, or glyph key launches colored 0.42s sparks that flare gates, bridges, belts, and waking hazards.</p>
+          </article>
+
+          <article class="proof-card">
+            <span class="proof-tag">ZERO-SCROLL UI</span>
+            <h3>Paged Books &amp; RTL Back Arrow</h3>
+            <p>Neither <strong>Help</strong> (14 pages) nor <strong>Legend</strong> (17 pages) ever scrolls: cards split cleanly between lines up to 250% UI scale across 20 languages, paired with a mirrored corner Back arrow.</p>
+          </article>
+
+          <article class="proof-card">
+            <span class="proof-tag">RM-NATIVE-8 PROOFS</span>
+            <h3>SwitchAudit &amp; 1,308 Tests</h3>
+            <p><kbd>PositionTraps</kbd>, <kbd>701 EnemyAudit</kbd>, and <kbd>SwitchAudit</kbd> prove every lever, plate, portal, lift, and pickup works, backed by 729,000 physics ticks, damped shake, and exact drag ballistics.</p>
+          </article>
+
+          <article class="proof-card">
+            <span class="proof-tag">STUDIO MASTERING</span>
+            <h3>-0.5 dB Limiter &amp; 2× Kaiser SFX</h3>
+            <p>Smooth 1.0s/1.5s fades join the Dual 432 Hz tracks, a Master hard-limiter prevents clipping across 16 voices, and 48-tap Kaiser 2× upsampling removes aliasing hiss across all 89 effects.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         THE BOOK "LEGEND": 17 THRILLER CHAPTERS & STUDIO-VOICED STORY
+         =================================================================== -->
+    <section id="legend" class="section section-alt">
       <div class="container">
         <div class="section-header reveal">
           <div class="eyebrow">
             <span class="eyebrow-dot"></span>
             <span data-i18n="part1">PART ONE · THE LEGEND</span>
           </div>
-          <h2 class="section-title" data-i18n="help_legend">Help &amp; Legend</h2>
+          <h2 class="section-title" data-i18n="book_legend">Legend</h2>
           <p class="section-sub" data-i18n="intro_legend">
-            The legend says the Meridian Works lie under a hill in Bosnia, Visočica above the town of Visoko, which its believers call the Pyramid of the Sun. Scientists say it is a natural hill. Read the whole story, with everything that is claimed and everything that was found, under Help &amp; Legend.
+            The legend of the Pyramid of the Sun, the cast of the story and a field guide to the game. What the legend claims is marked as a claim, and what the evidence shows is told next to it.
+          </p>
+        </div>
+
+        <!-- Live Studio-Voiced Verbal Animated Story Prologue Stage (86 Studio Clips + Word Timing) -->
+        <div class="temple-frame story-voice-stage reveal" id="story-voice-stage">
+          <audio id="legend-voice-audio" src="assets/media/legend-prologue-voice.mp3?v=11" preload="none"></audio>
+          <div class="story-voice-top">
+            <div class="story-crest-wrap">
+              <span class="story-crest-circle" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M3 5.5A2.5 2.5 0 0 1 5.5 3H11v16H5.5A2.5 2.5 0 0 0 3 21.5V5.5z"></path>
+                  <path d="M21 5.5A2.5 2.5 0 0 0 18.5 3H13v16h5.5a2.5 2.5 0 0 1 2.5 2.5V5.5z"></path>
+                </svg>
+              </span>
+              <div class="story-speaker-meta">
+                <strong>THE STORYTELLER · STUDIO VOICE PROLOGUE</strong>
+                <span>86 Studio Clips · Word-by-Word Karaoke Sync (Chapter 01 / 17)</span>
+              </div>
+              <span class="story-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            </div>
+
+            <button type="button" class="btn-primary" id="btn-play-legend-voice" aria-pressed="false">
+              <span data-voice-label data-i18n="watch_story_btn">▶  Watch Verbal Animated Story</span>
+            </button>
+          </div>
+
+          <h3 class="story-karaoke-title" id="story-karaoke-title" data-i18n="prologue_title">The Hill That Looks Back</h3>
+          <p class="story-karaoke-body" id="story-karaoke-body" data-i18n="prologue_p0">
+            Some hills look like hills. This one looks back. Visoko is a small town in the green heart of Bosnia, where the rivers Bosna and Fojnica meet. Above its roofs rises a hill called Visočica: 767 metres above the sea and about 213 above the town, with a flank so straight and a crest so sharp that, from the right angle, it looks like a pyramid.
           </p>
         </div>
 
@@ -1107,7 +1210,7 @@
     <!-- ===================================================================
          ACCESSIBILITY, CLEAR VIEW (F9) & CONTROLS REFERENCE
          =================================================================== -->
-    <section class="section section-alt">
+    <section class="section">
       <div class="container a11y-split">
         <div class="reveal">
           <div class="eyebrow">
@@ -1177,19 +1280,24 @@
                 <td><kbd>X</kbd> (West)</td>
               </tr>
               <tr>
-                <td>Chamber Journal</td>
-                <td><kbd>Tab</kbd> or <kbd>J</kbd></td>
+                <td>Chamber Journal / Retry</td>
+                <td><kbd>Tab</kbd> or <kbd>J</kbd> / <kbd>R</kbd></td>
                 <td>View / Select</td>
+              </tr>
+              <tr>
+                <td>Help Book / Controls / Pause</td>
+                <td><kbd>/</kbd> (<kbd>?</kbd>) / <kbd>F1</kbd> / <kbd>Esc</kbd></td>
+                <td>Start</td>
+              </tr>
+              <tr>
+                <td>Describe / Objective / Ping / Hint</td>
+                <td><kbd>Q</kbd> / <kbd>O</kbd> / <kbd>B</kbd> / <kbd>I</kbd></td>
+                <td><kbd>LB</kbd> / <kbd>Y</kbd></td>
               </tr>
               <tr>
                 <td>Clear View / Next Palette</td>
                 <td><kbd>F9</kbd> / <kbd>F10</kbd></td>
-                <td>Accessibility Menu</td>
-              </tr>
-              <tr>
-                <td>Controls / Pause</td>
-                <td><kbd>F1</kbd> / <kbd>Esc</kbd></td>
-                <td>Start</td>
+                <td><kbd>B</kbd> / Accessibility</td>
               </tr>
             </tbody>
           </table>
@@ -1279,8 +1387,8 @@
     </div>
   </footer>
 
-  <script src="assets/js/i18n-data.js?v=10"></script>
-  <script src="assets/js/meridian-canvas.js?v=10"></script>
-  <script src="assets/js/app.js?v=10"></script>
+  <script src="assets/js/i18n-data.js?v=11"></script>
+  <script src="assets/js/meridian-canvas.js?v=11"></script>
+  <script src="assets/js/app.js?v=11"></script>
 </body>
 </html>

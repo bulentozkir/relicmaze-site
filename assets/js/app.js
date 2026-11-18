@@ -70,6 +70,8 @@
     renderLoreLine(loreIndex, false);
     updateRegionButtonNames();
     renderActiveSanctum();
+    renderActiveHelpPage();
+    renderStoryKaraokeWords();
     if (selectedChamber) inspectChamber(selectedChamber);
   }
 
@@ -1014,11 +1016,309 @@
     syncStats();
   }
 
+  // --------------------------------------------------------------------------
+  // 12. ILLUSTRATED BOOK "HELP" (14 PAGES · NUMBERED PLATES EXPLORER)
+  // --------------------------------------------------------------------------
+  const HELP_CHAPTERS = [
+    {
+      id: "screen",
+      pageBadge: "PAGE 02 / 14",
+      partKey: "help_part1",
+      titleKey: "help_p2_title",
+      plate: "assets/help/help-screen.png?v=11",
+      items: [
+        ["hp_screen_a_h", "hp_screen_a_b"],
+        ["hp_screen_b_h", "hp_screen_b_b"],
+        ["hp_screen_c_h", "hp_screen_c_b"],
+      ],
+    },
+    {
+      id: "moves",
+      pageBadge: "PAGE 03 / 14",
+      partKey: "help_part1",
+      titleKey: "help_p3_title",
+      plate: "assets/help/help-moves.png?v=11",
+      items: [
+        ["hp_moves_a_h", "hp_moves_a_b"],
+        ["hp_moves_b_h", "hp_moves_b_b"],
+        ["hp_moves_c_h", "hp_moves_c_b"],
+      ],
+    },
+    {
+      id: "toolbar",
+      pageBadge: "PAGE 08 / 14",
+      partKey: "help_part3",
+      titleKey: "help_p8_title",
+      plate: "assets/help/help-toolbar.png?v=11",
+      items: [
+        ["hp_toolbar_a_h", "hp_toolbar_a_b"],
+        ["hp_toolbar_b_h", "hp_toolbar_b_b"],
+        ["hp_toolbar_c_h", "hp_toolbar_c_b"],
+      ],
+    },
+    {
+      id: "symbols",
+      pageBadge: "PAGE 09 / 14",
+      partKey: "help_part3",
+      titleKey: "help_p9_title",
+      plate: "assets/help/help-symbols.png?v=11",
+      items: [
+        ["hp_symbols_a_h", "hp_symbols_a_b"],
+        ["hp_symbols_b_h", "hp_symbols_b_b"],
+        ["hp_symbols_c_h", "hp_symbols_c_b"],
+      ],
+    },
+    {
+      id: "crowns",
+      pageBadge: "PAGE 11 / 14",
+      partKey: "help_part4",
+      titleKey: "help_p11_title",
+      plate: "assets/help/help-crowns.png?v=11",
+      items: [
+        ["hp_crowns_a_h", "hp_crowns_a_b"],
+        ["hp_crowns_b_h", "hp_crowns_b_b"],
+        ["hp_crowns_c_h", "hp_crowns_c_b"],
+      ],
+    },
+    {
+      id: "stuck",
+      pageBadge: "PAGE 12 / 14",
+      partKey: "help_part4",
+      titleKey: "help_p12_title",
+      plate: "assets/help/help-stuck.png?v=11",
+      items: [
+        ["hp_stuck_a_h", "hp_stuck_a_b"],
+        ["hp_stuck_b_h", "hp_stuck_b_b"],
+        ["hp_stuck_c_h", "hp_stuck_c_b"],
+      ],
+    },
+  ];
+
+  let activeHelpIdx = 0;
+
+  function renderActiveHelpPage() {
+    const rail = document.getElementById("help-tabs-rail");
+    const plateImg = document.getElementById("help-plate-img");
+    const plateBtn = document.getElementById("help-plate-btn");
+    const badgePage = document.getElementById("help-badge-page");
+    const badgePart = document.getElementById("help-badge-part");
+    const stageTitle = document.getElementById("help-stage-title");
+    const calloutsWrap = document.getElementById("help-callouts");
+    if (!rail || !plateImg || !calloutsWrap) return;
+
+    const ch = HELP_CHAPTERS[activeHelpIdx] || HELP_CHAPTERS[0];
+    rail.querySelectorAll(".help-tab-btn").forEach((b, idx) => {
+      const on = idx === activeHelpIdx;
+      b.classList.toggle("active", on);
+      b.setAttribute("aria-selected", on ? "true" : "false");
+      const lbl = b.querySelector(".help-tab-label");
+      if (lbl) lbl.textContent = t(HELP_CHAPTERS[idx].titleKey);
+    });
+
+    const titleText = t(ch.titleKey);
+    if (badgePage) badgePage.textContent = ch.pageBadge;
+    if (badgePart) badgePart.textContent = t(ch.partKey);
+    if (stageTitle) stageTitle.textContent = titleText;
+    plateImg.src = ch.plate;
+    plateImg.alt = `${titleText} — RelicMaze Help Book Plate`;
+    if (plateBtn) {
+      plateBtn.dataset.lightboxSrc = ch.plate;
+      plateBtn.dataset.lightboxTitle = `${t("book_help")} (${ch.pageBadge}) — ${titleText}`;
+    }
+
+    calloutsWrap.innerHTML = "";
+    ch.items.forEach(([hk, bk]) => {
+      const box = document.createElement("div");
+      box.className = "help-callout-item";
+      const h4 = document.createElement("h4");
+      h4.textContent = t(hk);
+      const p = document.createElement("p");
+      p.textContent = t(bk);
+      box.appendChild(h4);
+      box.appendChild(p);
+      calloutsWrap.appendChild(box);
+    });
+  }
+
+  function initHelpBookExplorer() {
+    const rail = document.getElementById("help-tabs-rail");
+    const plateBtn = document.getElementById("help-plate-btn");
+    if (!rail) return;
+
+    rail.innerHTML = "";
+    HELP_CHAPTERS.forEach((ch, idx) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "help-tab-btn" + (idx === activeHelpIdx ? " active" : "");
+      btn.setAttribute("role", "tab");
+      btn.setAttribute("aria-selected", idx === activeHelpIdx ? "true" : "false");
+
+      const pg = document.createElement("span");
+      pg.className = "help-tab-page";
+      pg.textContent = ch.pageBadge.replace("PAGE ", "P");
+      const lbl = document.createElement("span");
+      lbl.className = "help-tab-label";
+      lbl.textContent = t(ch.titleKey);
+
+      btn.appendChild(pg);
+      btn.appendChild(lbl);
+      btn.addEventListener("click", () => {
+        activeHelpIdx = idx;
+        renderActiveHelpPage();
+      });
+      rail.appendChild(btn);
+    });
+
+    if (plateBtn) {
+      plateBtn.addEventListener("click", () => {
+        const lightbox = document.getElementById("lightbox");
+        const lbImg = document.getElementById("lightbox-img");
+        const lbCaption = document.getElementById("lightbox-caption");
+        if (lightbox && lbImg) {
+          lbImg.src = plateBtn.dataset.lightboxSrc;
+          lbImg.alt = plateBtn.dataset.lightboxTitle || "Help Plate";
+          if (lbCaption) lbCaption.textContent = plateBtn.dataset.lightboxTitle || "";
+          lightbox.classList.add("open");
+          lightbox.setAttribute("aria-hidden", "false");
+        }
+      });
+    }
+
+    renderActiveHelpPage();
+  }
+
+  // --------------------------------------------------------------------------
+  // 13. STUDIO-VOICED LEGEND PROLOGUE KARAOKE STAGE (Content/voice/legend/en)
+  // --------------------------------------------------------------------------
+  // Exact millisecond word timestamps from Content/voice/legend/en/timing.json ("p00_l00", 71 words: 5 title + 66 body)
+  const PROLOGUE_TIMING_MS = [
+    74, 135, 478, 686, 919, 1801, 2022, 2623, 2892, 3125, 4142, 4400, 4694, 4939, 5760, 6434, 6569, 6630, 7010,
+    7390, 7463, 7574, 7966, 8235, 8333, 9240, 9375, 9473, 9877, 10576, 10772, 11274, 12034, 12328, 12476, 12868,
+    13297, 13358, 13652, 13934, 15184, 16471, 16801, 17034, 17120, 17549, 17831, 18088, 19020, 19228, 19301,
+    20037, 20159, 20233, 20588, 20882, 21434, 21544, 21593, 22047, 22402, 22819, 23346, 23493, 23578, 23824,
+    24632, 24718, 24914, 25049, 25110,
+  ];
+  const PROLOGUE_DURATION_MS = 25992;
+
+  let storyTitleSpans = [];
+  let storyBodySpans = [];
+  let storyRaf = 0;
+
+  function renderStoryKaraokeWords() {
+    const titleEl = document.getElementById("story-karaoke-title");
+    const bodyEl = document.getElementById("story-karaoke-body");
+    const voiceAudio = document.getElementById("legend-voice-audio");
+    if (!titleEl || !bodyEl) return;
+
+    const titleWords = (t("prologue_title") || "").trim().split(/\s+/).filter(Boolean);
+    const bodyWords = (t("prologue_p0") || "").trim().split(/\s+/).filter(Boolean);
+
+    titleEl.innerHTML = "";
+    bodyEl.innerHTML = "";
+    storyTitleSpans = [];
+    storyBodySpans = [];
+
+    const isPaused = !voiceAudio || voiceAudio.paused;
+    titleWords.forEach((w, idx) => {
+      if (idx > 0) titleEl.appendChild(document.createTextNode(" "));
+      const sp = document.createElement("span");
+      sp.className = "story-word" + (isPaused ? " lit" : "");
+      sp.textContent = w;
+      titleEl.appendChild(sp);
+      storyTitleSpans.push(sp);
+    });
+
+    bodyWords.forEach((w, idx) => {
+      if (idx > 0) bodyEl.appendChild(document.createTextNode(" "));
+      const sp = document.createElement("span");
+      sp.className = "story-word" + (isPaused ? " lit" : "");
+      sp.textContent = w;
+      bodyEl.appendChild(sp);
+      storyBodySpans.push(sp);
+    });
+  }
+
+  function initLegendStudioVoice() {
+    const stage = document.getElementById("story-voice-stage");
+    const btn = document.getElementById("btn-play-legend-voice");
+    const voiceAudio = document.getElementById("legend-voice-audio");
+    const bgAudio = document.getElementById("rm-audio");
+    if (!stage || !btn || !voiceAudio) return;
+
+    function updateHighlightFrame() {
+      if (voiceAudio.paused) return;
+      const ms = voiceAudio.currentTime * 1000;
+      const allSpans = storyTitleSpans.concat(storyBodySpans);
+
+      if (currentLang === "en" && allSpans.length === PROLOGUE_TIMING_MS.length) {
+        let activeIdx = -1;
+        for (let i = 0; i < PROLOGUE_TIMING_MS.length; i++) {
+          if (ms >= PROLOGUE_TIMING_MS[i]) activeIdx = i;
+          else break;
+        }
+        allSpans.forEach((sp, idx) => {
+          sp.classList.toggle("lit", idx <= activeIdx);
+          sp.classList.toggle("active-word", idx === activeIdx);
+        });
+      } else if (allSpans.length > 0) {
+        const frac = Math.min(1, Math.max(0, ms / PROLOGUE_DURATION_MS));
+        const activeIdx = Math.min(allSpans.length - 1, Math.floor(frac * allSpans.length));
+        allSpans.forEach((sp, idx) => {
+          sp.classList.toggle("lit", idx <= activeIdx);
+          sp.classList.toggle("active-word", idx === activeIdx);
+        });
+      }
+      storyRaf = requestAnimationFrame(updateHighlightFrame);
+    }
+
+    function setSpeakingUI(playing) {
+      stage.classList.toggle("speaking", playing);
+      btn.setAttribute("aria-pressed", playing ? "true" : "false");
+      const lbl = btn.querySelector("[data-voice-label]");
+      if (lbl) {
+        lbl.textContent = playing ? t("btn_pause_music") : t("watch_story_btn");
+      }
+      if (!playing) {
+        cancelAnimationFrame(storyRaf);
+        storyTitleSpans.concat(storyBodySpans).forEach((sp) => {
+          sp.classList.add("lit");
+          sp.classList.remove("active-word");
+        });
+      }
+    }
+
+    btn.addEventListener("click", () => {
+      if (voiceAudio.paused) {
+        if (bgAudio && !bgAudio.paused) bgAudio.pause();
+        storyTitleSpans.concat(storyBodySpans).forEach((sp) => {
+          sp.classList.remove("lit", "active-word");
+        });
+        voiceAudio.play().then(() => {
+          setSpeakingUI(true);
+          storyRaf = requestAnimationFrame(updateHighlightFrame);
+        }).catch(() => {});
+      } else {
+        voiceAudio.pause();
+        setSpeakingUI(false);
+      }
+    });
+
+    voiceAudio.addEventListener("ended", () => {
+      voiceAudio.currentTime = 0;
+      setSpeakingUI(false);
+    });
+    voiceAudio.addEventListener("pause", () => setSpeakingUI(false));
+
+    renderStoryKaraokeWords();
+  }
+
   // Boot!
   initLanguageDropdown();
   initPyramidExplorer();
   initSanctumExplorer();
   initEnemyFilters();
   initKabeelAltar();
+  initHelpBookExplorer();
+  initLegendStudioVoice();
   applyLanguage(currentLang);
 })();
