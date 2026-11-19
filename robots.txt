@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bulentozkir.github.io/relicmaze-site/sitemap.xml
