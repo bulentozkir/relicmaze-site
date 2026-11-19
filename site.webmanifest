@@ -1,0 +1,81 @@
+{
+  "name": "RelicMaze — 144-Chamber Puzzle Platformer for Windows",
+  "short_name": "RelicMaze",
+  "description": "Explore a 144-chamber temple in RelicMaze, a puzzle platformer for Windows with 11 hidden sanctums, 9 sigils, spectral relics, and offline single-player play.",
+  "id": "/relicmaze-site/",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#07080F",
+  "theme_color": "#07080F",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    {
+      "src": "assets/logos/RelicMaze-Logo-44x44.png",
+      "sizes": "44x44",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/logos/RelicMaze-Logo-71x71.png",
+      "sizes": "71x71",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/logos/RelicMaze-Logo-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/logos/RelicMaze-Logo-150x150.png",
+      "sizes": "150x150",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/logos/icon.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/logos/RelicMaze-Logo-300x300.png",
+      "sizes": "300x300",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/logos/RelicMaze-Logo-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/logos/RelicMaze-Logo-1024x1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/screenshots/01-Gameplay-Astral-Veil-Chamber.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Chamber 035 — Veil of the Soul Prism"
+    },
+    {
+      "src": "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Hidden Sanctum S07 — The Rolling Boulder Maze"
+    },
+    {
+      "src": "assets/screenshots/10-Journal-Page.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Chamber Journal — 12-Floor Stepped Pyramid"
+    }
+  ]
+}

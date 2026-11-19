@@ -111,8 +111,34 @@
 
   let lastTs = performance.now();
   let clock = 2.2;
+  let heroVisible = true;
+  let rafId = 0;
+
+  function scheduleRender() {
+    if (!rafId && heroVisible && !document.hidden) {
+      lastTs = performance.now();
+      rafId = requestAnimationFrame(render);
+    }
+  }
+
+  if ("IntersectionObserver" in window && canvas.parentElement) {
+    const heroIo = new IntersectionObserver(
+      (entries) => {
+        heroVisible = entries.some((entry) => entry.isIntersecting);
+        if (heroVisible) scheduleRender();
+      },
+      { threshold: 0 }
+    );
+    heroIo.observe(canvas.parentElement);
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) scheduleRender();
+  });
 
   function render(now) {
+    rafId = 0;
+    if (!heroVisible || document.hidden) return;
     const dt = Math.min(0.05, (now - lastTs) / 1000);
     lastTs = now;
     const still = isStill();
@@ -129,7 +155,7 @@
 
     ctx.clearRect(0, 0, width, height);
     if (clearView) {
-      requestAnimationFrame(render);
+      scheduleRender();
       return;
     }
 
@@ -318,8 +344,8 @@
       ctx.fill();
     }
 
-    requestAnimationFrame(render);
+    scheduleRender();
   }
 
-  requestAnimationFrame(render);
+  scheduleRender();
 })();

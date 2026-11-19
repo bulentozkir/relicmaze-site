@@ -8,5 +8,6 @@ Official static GitHub Pages showcase for **RelicMaze** — an original room-by-
 - `support.html` — Player Support, system requirements, save file locations (`%APPDATA%\RelicMaze`), controls, and accessibility shortcuts.
 - `privacy.html` — Privacy Policy (100% offline play, zero telemetry, zero accounts, local-only saves).
 - `copyright.html` — Copyright, originality & provenance notice, plus MIT licences for Godot Engine and .NET.
-- `robots.txt` and `sitemap.xml` — Search-engine crawl guidance and canonical public page URLs.
+- `robots.txt` and `sitemap.xml` — Search-engine crawl guidance, canonical public page URLs, `<lastmod>` dates, and Google Image Sitemap entries.
+- `site.webmanifest` and `404.html` — Web app manifest (icons, screenshots, theme metadata) and custom `noindex, follow` 404 recovery page for GitHub Pages.
 - `.nojekyll` — Static GitHub Pages marker.

@@ -22,18 +22,56 @@
   }
 
   let currentLang = getInitialLang();
+  const initialDocTitle = document.title;
+  const metaDescEl = document.querySelector('meta[name="description"]');
+  const initialMetaDesc = metaDescEl ? metaDescEl.getAttribute("content") || "" : "";
+  const pageKind = document.body.dataset.page || "home";
 
   function t(key, fallback) {
     const table = I18N.strings[currentLang] || I18N.strings.en || {};
     return table[key] || (I18N.strings.en && I18N.strings.en[key]) || fallback || key;
   }
 
-  function applyLanguage(code) {
+  function syncLocalizedHeadMeta(code) {
+    if (code === "en") {
+      document.title = initialDocTitle;
+      if (metaDescEl && initialMetaDesc) metaDescEl.setAttribute("content", initialMetaDesc);
+      return;
+    }
+    let nextTitle = initialDocTitle;
+    let nextDesc = initialMetaDesc;
+    if (pageKind === "support") {
+      nextTitle = `${t("support_page_title")} — RelicMaze`;
+      nextDesc = t("support_page_sub");
+    } else if (pageKind === "privacy") {
+      nextTitle = `${t("privacy_page_title")} — RelicMaze`;
+      nextDesc = t("privacy_page_sub");
+    } else if (pageKind === "copyright") {
+      nextTitle = `${t("copyright_page_title")} — RelicMaze`;
+      nextDesc = t("copyright_page_sub");
+    } else if (pageKind === "home") {
+      nextTitle = t("subtitle_game");
+      nextDesc = t("intro_rules");
+    }
+    if (nextTitle) document.title = nextTitle;
+    if (metaDescEl && nextDesc) metaDescEl.setAttribute("content", nextDesc);
+  }
+
+  function applyLanguage(code, updateUrl) {
     if (!I18N.strings[code]) code = "en";
     currentLang = code;
     try {
       localStorage.setItem(STORAGE_LANG, code);
     } catch (_) {}
+
+    if (updateUrl && window.history && typeof window.history.replaceState === "function") {
+      try {
+        const url = new URL(window.location.href);
+        if (code === "en") url.searchParams.delete("lang");
+        else url.searchParams.set("lang", code);
+        window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+      } catch (_) {}
+    }
 
     const meta = I18N.languages.find((l) => l.code === code) || {
       code: "en",
@@ -44,6 +82,7 @@
 
     document.documentElement.lang = meta.code;
     document.documentElement.dir = meta.rtl ? "rtl" : "ltr";
+    syncLocalizedHeadMeta(meta.code);
 
     // Update trigger label
     const codePill = document.getElementById("lang-current-code");
@@ -109,7 +148,7 @@
       btn.appendChild(top);
       btn.appendChild(sub);
       btn.addEventListener("click", () => {
-        applyLanguage(lang.code);
+        applyLanguage(lang.code, true);
         dropdown.classList.remove("open");
         trigger.setAttribute("aria-expanded", "false");
       });
@@ -859,6 +898,9 @@
     if (shotImg) {
       shotImg.src = item.shot;
       shotImg.alt = `${titleText} — Sanctum ${k}`;
+      const is1080 = item.shot.indexOf("05-Gameplay-") !== -1;
+      shotImg.width = is1080 ? 1920 : 1600;
+      shotImg.height = is1080 ? 1080 : 900;
     }
     if (shotBtn) {
       shotBtn.dataset.lightboxSrc = item.shot;
@@ -952,6 +994,9 @@
 
     function setActivePortraitTab(activeBtn, src) {
       portraitImg.src = src;
+      const isVisage = src.indexOf("visage") !== -1;
+      portraitImg.width = isVisage ? 537 : 776;
+      portraitImg.height = isVisage ? 516 : 752;
       [viewFullBtn, viewWitheredBtn, viewVisageBtn].forEach((b) => {
         if (b) b.classList.toggle("active", b === activeBtn);
       });
