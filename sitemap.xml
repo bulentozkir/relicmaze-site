@@ -2,69 +2,70 @@
 <urlset
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+  xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
 >
   <url>
     <loc>https://bulentozkir.github.io/relicmaze-site/</loc>
-    <lastmod>2026-11-19</lastmod>
+    <lastmod>2026-11-21</lastmod>
     <image:image>
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/logos/RelicMaze-Logo-1920x1080.png</image:loc>
-      <image:title>RelicMaze Official Widescreen Key Art (1920x1080)</image:title>
     </image:image>
     <image:image>
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/logos/RelicMaze-Poster-720x1080.png</image:loc>
-      <image:title>RelicMaze Official Poster — 144 Chambers and 11 Hidden Sanctums</image:title>
     </image:image>
     <image:image>
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/logos/RelicMaze-BoxArt-1080x1080.png</image:loc>
-      <image:title>RelicMaze Official Square Box Art (1080x1080)</image:title>
     </image:image>
     <image:image>
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/screenshots/01-Gameplay-Astral-Veil-Chamber.png</image:loc>
-      <image:title>RelicMaze Chamber 035 — Veil of the Soul Prism Gameplay</image:title>
     </image:image>
     <image:image>
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/screenshots/02-Gameplay-Gecko-Spire-Shafts.png</image:loc>
-      <image:title>RelicMaze Chamber 057 — Spire of the Climbing Gecko Gameplay</image:title>
     </image:image>
     <image:image>
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/screenshots/03-Gameplay-Sunken-Cenote-Sluice.png</image:loc>
-      <image:title>RelicMaze Chamber 097 — Sunken Cenote Sluice Gameplay</image:title>
     </image:image>
     <image:image>
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/screenshots/04-Gameplay-Shrouded-Torch-Vault.png</image:loc>
-      <image:title>RelicMaze Chamber 114 — Brazier of the Shrouded Vault Gameplay</image:title>
     </image:image>
     <image:image>
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png</image:loc>
-      <image:title>RelicMaze Hidden Sanctum S07 — The Rolling Boulder Maze Puzzle Room</image:title>
     </image:image>
     <image:image>
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/screenshots/07-Game-Opening-Page.png</image:loc>
-      <image:title>RelicMaze Opening Title Screen</image:title>
     </image:image>
     <image:image>
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/screenshots/10-Journal-Page.png</image:loc>
-      <image:title>RelicMaze Chamber Journal — 12-Floor Stepped Pyramid</image:title>
     </image:image>
     <image:image>
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/enemies/kabeel-portrait.png</image:loc>
-      <image:title>Kabeel — Archfiend of Chamber 144 in RelicMaze</image:title>
     </image:image>
     <image:image>
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/previews/all-144-rooms.png</image:loc>
-      <image:title>RelicMaze Complete 144-Chamber Architectural Atlas</image:title>
     </image:image>
   </url>
   <url>
+    <loc>https://bulentozkir.github.io/relicmaze-site/trailer.html</loc>
+    <lastmod>2026-11-21</lastmod>
+    <video:video>
+      <video:thumbnail_loc>https://bulentozkir.github.io/relicmaze-site/assets/media/trailer-poster.webp</video:thumbnail_loc>
+      <video:title>RelicMaze Gameplay Trailer</video:title>
+      <video:description>Watch 55 seconds of RelicMaze gameplay and see how Milo explores the chambers of this offline puzzle platformer for Windows.</video:description>
+      <video:content_loc>https://bulentozkir.github.io/relicmaze-site/assets/media/trailer.mp4</video:content_loc>
+      <video:duration>55</video:duration>
+      <video:publication_date>2026-11-16T18:49:33+03:00</video:publication_date>
+    </video:video>
+  </url>
+  <url>
     <loc>https://bulentozkir.github.io/relicmaze-site/support.html</loc>
-    <lastmod>2026-11-19</lastmod>
+    <lastmod>2026-11-21</lastmod>
   </url>
   <url>
     <loc>https://bulentozkir.github.io/relicmaze-site/privacy.html</loc>
-    <lastmod>2026-11-19</lastmod>
+    <lastmod>2026-11-21</lastmod>
   </url>
   <url>
     <loc>https://bulentozkir.github.io/relicmaze-site/copyright.html</loc>
-    <lastmod>2026-11-19</lastmod>
+    <lastmod>2026-11-21</lastmod>
   </url>
 </urlset>

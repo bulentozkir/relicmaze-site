@@ -1,15 +1,71 @@
-/* ==========================================================================
-   RELICMAZE — Interactive Site Controller (i18n, Soundtrack + WebAudio,
-   144-Chamber Pyramid Atlas, Astral Veil Shift, Gallery Lightbox & Clear View)
-   ========================================================================== */
 (function () {
   const I18N = window.RELICMAZE_I18N || { languages: [], strings: {} };
   const STORAGE_LANG = "rm_site_lang";
   const STORAGE_CLEAR = "rm_clear_view";
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  const labelKeys = ["site_menu", "atlas_floor", "previous", "next", "watch_trailer", "accessibility"];
+  const labels = {
+    en: ["Menu", "Floor", "Previous", "Next", "Watch trailer", "Accessibility"],
+    zh: ["菜单", "楼层", "上一项", "下一项", "观看预告片", "无障碍"],
+    hi: ["मेन्यू", "मंज़िल", "पिछला", "अगला", "ट्रेलर देखें", "सुलभता"],
+    es: ["Menú", "Piso", "Anterior", "Siguiente", "Ver tráiler", "Accesibilidad"],
+    ar: ["القائمة", "الطابق", "السابق", "التالي", "شاهد العرض", "إمكانية الوصول"],
+    fr: ["Menu", "Étage", "Précédent", "Suivant", "Voir la bande-annonce", "Accessibilité"],
+    bn: ["মেনু", "তলা", "আগেরটি", "পরেরটি", "ট্রেলার দেখুন", "অভিগম্যতা"],
+    pt: ["Menu", "Andar", "Anterior", "Próximo", "Ver trailer", "Acessibilidade"],
+    id: ["Menu", "Lantai", "Sebelumnya", "Berikutnya", "Tonton cuplikan", "Aksesibilitas"],
+    ur: ["مینو", "منزل", "پچھلا", "اگلا", "ٹریلر دیکھیں", "رسائی"],
+    ru: ["Меню", "Этаж", "Назад", "Далее", "Смотреть трейлер", "Доступность"],
+    de: ["Menü", "Etage", "Zurück", "Weiter", "Trailer ansehen", "Barrierefreiheit"],
+    ja: ["メニュー", "階", "前へ", "次へ", "予告編を見る", "アクセシビリティ"],
+    pcm: ["Menu", "Floor", "Back", "Next", "Watch trailer", "Accessibility"],
+    mr: ["मेनू", "मजला", "मागील", "पुढील", "ट्रेलर पाहा", "सुलभता"],
+    vi: ["Menu", "Tầng", "Trước", "Sau", "Xem đoạn giới thiệu", "Trợ năng"],
+    te: ["మెనూ", "అంతస్తు", "మునుపటి", "తదుపరి", "ట్రైలర్ చూడండి", "ప్రాప్యత"],
+    sw: ["Menyu", "Ghorofa", "Iliyotangulia", "Inayofuata", "Tazama trela", "Ufikivu"],
+    ha: ["Menu", "Bene", "Na baya", "Na gaba", "Kalli tirela", "Sauƙin shiga"],
+    tr: ["Menü", "Kat", "Önceki", "Sonraki", "Fragmanı izle", "Erişilebilirlik"],
+  };
+  const englishCopy = {
+    hero_platform: "Offline puzzle platformer for Windows",
+    hero_tagline: "144 chambers beneath a stepped pyramid",
+    gameplay_still: "Gameplay still",
+    gameplay_label: "Gameplay footage",
+    intro_rules: "Collect every seal to open the next door. Find nine Meridian sigils and the Heart to open the final one. Hit a hazard and you return to the chamber entrance with your progress intact.",
+    cta_explore: "Explore 144 chambers",
+    hero_explore: "Explore the pyramid",
+    trailer_title: "Trailer and soundtrack",
+    soundtrack_label: "Original soundtrack",
+    walkthrough_strip_title: "Solver walkthroughs",
+    pyramid_eyebrow: "Survey of the pyramid",
+    pyramid_sub: "Select a chamber to see its region, sigil, or Sanctum gateway. On a smaller screen, use the floor picker to move through the pyramid.",
+    puzzles_eyebrow: "Square-numbered gateways",
+    enemies_eyebrow: "Illustrated bestiary",
+    kabeel_eyebrow: "Chamber 144",
+    relics_eyebrow: "Field notes on the Astral Veil",
+    gallery_eyebrow: "Visual archive",
+    the_legend: "The legend",
+    btn_throw_stone: "Throw a sun-stone",
+    btn_reset_duel: "Reset duel",
+    btn_phase_toggle: "Switch phase",
+    phase_astral: "Astral Veil",
+    listen_story: "Listen to the prologue",
+    pause_story: "Pause narration",
+    msstore_banner_title: "RelicMaze for Windows",
+    find_store: "Find on Microsoft Store",
+    filter_all: "All media",
+    legend_says: "The legend says",
+    evidence_says: "What the evidence says",
+    on_the_record: "On the record",
+  };
+  const localizedFallbacks = {
+    hero_platform: "subtitle_game",
+    hero_tagline: "hero_kicker",
+    hero_explore: "nav_pyramid",
+    soundtrack_label: "music",
+    find_store: "msstore_label",
+  };
 
-  // --------------------------------------------------------------------------
-  // 1. LANGUAGE SELECTOR & FULL 20-LANGUAGE RTL/LTR LOCALIZATION
-  // --------------------------------------------------------------------------
   function getInitialLang() {
     const params = new URLSearchParams(window.location.search);
     const q = params.get("lang");
@@ -26,10 +82,14 @@
   const metaDescEl = document.querySelector('meta[name="description"]');
   const initialMetaDesc = metaDescEl ? metaDescEl.getAttribute("content") || "" : "";
   const pageKind = document.body.dataset.page || "home";
+  const languagePicker = document.getElementById("site-language");
 
   function t(key, fallback) {
     const table = I18N.strings[currentLang] || I18N.strings.en || {};
-    return table[key] || (I18N.strings.en && I18N.strings.en[key]) || fallback || key;
+    const labelIndex = labelKeys.indexOf(key);
+    if (labelIndex !== -1) return (labels[currentLang] || labels.en)[labelIndex];
+    if (currentLang === "en" && englishCopy[key]) return englishCopy[key];
+    return table[key] || table[localizedFallbacks[key]] || englishCopy[key] || I18N.strings.en?.[key] || fallback || key;
   }
 
   function syncLocalizedHeadMeta(code) {
@@ -84,103 +144,48 @@
     document.documentElement.dir = meta.rtl ? "rtl" : "ltr";
     syncLocalizedHeadMeta(meta.code);
 
-    // Update trigger label
-    const codePill = document.getElementById("lang-current-code");
-    const nativeSpan = document.getElementById("lang-current-native");
-    if (codePill) codePill.textContent = meta.code.toUpperCase();
-    if (nativeSpan) nativeSpan.textContent = meta.native;
+    if (languagePicker) languagePicker.value = code;
 
-    // Update menu selection state
-    document.querySelectorAll(".lang-option").forEach((btn) => {
-      btn.setAttribute("aria-selected", btn.dataset.lang === code ? "true" : "false");
-    });
-
-    // Translate all [data-i18n] nodes
     document.querySelectorAll("[data-i18n]").forEach((el) => {
-      const key = el.getAttribute("data-i18n");
-      const val = t(key);
-      if (val) el.textContent = val;
+      el.textContent = t(el.dataset.i18n, el.textContent);
     });
 
-    // Update dynamic audio/GIF/phase button texts & lore ticker
-    syncAudioLabels();
-    syncGifButtonLabel();
     syncPhaseState();
-    renderLoreLine(loreIndex, false);
+    renderLoreLine(loreIndex);
     updateRegionButtonNames();
     renderActiveSanctum();
     renderActiveHelpPage();
     renderStoryKaraokeWords();
-    if (selectedChamber) inspectChamber(selectedChamber);
+    syncNarrationButton();
+    inspectChamber(selectedChamber, selectedSanctum);
   }
 
-  function initLanguageDropdown() {
-    const dropdown = document.getElementById("lang-dropdown");
-    const trigger = document.getElementById("lang-trigger");
-    const menu = document.getElementById("lang-menu");
-    if (!dropdown || !trigger || !menu) return;
+  function initNavigation() {
+    if (languagePicker && I18N.languages.length > 0) {
+      languagePicker.replaceChildren(...I18N.languages.map((lang) => {
+        const option = new Option(lang.native, lang.code);
+        option.lang = lang.code;
+        option.dir = lang.rtl ? "rtl" : "ltr";
+        return option;
+      }));
+      languagePicker.closest("label").hidden = false;
+      languagePicker.addEventListener("change", () => applyLanguage(languagePicker.value, true));
+    }
 
-    menu.innerHTML = "";
-    I18N.languages.forEach((lang) => {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "lang-option";
-      btn.setAttribute("role", "option");
-      btn.dataset.lang = lang.code;
-      btn.setAttribute("aria-selected", lang.code === currentLang ? "true" : "false");
-
-      const top = document.createElement("span");
-      top.className = "lang-native";
-      const nameSpan = document.createElement("span");
-      nameSpan.textContent = lang.native;
-      top.appendChild(nameSpan);
-      if (lang.rtl) {
-        const rtlBadge = document.createElement("span");
-        rtlBadge.className = "rtl-tag";
-        rtlBadge.textContent = "RTL";
-        top.appendChild(rtlBadge);
-      }
-
-      const sub = document.createElement("span");
-      sub.className = "lang-en-sub";
-      sub.textContent = `${lang.english} (${lang.code})`;
-
-      btn.appendChild(top);
-      btn.appendChild(sub);
-      btn.addEventListener("click", () => {
-        applyLanguage(lang.code, true);
-        dropdown.classList.remove("open");
-        trigger.setAttribute("aria-expanded", "false");
-      });
-      menu.appendChild(btn);
+    const menu = document.querySelector(".site-menu");
+    if (!menu) return;
+    document.addEventListener("click", (event) => {
+      if (menu.open && (!menu.contains(event.target) || event.target.closest(".menu-panel a"))) menu.open = false;
     });
 
-    trigger.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const willOpen = !dropdown.classList.contains("open");
-      dropdown.classList.toggle("open", willOpen);
-      trigger.setAttribute("aria-expanded", willOpen ? "true" : "false");
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!dropdown.contains(e.target)) {
-        dropdown.classList.remove("open");
-        trigger.setAttribute("aria-expanded", "false");
-      }
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && dropdown.classList.contains("open")) {
-        dropdown.classList.remove("open");
-        trigger.setAttribute("aria-expanded", "false");
-        trigger.focus();
+    menu.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menu.open) {
+        menu.open = false;
+        menu.querySelector("summary").focus();
       }
     });
   }
 
-  // --------------------------------------------------------------------------
-  // 2. CLEAR VIEW (F9) & LANTERN AURA & SCROLL MERIDIAN BAR
-  // --------------------------------------------------------------------------
   function setClearView(enabled) {
     document.body.classList.toggle("clear-view", enabled);
     try {
@@ -209,324 +214,138 @@
     }
   });
 
-  const aura = document.querySelector(".lantern-aura");
-  if (aura) {
-    window.addEventListener(
-      "pointermove",
-      (e) => {
-        aura.style.left = `${e.clientX}px`;
-        aura.style.top = `${e.clientY}px`;
-      },
-      { passive: true }
-    );
-  }
-
-  const meridianBar = document.querySelector(".scroll-meridian-bar");
-  if (meridianBar) {
-    const updateScroll = () => {
-      const max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-      const pct = Math.min(100, Math.max(0, (window.scrollY / max) * 100));
-      meridianBar.style.width = `${pct.toFixed(1)}%`;
-    };
-    window.addEventListener("scroll", updateScroll, { passive: true });
-    updateScroll();
-  }
-
-  // 3D Poster Tilt in Hero
-  const poster = document.getElementById("hero-poster-frame");
-  if (poster) {
-    poster.addEventListener("pointermove", (e) => {
-      if (document.body.classList.contains("reduced-motion")) return;
-      const r = poster.getBoundingClientRect();
-      const nx = (e.clientX - r.left) / r.width - 0.5;
-      const ny = (e.clientY - r.top) / r.height - 0.5;
-      poster.style.transform = `rotateY(${(nx * 11).toFixed(2)}deg) rotateX(${(-ny * 11).toFixed(2)}deg)`;
-    });
-    poster.addEventListener("pointerleave", () => {
-      poster.style.transform = "";
-    });
-  }
-
-  // --------------------------------------------------------------------------
-  // 3. ROTATING "THE LEGEND" LORE PLATE (6 Authentic Lines from Legend.cs)
-  // --------------------------------------------------------------------------
   let loreIndex = 0;
-  let lorePaused = false;
   const loreTextEl = document.getElementById("legend-ticker-line");
-  const loreDotsWrap = document.getElementById("legend-dots");
+  const lorePage = document.getElementById("lore-index");
 
-  function renderLoreLine(idx, animate) {
-    loreIndex = ((idx % 6) + 6) % 6;
+  function renderLoreLine(index) {
     if (!loreTextEl) return;
-    if (loreDotsWrap) {
-      loreDotsWrap.querySelectorAll(".legend-dot").forEach((d, i) => {
-        d.classList.toggle("active", i === loreIndex);
-      });
-    }
-    const line = t(`lore_${loreIndex}`);
-    if (animate && !document.body.classList.contains("reduced-motion")) {
-      loreTextEl.classList.add("fading");
-      setTimeout(() => {
-        loreTextEl.textContent = line;
-        loreTextEl.classList.remove("fading");
-      }, 240);
-    } else {
-      loreTextEl.textContent = line;
-    }
+    loreIndex = (index + 6) % 6;
+    loreTextEl.textContent = t(`lore_${loreIndex}`);
+    lorePage.textContent = `0${loreIndex + 1} / 06`;
   }
 
-  if (loreDotsWrap && loreTextEl) {
-    for (let i = 0; i < 6; i++) {
-      const dot = document.createElement("button");
-      dot.type = "button";
-      dot.className = "legend-dot" + (i === 0 ? " active" : "");
-      dot.setAttribute("aria-label", `Legend note ${i + 1}`);
-      dot.addEventListener("click", () => renderLoreLine(i, true));
-      loreDotsWrap.appendChild(dot);
-    }
-    const tickerBox = loreTextEl.closest(".legend-ticker");
-    if (tickerBox) {
-      tickerBox.addEventListener("mouseenter", () => (lorePaused = true));
-      tickerBox.addEventListener("mouseleave", () => (lorePaused = false));
-    }
-    setInterval(() => {
-      if (!lorePaused && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        renderLoreLine(loreIndex + 1, true);
+  if (lorePage) {
+    lorePage.parentElement.hidden = false;
+    document.getElementById("lore-prev").addEventListener("click", () => renderLoreLine(loreIndex - 1));
+    document.getElementById("lore-next").addEventListener("click", () => renderLoreLine(loreIndex + 1));
+  }
+
+  function initSoundtrack() {
+    const audio = document.getElementById("rm-audio");
+    const menuButton = document.getElementById("toolbar-music-btn");
+    const picker = document.getElementById("audio-track");
+    const error = document.getElementById("soundtrack-error");
+    if (!audio) return;
+    const tracks = ["assets/media/relicmaze.mp3?v=8", "assets/media/relicmaze-phrygian.mp3?v=8"];
+    const narration = document.getElementById("legend-voice-audio");
+    let track = 0;
+    audio.volume = 0.75;
+
+    const reportAudioError = (reason) => {
+      if (reason?.name === "AbortError") return;
+      if (error) error.hidden = false;
+      console.warn("RelicMaze soundtrack could not play:", reason);
+    };
+    const setTrack = (index, play) => {
+      track = index;
+      if (error) error.hidden = true;
+      if (picker) picker.value = String(track);
+      audio.src = tracks[track];
+      if (play) audio.play().catch(reportAudioError);
+    };
+    audio.addEventListener("play", () => {
+      if (narration && !narration.paused) narration.pause();
+      if (error) error.hidden = true;
+      menuButton?.setAttribute("aria-pressed", "true");
+    });
+    audio.addEventListener("pause", () => menuButton?.setAttribute("aria-pressed", "false"));
+    audio.addEventListener("ended", () => setTrack((track + 1) % tracks.length, true));
+    audio.addEventListener("error", () => reportAudioError(audio.error));
+    menuButton?.addEventListener("click", () => {
+      if (audio.paused) audio.play().catch(reportAudioError);
+      else audio.pause();
+    });
+    picker?.addEventListener("change", () => setTrack(Number(picker.value), !audio.paused));
+    initVisualizer(audio);
+  }
+
+  function initVisualizer(audio) {
+    const canvas = document.getElementById("audio-visualizer");
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    // The Web Audio graph cannot read file:// media; native playback still works.
+    if (!canvas || !AudioContext || location.protocol === "file:" || !("IntersectionObserver" in window)) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let graph;
+    let analyser;
+    let samples;
+    let visible = false;
+    let frame = 0;
+    let lastFrame = 0;
+    const canDraw = () => !!analyser && !audio.paused && visible && !document.hidden && !reducedMotion.matches;
+
+    function draw(now) {
+      frame = 0;
+      if (!canDraw()) return;
+      if (now - lastFrame >= 32) {
+        lastFrame = now;
+        analyser.getByteFrequencyData(samples);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < 22; i++) {
+          const height = Math.max(2, samples[i] / 255 * canvas.height);
+          ctx.fillRect(i * 6, canvas.height - height, 3, height);
+        }
       }
-    }, 7000);
-  }
+      frame = requestAnimationFrame(draw);
+    }
 
-  // --------------------------------------------------------------------------
-  // 4. DUAL 432 Hz SOUNDTRACK PLAYLIST (relicmaze.mp3 + relicmaze-phrygian.mp3)
-  // --------------------------------------------------------------------------
-  const PLAYLIST = [
-    {
-      src: "assets/media/relicmaze.mp3?v=8",
-      title: "432 Hz Score I — relicmaze.mp3 (1/2)",
-      pill: "relicmaze.mp3 (1/2)",
-    },
-    {
-      src: "assets/media/relicmaze-phrygian.mp3?v=8",
-      title: "432 Hz Score II — relicmaze-phrygian.mp3 (2/2)",
-      pill: "relicmaze-phrygian.mp3 (2/2)",
-    },
-  ];
-  let trackIdx = 0;
-
-  const audioEl = document.getElementById("rm-audio");
-  const toolbarMusicBtn = document.getElementById("toolbar-music-btn");
-  const deckMusicBtn = document.getElementById("deck-music-btn");
-  const nextTrackBtn = document.getElementById("next-track-btn");
-  const trackTitleEl = document.getElementById("audio-track-title");
-  const overlayMusicBtn = document.getElementById("overlay-music-btn");
-  const trailerStatusPill = document.getElementById("trailer-sound-pill");
-  const seekBar = document.getElementById("audio-seek");
-  const timeLabel = document.getElementById("audio-time");
-  const volSlider = document.getElementById("audio-volume");
-  const visCanvas = document.getElementById("audio-visualizer");
-  const trailerGifImg = document.getElementById("trailer-gif-img");
-  const gifToggleBtn = document.getElementById("gif-toggle-btn");
-
-  let audioCtx = null;
-  let analyser = null;
-  let freqData = null;
-  let gifPaused = false;
-
-  if (audioEl) {
-    audioEl.loop = false;
-    audioEl.src = PLAYLIST[trackIdx].src;
-  }
-
-  function fmtTime(sec) {
-    if (!isFinite(sec) || sec < 0) return "0:00";
-    const m = Math.floor(sec / 60);
-    const s = Math.floor(sec % 60);
-    return `${m}:${s < 10 ? "0" : ""}${s}`;
-  }
-
-  function ensureWebAudio() {
-    if (!audioEl || audioCtx) return;
-    try {
-      const Ctx = window.AudioContext || window.webkitAudioContext;
-      if (!Ctx) return;
-      audioCtx = new Ctx();
-      const src = audioCtx.createMediaElementSource(audioEl);
-      analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 64;
-      freqData = new Uint8Array(analyser.frequencyBinCount);
-      src.connect(analyser);
-      analyser.connect(audioCtx.destination);
-      drawVisualizer();
-    } catch (_) {}
-  }
-
-  function drawVisualizer() {
-    if (!visCanvas || !analyser) return;
-    const vctx = visCanvas.getContext("2d");
-    const w = visCanvas.width;
-    const h = visCanvas.height;
-
-    function loop() {
-      vctx.clearRect(0, 0, w, h);
-      analyser.getByteFrequencyData(freqData);
-      const bars = 24;
-      const gap = 3;
-      const bw = (w - gap * (bars - 1)) / bars;
-      for (let i = 0; i < bars; i++) {
-        const v = audioEl && !audioEl.paused ? freqData[i] / 255 : 0.08;
-        const bh = Math.max(3, v * (h - 6));
-        const x = i * (bw + gap);
-        const y = h - bh - 2;
-        const grad = vctx.createLinearGradient(0, h, 0, 0);
-        grad.addColorStop(0, "#ffd46b");
-        grad.addColorStop(1, "#56f6ea");
-        vctx.fillStyle = grad;
-        vctx.fillRect(x, y, bw, bh);
+    async function sync() {
+      if (!audio.paused && visible && !document.hidden && !reducedMotion.matches && !graph) {
+        try {
+          graph = new AudioContext();
+          if (graph.state === "suspended") await graph.resume();
+          analyser = graph.createAnalyser();
+          analyser.fftSize = 64;
+          samples = new Uint8Array(analyser.frequencyBinCount);
+          analyser.connect(graph.destination);
+          graph.createMediaElementSource(audio).connect(analyser);
+          ctx.fillStyle = "#d5ac78";
+        } catch (error) {
+          analyser = null;
+          console.warn("RelicMaze spectrum could not start:", error);
+        }
       }
-      requestAnimationFrame(loop);
-    }
-    requestAnimationFrame(loop);
-  }
-
-  function syncAudioLabels() {
-    const playing = Boolean(audioEl && !audioEl.paused);
-    const curTrack = PLAYLIST[trackIdx] || PLAYLIST[0];
-    if (toolbarMusicBtn) {
-      toolbarMusicBtn.classList.toggle("playing", playing);
-      toolbarMusicBtn.setAttribute("aria-pressed", playing ? "true" : "false");
-    }
-    const labelText = playing ? t("btn_pause_music") : t("btn_play_music");
-    if (deckMusicBtn) {
-      deckMusicBtn.querySelector("[data-label]") &&
-        (deckMusicBtn.querySelector("[data-label]").textContent = labelText);
-    }
-    if (trackTitleEl) {
-      trackTitleEl.textContent = curTrack.title;
-    }
-    if (nextTrackBtn) {
-      const nextNum = ((trackIdx + 1) % PLAYLIST.length) + 1;
-      nextTrackBtn.textContent = `⏭ Track ${nextNum}/${PLAYLIST.length}`;
-    }
-    if (overlayMusicBtn) {
-      overlayMusicBtn.style.display = playing ? "none" : "inline-flex";
-      const sp = overlayMusicBtn.querySelector("[data-label]");
-      if (sp) sp.textContent = t("btn_play_music");
-    }
-    if (trailerStatusPill) {
-      trailerStatusPill.classList.toggle("sound-live", playing);
-      trailerStatusPill.textContent = playing
-        ? `♪ 432 Hz · ${curTrack.pill} · LIVE`
-        : `♪ 432 Hz · ${curTrack.pill} · MUTED`;
-    }
-  }
-
-  async function switchTrack(nextIndex, autoPlay) {
-    if (!audioEl) return;
-    trackIdx = ((nextIndex % PLAYLIST.length) + PLAYLIST.length) % PLAYLIST.length;
-    const wasPlaying = !audioEl.paused || autoPlay;
-    audioEl.src = PLAYLIST[trackIdx].src;
-    syncAudioLabels();
-    if (wasPlaying) {
-      ensureWebAudio();
-      if (audioCtx && audioCtx.state === "suspended") {
-        try { await audioCtx.resume(); } catch (_) {}
+      if (canDraw()) {
+        if (!frame) frame = requestAnimationFrame(draw);
+      } else {
+        cancelAnimationFrame(frame);
+        frame = 0;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
-      try { await audioEl.play(); } catch (_) {}
     }
-    syncAudioLabels();
+
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      sync();
+    }).observe(canvas);
+    audio.addEventListener("play", sync);
+    audio.addEventListener("pause", sync);
+    audio.addEventListener("ended", sync);
+    document.addEventListener("visibilitychange", sync);
+    reducedMotion.addEventListener("change", sync);
   }
 
-  async function toggleMusic() {
-    if (!audioEl) return;
-    ensureWebAudio();
-    if (audioCtx && audioCtx.state === "suspended") {
-      try {
-        await audioCtx.resume();
-      } catch (_) {}
-    }
-    if (audioEl.paused) {
-      try {
-        await audioEl.play();
-      } catch (_) {}
-    } else {
-      audioEl.pause();
-    }
-    syncAudioLabels();
+  const trailer = document.getElementById("trailer-video");
+  if (trailer) {
+    const trailerError = document.getElementById("trailer-error");
+    const showTrailerError = () => { trailerError.hidden = false; };
+    trailer.addEventListener("error", showTrailerError);
+    trailer.querySelector("source")?.addEventListener("error", showTrailerError);
+    trailer.addEventListener("playing", () => { trailerError.hidden = true; });
   }
 
-  [toolbarMusicBtn, deckMusicBtn, overlayMusicBtn].forEach((btn) => {
-    if (btn) btn.addEventListener("click", toggleMusic);
-  });
-
-  // Hero "Watch Trailer & Music" button scrolls smoothly & starts soundtrack!
-  const heroTrailerCta = document.getElementById("hero-watch-trailer");
-  if (heroTrailerCta) {
-    heroTrailerCta.addEventListener("click", () => {
-      if (audioEl && audioEl.paused) toggleMusic();
-    });
-  }
-
-  if (audioEl) {
-    audioEl.volume = 0.75;
-    audioEl.addEventListener("timeupdate", () => {
-      if (seekBar && isFinite(audioEl.duration) && audioEl.duration > 0) {
-        seekBar.value = String((audioEl.currentTime / audioEl.duration) * 100);
-      }
-      if (timeLabel) {
-        timeLabel.textContent = `${fmtTime(audioEl.currentTime)} / ${fmtTime(audioEl.duration)}`;
-      }
-    });
-    audioEl.addEventListener("loadedmetadata", () => {
-      if (timeLabel) {
-        timeLabel.textContent = `0:00 / ${fmtTime(audioEl.duration)}`;
-      }
-    });
-    audioEl.addEventListener("play", syncAudioLabels);
-    audioEl.addEventListener("pause", syncAudioLabels);
-    audioEl.addEventListener("ended", () => {
-      switchTrack(trackIdx + 1, true);
-    });
-  }
-
-  if (nextTrackBtn) {
-    nextTrackBtn.addEventListener("click", () => {
-      switchTrack(trackIdx + 1, true);
-    });
-  }
-
-  if (seekBar && audioEl) {
-    seekBar.addEventListener("input", () => {
-      if (isFinite(audioEl.duration) && audioEl.duration > 0) {
-        audioEl.currentTime = (Number(seekBar.value) / 100) * audioEl.duration;
-      }
-    });
-  }
-  if (volSlider && audioEl) {
-    volSlider.addEventListener("input", () => {
-      audioEl.volume = Number(volSlider.value);
-    });
-  }
-
-  function syncGifButtonLabel() {
-    if (!gifToggleBtn) return;
-    gifToggleBtn.textContent = gifPaused ? t("btn_resume_gif") : t("btn_pause_gif");
-  }
-
-  if (gifToggleBtn && trailerGifImg) {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      gifPaused = true;
-      trailerGifImg.src = trailerGifImg.dataset.poster;
-    }
-    gifToggleBtn.addEventListener("click", () => {
-      gifPaused = !gifPaused;
-      trailerGifImg.src = gifPaused ? trailerGifImg.dataset.poster : trailerGifImg.dataset.gif;
-      syncGifButtonLabel();
-    });
-  }
-
-  // --------------------------------------------------------------------------
-  // 5. INTERACTIVE 12-FLOOR STEPPED PYRAMID & 10 REGIONS EXPLORER
-  // --------------------------------------------------------------------------
   const REGIONS = [
     { idx: 0, start: 1, end: 15, color: "#5cb87a", sigil: 15, vibe: "Root-cut masonry, lantern bearings & foundational latches." },
     { idx: 1, start: 16, end: 30, color: "#d69e49", sigil: 30, vibe: "Warm clay arches, suspended seals & swinging obsidian blades." },
@@ -555,8 +374,11 @@
   };
 
   const SIGIL_ROOMS = new Set([15, 30, 45, 60, 75, 90, 105, 120, 135]);
+  const floorPicker = document.getElementById("pyramid-floor-select");
+  const atlasHover = matchMedia("(min-width: 1120px) and (hover: hover) and (pointer: fine)");
   let activeRegionFilter = null;
   let selectedChamber = 144;
+  let selectedSanctum = false;
 
   function regionForRoom(n) {
     return REGIONS.find((r) => n >= r.start && n <= r.end) || REGIONS[0];
@@ -572,26 +394,31 @@
 
   function inspectChamber(n, sanctumOverride) {
     selectedChamber = n;
+    selectedSanctum = Boolean(sanctumOverride && SANCTUMS[n]);
     const numEl = document.getElementById("inspector-num");
     const titleEl = document.getElementById("inspector-title");
     const metaEl = document.getElementById("inspector-meta");
     if (!numEl || !titleEl || !metaEl) return;
 
-    document.querySelectorAll(".chamber-cell, .sanctum-node").forEach((c) => {
-      c.classList.remove("selected");
-    });
-
     const reg = regionForRoom(n);
     const floor = Math.floor(Math.sqrt(n - 1)) + 1;
+    const selector = selectedSanctum ? ".sanctum-node" : ".chamber-cell";
+    const current = document.querySelector(`${selector}[data-room="${n}"]`);
+    const last = document.querySelector('.pyramid-rows [aria-pressed="true"]');
+    if (last && last !== current) last.setAttribute("aria-pressed", "false");
+    current?.setAttribute("aria-pressed", "true");
+    if (floorPicker && floorPicker.value !== String(floor)) {
+      floorPicker.value = String(floor);
+    }
+    document.querySelector(".pyramid-floor.is-current")?.classList.remove("is-current");
+    document.querySelector(`.pyramid-floor[data-floor="${floor}"]`)?.classList.add("is-current");
 
-    if (sanctumOverride && SANCTUMS[n]) {
+    if (selectedSanctum) {
       const sc = SANCTUMS[n];
-      const node = document.querySelector(`.sanctum-node[data-room="${n}"]`);
-      if (node) node.classList.add("selected");
       numEl.textContent = sc.code;
-      titleEl.textContent = `${sc.name} — Hidden Sanctum (${sc.kind})`;
-      metaEl.textContent = `East-flank gateway from Chamber ${String(n).padStart(3, "0")} · Floor ${floor} of 12 · ${t(`reg_${reg.idx}`)}`;
       const sIdx = SANCTUM_LIST.findIndex((x) => x.room === n);
+      titleEl.textContent = sIdx >= 0 ? t(`s${SANCTUM_LIST[sIdx].order}_title`) : sc.name;
+      metaEl.textContent = `${t("atlas_floor")} ${floor} / 12 · ${t(`reg_${reg.idx}`)} · ${sc.kind}`;
       if (sIdx >= 0 && sIdx !== activeSanctumIdx) {
         activeSanctumIdx = sIdx;
         renderActiveSanctum();
@@ -599,23 +426,20 @@
       return;
     }
 
-    const cell = document.querySelector(`.chamber-cell[data-room="${n}"]`);
-    if (cell) cell.classList.add("selected");
-
     numEl.textContent = String(n).padStart(3, "0");
     let badge = "";
-    if (n === 144) badge = " · Kabeel, the Satanic Lava-Born Beast (50-Stone Duel)";
-    else if (SIGIL_ROOMS.has(n)) badge = ` · Meridian Sigil #${n / 15} Chamber`;
-    else if (SANCTUMS[n]) badge = ` · Gateway to Sanctum ${SANCTUMS[n].code} (${SANCTUMS[n].name})`;
+    if (n === 144) badge = " · Kabeel";
+    else if (SIGIL_ROOMS.has(n)) badge = ` · Meridian sigil ${n / 15}`;
+    else if (SANCTUMS[n]) badge = ` · Gateway to Sanctum ${SANCTUMS[n].code}`;
 
     titleEl.textContent = `${t(`reg_${reg.idx}`)}${badge}`;
-    metaEl.textContent = `Floor ${floor} of 12 (32×20 tiles, 12 Hz deterministic solver-verified) — ${reg.vibe}`;
+    metaEl.textContent = `${t("atlas_floor")} ${floor} / 12 · ${reg.vibe}`;
   }
 
   function applyRegionHighlight(regionIdx) {
     activeRegionFilter = activeRegionFilter === regionIdx ? null : regionIdx;
     document.querySelectorAll(".region-btn").forEach((b) => {
-      b.classList.toggle("active", Number(b.dataset.region) === activeRegionFilter);
+      b.setAttribute("aria-pressed", String(Number(b.dataset.region) === activeRegionFilter));
     });
     document.querySelectorAll(".chamber-cell").forEach((cell) => {
       const rIdx = Number(cell.dataset.region);
@@ -638,25 +462,32 @@
       btn.type = "button";
       btn.className = "region-btn";
       btn.dataset.region = String(reg.idx);
+      btn.setAttribute("aria-pressed", "false");
       btn.style.setProperty("--reg-color", reg.color);
-      btn.innerHTML = `<span class="region-name">${t(`reg_${reg.idx}`)}</span><span class="region-range">${reg.start}–${reg.end}</span>`;
+      const name = document.createElement("span");
+      name.className = "region-name";
+      name.textContent = t(`reg_${reg.idx}`);
+      const range = document.createElement("bdi");
+      range.className = "region-range";
+      range.textContent = `${reg.start}–${reg.end}`;
+      btn.append(name, range);
       btn.addEventListener("click", () => applyRegionHighlight(reg.idx));
       regContainer.appendChild(btn);
     });
 
     rowsContainer.innerHTML = "";
     let roomNum = 1;
-    for (let f = 0; f < 12; f++) {
-      const count = 2 * f + 1;
+    for (let floor = 1; floor <= 12; floor++) {
+      const count = 2 * floor - 1;
       const row = document.createElement("div");
       row.className = "pyramid-floor";
-
-      const tag = document.createElement("span");
-      tag.className = "floor-tag";
+      row.dataset.floor = String(floor);
       const firstInFloor = roomNum;
       const lastInFloor = roomNum + count - 1;
-      tag.textContent = firstInFloor === lastInFloor ? "1" : `${firstInFloor}–${lastInFloor}`;
-      row.appendChild(tag);
+      if (floorPicker) {
+        const range = firstInFloor === lastInFloor ? "1" : `${firstInFloor}–${lastInFloor}`;
+        floorPicker.add(new Option(`${floor} (${range})`, String(floor)));
+      }
 
       for (let c = 0; c < count; c++) {
         const n = roomNum++;
@@ -670,13 +501,16 @@
         cell.dataset.region = String(reg.idx);
         cell.style.setProperty("--cell-color", reg.color);
         cell.textContent = String(n);
-        cell.setAttribute("aria-label", `Chamber ${n}`);
-        cell.addEventListener("mouseenter", () => inspectChamber(n, false));
+        const appendix = SIGIL_ROOMS.has(n) ? ", Meridian sigil" : n === 144 ? ", finale" : "";
+        cell.setAttribute("aria-label", `Chamber ${n}${appendix}`);
+        cell.setAttribute("aria-pressed", "false");
+        cell.addEventListener("pointerenter", (event) => {
+          if (event.pointerType === "mouse" && atlasHover.matches) inspectChamber(n, false);
+        });
         cell.addEventListener("click", () => inspectChamber(n, false));
         row.appendChild(cell);
       }
 
-      // East-flank Hidden Sanctum on floors 1..11 (ends at square numbers 4, 9, 16 ... 144)
       if (SANCTUMS[lastInFloor]) {
         const sc = SANCTUMS[lastInFloor];
         const sBtn = document.createElement("button");
@@ -685,7 +519,10 @@
         sBtn.dataset.room = String(lastInFloor);
         sBtn.textContent = sc.code;
         sBtn.setAttribute("aria-label", `${sc.code}: ${sc.name}`);
-        sBtn.addEventListener("mouseenter", () => inspectChamber(lastInFloor, true));
+        sBtn.setAttribute("aria-pressed", "false");
+        sBtn.addEventListener("pointerenter", (event) => {
+          if (event.pointerType === "mouse" && atlasHover.matches) inspectChamber(lastInFloor, true);
+        });
         sBtn.addEventListener("click", () => inspectChamber(lastInFloor, true));
         row.appendChild(sBtn);
       }
@@ -693,12 +530,16 @@
       rowsContainer.appendChild(row);
     }
 
-    inspectChamber(144, false);
+    if (floorPicker) {
+      floorPicker.closest("label").hidden = false;
+      floorPicker.addEventListener("change", () => {
+        const floor = Number(floorPicker.value);
+        inspectChamber((floor - 1) ** 2 + 1, false);
+      });
+    }
+    inspectChamber(selectedChamber, false);
   }
 
-  // --------------------------------------------------------------------------
-  // 6. ASTRAL VEIL PHASE SHIFT INTERACTIVE TOGGLE
-  // --------------------------------------------------------------------------
   const astralSection = document.getElementById("relics");
   const phaseBtn = document.getElementById("btn-phase-toggle");
   const phasePill = document.getElementById("phase-status-pill");
@@ -708,16 +549,16 @@
     if (!astralSection) return;
     astralSection.classList.toggle("astral-active", isAstral);
     if (phaseBtn) phaseBtn.setAttribute("aria-pressed", isAstral ? "true" : "false");
-    if (phasePill) phasePill.textContent = isAstral ? `✦ ${t("phase_astral")}` : `◈ ${t("phase_physical")}`;
+    if (phasePill) phasePill.textContent = t(isAstral ? "phase_astral" : "phase_physical");
 
     const pw = document.getElementById("state-phase-wall");
     const ab = document.getElementById("state-astral-bridge");
     const wr = document.getElementById("state-wraith");
     const ld = document.getElementById("state-ladder");
-    if (pw) pw.textContent = isAstral ? "PERMEABLE AIR (Walk Through)" : "SOLID SANDSTONE (#)";
-    if (ab) ab.textContent = isAstral ? "SOLID SPIRIT BRIDGE (#)" : "INTANGIBLE MIST (Fall)";
-    if (wr) wr.textContent = isAstral ? "SOLIDIFIED STALKER!" : "HARMLESS ECTOPLASM";
-    if (ld) ld.textContent = isAstral ? "INTANGIBLE (No Climb)" : "CLIMBABLE RUNGS (H)";
+    if (pw) pw.textContent = isAstral ? "Passable" : "Solid sandstone";
+    if (ab) ab.textContent = isAstral ? "Solid bridge · Can cross" : "Mist · Cannot cross";
+    if (wr) wr.textContent = isAstral ? "Solid · Dangerous" : "Harmless";
+    if (ld) ld.textContent = isAstral ? "Intangible · Cannot climb" : "Climbable";
   }
 
   if (phaseBtn) {
@@ -727,23 +568,12 @@
     });
   }
 
-  // --------------------------------------------------------------------------
-  // 7. FILTERABLE SCREENSHOT GALLERY & KEYBOARD LIGHTBOX
-  // --------------------------------------------------------------------------
-  const filterBtns = document.querySelectorAll(".filter-btn");
-  const galleryItems = Array.from(document.querySelectorAll("[data-lightbox-src]"));
-  const lightbox = document.getElementById("lightbox");
-  const lbImg = document.getElementById("lightbox-img");
-  const lbCaption = document.getElementById("lightbox-caption");
-  const lbClose = document.getElementById("lightbox-close");
-  const lbPrev = document.getElementById("lightbox-prev");
-  const lbNext = document.getElementById("lightbox-next");
-  let lbIndex = 0;
-
-  filterBtns.forEach((btn) => {
+  const galleryFilters = document.querySelectorAll("[data-filter]");
+  galleryFilters.forEach((btn) => {
+    btn.setAttribute("aria-pressed", String(btn.dataset.filter === "all"));
     btn.addEventListener("click", () => {
       const cat = btn.dataset.filter;
-      filterBtns.forEach((b) => b.classList.toggle("active", b === btn));
+      galleryFilters.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
       document.querySelectorAll(".gallery-item").forEach((card) => {
         const match = cat === "all" || card.dataset.category === cat;
         card.hidden = !match;
@@ -751,107 +581,86 @@
     });
   });
 
-  function visibleLightboxItems() {
-    return galleryItems.filter((el) => !el.hidden);
-  }
+  function initLightbox() {
+    const dialog = document.getElementById("lightbox");
+    if (!dialog) return;
+    const image = document.getElementById("lightbox-img");
+    const player = document.getElementById("lightbox-video");
+    const caption = document.getElementById("lightbox-caption");
+    const index = document.getElementById("lightbox-index");
+    const pagination = index.parentElement;
+    const error = document.getElementById("lightbox-error");
+    let opener;
+    let items = [];
+    let current = 0;
 
-  function openLightboxAt(idx) {
-    const list = visibleLightboxItems();
-    if (!lightbox || !lbImg || list.length === 0) return;
-    lbIndex = ((idx % list.length) + list.length) % list.length;
-    const item = list[lbIndex];
-    lbImg.src = item.dataset.lightboxSrc;
-    lbImg.alt = item.dataset.lightboxTitle || "RelicMaze";
-    if (lbCaption) {
-      lbCaption.textContent = `${item.dataset.lightboxTitle || ""} (${lbIndex + 1} / ${list.length})`;
+    function clearVideo() {
+      if (!player.hasAttribute("src")) return;
+      player.pause();
+      player.removeAttribute("src");
+      player.load();
     }
-    lightbox.classList.add("open");
-    lightbox.setAttribute("aria-hidden", "false");
-  }
 
-  function closeLightbox() {
-    if (!lightbox) return;
-    lightbox.classList.remove("open");
-    lightbox.setAttribute("aria-hidden", "true");
-  }
+    function show(indexInGroup) {
+      current = (indexInGroup + items.length) % items.length;
+      const { lightboxSrc, lightboxVideo, lightboxTitle } = items[current].dataset;
+      const title = lightboxTitle || "RelicMaze";
+      clearVideo();
+      image.hidden = Boolean(lightboxVideo);
+      player.hidden = !lightboxVideo;
+      error.hidden = true;
+      if (lightboxVideo) {
+        image.removeAttribute("src");
+        player.poster = lightboxSrc;
+        player.setAttribute("aria-label", title);
+        player.src = lightboxVideo;
+      } else {
+        const thumb = items[current].querySelector("img");
+        image.alt = thumb?.alt || title;
+        image.src = lightboxSrc;
+      }
+      caption.textContent = title;
+      index.textContent = `${current + 1} / ${items.length}`;
+      pagination.hidden = items.length < 2;
+    }
 
-  galleryItems.forEach((el) => {
-    el.addEventListener("click", () => {
-      const list = visibleLightboxItems();
-      const idx = list.indexOf(el);
-      openLightboxAt(idx >= 0 ? idx : 0);
+    document.querySelectorAll("[data-lightbox-src]").forEach((item) => {
+      item.setAttribute("aria-haspopup", "dialog");
+      item.addEventListener("click", () => {
+        const group = item.closest("[data-viewer-group]");
+        items = group ? [...group.querySelectorAll("[data-lightbox-src]")].filter((el) => !el.closest("[hidden]")) : [item];
+        opener = item;
+        show(items.indexOf(item));
+        dialog.showModal();
+      });
     });
-  });
 
-  if (lbClose) lbClose.addEventListener("click", closeLightbox);
-  if (lbPrev) lbPrev.addEventListener("click", () => openLightboxAt(lbIndex - 1));
-  if (lbNext) lbNext.addEventListener("click", () => openLightboxAt(lbIndex + 1));
-  if (lightbox) {
-    lightbox.addEventListener("click", (e) => {
-      if (e.target === lightbox) closeLightbox();
+    document.getElementById("lightbox-prev").addEventListener("click", () => show(current - 1));
+    document.getElementById("lightbox-next").addEventListener("click", () => show(current + 1));
+    image.addEventListener("error", () => { if (!image.hidden) error.hidden = false; });
+    player.addEventListener("error", () => { if (!player.hidden) error.hidden = false; });
+    dialog.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        dialog.close();
+        return;
+      }
+      if (items.length < 2 || event.target === player || !["ArrowLeft", "ArrowRight"].includes(event.key)) return;
+      event.preventDefault();
+      const step = (event.key === "ArrowRight") === (document.documentElement.dir !== "rtl") ? 1 : -1;
+      show(current + step);
+    });
+    dialog.addEventListener("click", (event) => {
+      if (event.target !== dialog) return;
+      const bounds = dialog.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+    });
+    dialog.addEventListener("close", () => {
+      clearVideo();
+      opener?.focus({ preventScroll: true });
     });
   }
 
-  document.addEventListener("keydown", (e) => {
-    if (!lightbox || !lightbox.classList.contains("open")) return;
-    if (e.key === "Escape") closeLightbox();
-    else if (e.key === "ArrowLeft") openLightboxAt(lbIndex - 1);
-    else if (e.key === "ArrowRight") openLightboxAt(lbIndex + 1);
-  });
-
-  // --------------------------------------------------------------------------
-  // 8. SCROLL REVEAL & ANIMATED NUMBER COUNTERS
-  // --------------------------------------------------------------------------
-  const revealEls = document.querySelectorAll(".reveal");
-  if ("IntersectionObserver" in window && revealEls.length > 0) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("in-view");
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    revealEls.forEach((el) => io.observe(el));
-  } else {
-    revealEls.forEach((el) => el.classList.add("in-view"));
-  }
-
-  const counterEls = document.querySelectorAll("[data-count-to]");
-  if ("IntersectionObserver" in window && counterEls.length > 0) {
-    const cio = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const el = entry.target;
-          cio.unobserve(el);
-          const target = Number(el.dataset.countTo);
-          if (target === 0 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-            el.textContent = String(target);
-            return;
-          }
-          const start = performance.now();
-          const dur = 950;
-          function tick(now) {
-            const p = Math.min(1, (now - start) / dur);
-            const eased = 1 - Math.pow(1 - p, 3);
-            el.textContent = String(Math.round(target * eased));
-            if (p < 1) requestAnimationFrame(tick);
-          }
-          requestAnimationFrame(tick);
-        });
-      },
-      { threshold: 0.4 }
-    );
-    counterEls.forEach((el) => cio.observe(el));
-  }
-
-  // --------------------------------------------------------------------------
-  // 9. 11 INTER-FLOOR SANCTUM PUZZLE ROOMS EXPLORER (4, 9, 16 .. 144)
-  // --------------------------------------------------------------------------
   const SANCTUM_LIST = [
     { order: 1, first: 2, room: 4, floor: 2, regIdx: 0, shot: "assets/screenshots/sanctum-04-dial.png" },
     { order: 2, first: 5, room: 9, floor: 3, regIdx: 0, shot: "assets/screenshots/sanctum-04-dial.png" },
@@ -873,9 +682,7 @@
     const k = item.order;
 
     document.querySelectorAll(".sanctum-tab").forEach((btn, idx) => {
-      const on = idx === activeSanctumIdx;
-      btn.classList.toggle("active", on);
-      btn.setAttribute("aria-selected", on ? "true" : "false");
+      btn.setAttribute("aria-pressed", String(idx === activeSanctumIdx));
     });
 
     const badgeCode = document.getElementById("sanctum-badge-code");
@@ -889,9 +696,9 @@
 
     const titleText = t(`s${k}_title`);
     const archText = t(`s${k}_arch`);
-    if (badgeCode) badgeCode.textContent = `SANCTUM ${String(k).padStart(2, "0")} / 11 · CHAMBER ${String(item.room).padStart(3, "0")} (${item.floor}²)`;
+    if (badgeCode) badgeCode.textContent = `Sanctum ${String(k).padStart(2, "0")} / 11 · Chamber ${String(item.room).padStart(3, "0")} (${item.floor}²)`;
     if (badgeArch) badgeArch.textContent = archText;
-    if (badgeRegion) badgeRegion.textContent = `Floor ${item.floor} · Stratum ${item.first}–${item.room} · ${t(`reg_${item.regIdx}`)}`;
+    if (badgeRegion) badgeRegion.textContent = `${t("atlas_floor")} ${item.floor} · ${item.first}–${item.room} · ${t(`reg_${item.regIdx}`)}`;
     if (titleEl) titleEl.textContent = titleText;
     if (objEl) objEl.textContent = t(`s${k}_obj`);
     if (clueEl) clueEl.textContent = t(`s${k}_clue`);
@@ -915,9 +722,9 @@
     SANCTUM_LIST.forEach((s, idx) => {
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "sanctum-tab" + (idx === activeSanctumIdx ? " active" : "");
-      btn.setAttribute("role", "tab");
-      btn.innerHTML = `<span class="sanctum-tab-code">S${String(s.order).padStart(2, "0")}</span><span class="sanctum-tab-room">${String(s.room).padStart(3, "0")}</span><span class="sanctum-tab-sq">${s.floor}²</span>`;
+      btn.className = "sanctum-tab";
+      btn.innerHTML = `<bdi class="sanctum-tab-code">S${String(s.order).padStart(2, "0")}</bdi><bdi class="sanctum-tab-room">${String(s.room).padStart(3, "0")}</bdi>`;
+      btn.setAttribute("aria-label", `Sanctum ${s.order}, Chamber ${s.room}`);
       btn.addEventListener("click", () => {
         activeSanctumIdx = idx;
         renderActiveSanctum();
@@ -940,23 +747,9 @@
       });
     }
 
-    const shotBtn = document.getElementById("sanctum-shot-btn");
-    if (shotBtn && lightbox && lbImg) {
-      shotBtn.addEventListener("click", () => {
-        lbImg.src = shotBtn.dataset.lightboxSrc;
-        lbImg.alt = shotBtn.dataset.lightboxTitle || "Sanctum Puzzle";
-        if (lbCaption) lbCaption.textContent = shotBtn.dataset.lightboxTitle || "";
-        lightbox.classList.add("open");
-        lightbox.setAttribute("aria-hidden", "false");
-      });
-    }
-
     renderActiveSanctum();
   }
 
-  // --------------------------------------------------------------------------
-  // 10. ENEMIES & TRAPS BESTIARY FILTER
-  // --------------------------------------------------------------------------
   function initEnemyFilters() {
     const btns = document.querySelectorAll("[data-enemy-filter]");
     const cards = document.querySelectorAll(".enemy-card");
@@ -964,7 +757,7 @@
     btns.forEach((btn) => {
       btn.addEventListener("click", () => {
         const f = btn.dataset.enemyFilter;
-        btns.forEach((b) => b.classList.toggle("active", b === btn));
+        btns.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
         cards.forEach((c) => {
           c.hidden = f !== "all" && c.dataset.enemyGroup !== f;
         });
@@ -972,9 +765,6 @@
     });
   }
 
-  // --------------------------------------------------------------------------
-  // 11. KABEEL SATANIC ARCHFIEND PORTRAIT ALTAR (UPDATED ART · NO ROOM IMAGE!)
-  // --------------------------------------------------------------------------
   function initKabeelAltar() {
     const portraitImg = document.getElementById("kabeel-main-img");
     const stageWrap = document.getElementById("kabeel-portrait-stage");
@@ -987,6 +777,7 @@
     const elScore = document.getElementById("kabeel-score-val");
     const elHorn = document.getElementById("kabeel-horn-val");
     const elState = document.getElementById("kabeel-bridge-val");
+    const progress = document.getElementById("kabeel-progress");
 
     if (!portraitImg) return;
     let hits = 0;
@@ -997,28 +788,31 @@
       const isVisage = src.indexOf("visage") !== -1;
       portraitImg.width = isVisage ? 537 : 776;
       portraitImg.height = isVisage ? 516 : 752;
+      portraitImg.alt = isVisage ? "Close-up of Kabeel’s horned face" :
+        activeBtn === viewWitheredBtn ? "Withered Kabeel with exposed bones" : "Illustration of Kabeel with four horns and unfurled wings";
       [viewFullBtn, viewWitheredBtn, viewVisageBtn].forEach((b) => {
-        if (b) b.classList.toggle("active", b === activeBtn);
+        b?.setAttribute("aria-pressed", String(b === activeBtn));
       });
     }
 
     function syncStats() {
       const felled = hits >= NEEDED;
       const pts = hits * 100 + (felled ? 5000 : 0);
+      if (progress) progress.value = hits;
       if (elHits) elHits.textContent = `${hits} / ${NEEDED}`;
-      if (elScore) elScore.textContent = `+${pts.toLocaleString()} PTS`;
+      if (elScore) elScore.textContent = `+${pts.toLocaleString(currentLang, { numberingSystem: "latn" })} pts`;
       if (elHorn) {
         elHorn.textContent =
-          hits >= 35 ? "FEMUR & SKULL BARED" : hits >= 25 ? "HORN SHATTERED" : "4 HORNS INTACT";
+          hits >= 35 ? "Femur and skull exposed" : hits >= 25 ? "Horn shattered" : "Four horns intact";
       }
       if (elState) {
         elState.textContent = felled
-          ? "HEART PIERCED"
+          ? "Heart pierced"
           : hits >= 25
-          ? "WITHERING BONE"
+          ? "Withering"
           : hits > 0 && hits % 5 === 0
-          ? "ROARING!"
-          : "ENTHRONED";
+          ? "Roaring"
+          : "Enthroned";
       }
       if (strikeBtn) strikeBtn.disabled = felled;
       if (stageWrap) stageWrap.classList.toggle("kabeel-felled", felled);
@@ -1042,11 +836,7 @@
           setActivePortraitTab(viewWitheredBtn, "assets/enemies/kabeel-withered.png?v=6");
         }
         syncStats();
-        if (stageWrap && !document.body.classList.contains("reduced-motion")) {
-          stageWrap.classList.remove("kabeel-flinch");
-          void stageWrap.offsetWidth;
-          stageWrap.classList.add("kabeel-flinch");
-        }
+        if (hits === NEEDED) resetBtn?.focus();
       });
     }
 
@@ -1061,9 +851,6 @@
     syncStats();
   }
 
-  // --------------------------------------------------------------------------
-  // 12. ILLUSTRATED BOOK "HELP" (14 PAGES · NUMBERED PLATES EXPLORER)
-  // --------------------------------------------------------------------------
   const HELP_CHAPTERS = [
     {
       id: "screen",
@@ -1153,15 +940,13 @@
 
     const ch = HELP_CHAPTERS[activeHelpIdx] || HELP_CHAPTERS[0];
     rail.querySelectorAll(".help-tab-btn").forEach((b, idx) => {
-      const on = idx === activeHelpIdx;
-      b.classList.toggle("active", on);
-      b.setAttribute("aria-selected", on ? "true" : "false");
+      b.setAttribute("aria-pressed", String(idx === activeHelpIdx));
       const lbl = b.querySelector(".help-tab-label");
       if (lbl) lbl.textContent = t(HELP_CHAPTERS[idx].titleKey);
     });
 
     const titleText = t(ch.titleKey);
-    if (badgePage) badgePage.textContent = ch.pageBadge;
+    if (badgePage) badgePage.textContent = ch.pageBadge.replace(/^PAGE /, "Page ");
     if (badgePart) badgePart.textContent = t(ch.partKey);
     if (stageTitle) stageTitle.textContent = titleText;
     plateImg.src = ch.plate;
@@ -1187,20 +972,17 @@
 
   function initHelpBookExplorer() {
     const rail = document.getElementById("help-tabs-rail");
-    const plateBtn = document.getElementById("help-plate-btn");
     if (!rail) return;
 
     rail.innerHTML = "";
     HELP_CHAPTERS.forEach((ch, idx) => {
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "help-tab-btn" + (idx === activeHelpIdx ? " active" : "");
-      btn.setAttribute("role", "tab");
-      btn.setAttribute("aria-selected", idx === activeHelpIdx ? "true" : "false");
+      btn.className = "help-tab-btn";
 
       const pg = document.createElement("span");
       pg.className = "help-tab-page";
-      pg.textContent = ch.pageBadge.replace("PAGE ", "P");
+      pg.textContent = ch.pageBadge.split(" ")[1];
       const lbl = document.createElement("span");
       lbl.className = "help-tab-label";
       lbl.textContent = t(ch.titleKey);
@@ -1214,28 +996,10 @@
       rail.appendChild(btn);
     });
 
-    if (plateBtn) {
-      plateBtn.addEventListener("click", () => {
-        const lightbox = document.getElementById("lightbox");
-        const lbImg = document.getElementById("lightbox-img");
-        const lbCaption = document.getElementById("lightbox-caption");
-        if (lightbox && lbImg) {
-          lbImg.src = plateBtn.dataset.lightboxSrc;
-          lbImg.alt = plateBtn.dataset.lightboxTitle || "Help Plate";
-          if (lbCaption) lbCaption.textContent = plateBtn.dataset.lightboxTitle || "";
-          lightbox.classList.add("open");
-          lightbox.setAttribute("aria-hidden", "false");
-        }
-      });
-    }
-
     renderActiveHelpPage();
   }
 
-  // --------------------------------------------------------------------------
-  // 13. STUDIO-VOICED LEGEND PROLOGUE KARAOKE STAGE (Content/voice/legend/en)
-  // --------------------------------------------------------------------------
-  // Exact millisecond word timestamps from Content/voice/legend/en/timing.json ("p00_l00", 71 words: 5 title + 66 body)
+  // Word cue times from Content/voice/legend/en/timing.json (p00_l00).
   const PROLOGUE_TIMING_MS = [
     74, 135, 478, 686, 919, 1801, 2022, 2623, 2892, 3125, 4142, 4400, 4694, 4939, 5760, 6434, 6569, 6630, 7010,
     7390, 7463, 7574, 7966, 8235, 8333, 9240, 9375, 9473, 9877, 10576, 10772, 11274, 12034, 12328, 12476, 12868,
@@ -1243,127 +1007,86 @@
     20037, 20159, 20233, 20588, 20882, 21434, 21544, 21593, 22047, 22402, 22819, 23346, 23493, 23578, 23824,
     24632, 24718, 24914, 25049, 25110,
   ];
-  const PROLOGUE_DURATION_MS = 25992;
-
-  let storyTitleSpans = [];
-  let storyBodySpans = [];
-  let storyRaf = 0;
+  const voiceAudio = document.getElementById("legend-voice-audio");
+  const voiceButton = document.getElementById("btn-play-legend-voice");
+  let storyWords = [];
+  let activeWord = null;
 
   function renderStoryKaraokeWords() {
     const titleEl = document.getElementById("story-karaoke-title");
     const bodyEl = document.getElementById("story-karaoke-body");
-    const voiceAudio = document.getElementById("legend-voice-audio");
     if (!titleEl || !bodyEl) return;
+    storyWords = [];
+    activeWord = null;
+    if (currentLang !== "en") return;
+    for (const el of [titleEl, bodyEl]) {
+      const words = el.textContent.trim().split(/\s+/);
+      el.replaceChildren();
+      words.forEach((word, i) => {
+        if (i > 0) el.append(" ");
+        const span = document.createElement("span");
+        span.className = "story-word";
+        span.textContent = word;
+        el.appendChild(span);
+        storyWords.push(span);
+      });
+    }
+  }
 
-    const titleWords = (t("prologue_title") || "").trim().split(/\s+/).filter(Boolean);
-    const bodyWords = (t("prologue_p0") || "").trim().split(/\s+/).filter(Boolean);
+  function syncNarrationButton() {
+    if (!voiceAudio || !voiceButton) return;
+    const playing = !voiceAudio.paused;
+    voiceButton.querySelector("[data-voice-label]").textContent = t(playing ? "pause_story" : "listen_story");
+    if (!playing) clearWordHighlight();
+  }
 
-    titleEl.innerHTML = "";
-    bodyEl.innerHTML = "";
-    storyTitleSpans = [];
-    storyBodySpans = [];
-
-    const isPaused = !voiceAudio || voiceAudio.paused;
-    titleWords.forEach((w, idx) => {
-      if (idx > 0) titleEl.appendChild(document.createTextNode(" "));
-      const sp = document.createElement("span");
-      sp.className = "story-word" + (isPaused ? " lit" : "");
-      sp.textContent = w;
-      titleEl.appendChild(sp);
-      storyTitleSpans.push(sp);
-    });
-
-    bodyWords.forEach((w, idx) => {
-      if (idx > 0) bodyEl.appendChild(document.createTextNode(" "));
-      const sp = document.createElement("span");
-      sp.className = "story-word" + (isPaused ? " lit" : "");
-      sp.textContent = w;
-      bodyEl.appendChild(sp);
-      storyBodySpans.push(sp);
-    });
+  function clearWordHighlight() {
+    activeWord?.classList.remove("active-word");
+    activeWord = null;
   }
 
   function initLegendStudioVoice() {
-    const stage = document.getElementById("story-voice-stage");
-    const btn = document.getElementById("btn-play-legend-voice");
-    const voiceAudio = document.getElementById("legend-voice-audio");
-    const bgAudio = document.getElementById("rm-audio");
-    if (!stage || !btn || !voiceAudio) return;
-
-    function updateHighlightFrame() {
-      if (voiceAudio.paused) return;
-      const ms = voiceAudio.currentTime * 1000;
-      const allSpans = storyTitleSpans.concat(storyBodySpans);
-
-      if (currentLang === "en" && allSpans.length === PROLOGUE_TIMING_MS.length) {
-        let activeIdx = -1;
-        for (let i = 0; i < PROLOGUE_TIMING_MS.length; i++) {
-          if (ms >= PROLOGUE_TIMING_MS[i]) activeIdx = i;
-          else break;
-        }
-        allSpans.forEach((sp, idx) => {
-          sp.classList.toggle("lit", idx <= activeIdx);
-          sp.classList.toggle("active-word", idx === activeIdx);
-        });
-      } else if (allSpans.length > 0) {
-        const frac = Math.min(1, Math.max(0, ms / PROLOGUE_DURATION_MS));
-        const activeIdx = Math.min(allSpans.length - 1, Math.floor(frac * allSpans.length));
-        allSpans.forEach((sp, idx) => {
-          sp.classList.toggle("lit", idx <= activeIdx);
-          sp.classList.toggle("active-word", idx === activeIdx);
-        });
-      }
-      storyRaf = requestAnimationFrame(updateHighlightFrame);
-    }
-
-    function setSpeakingUI(playing) {
-      stage.classList.toggle("speaking", playing);
-      btn.setAttribute("aria-pressed", playing ? "true" : "false");
-      const lbl = btn.querySelector("[data-voice-label]");
-      if (lbl) {
-        lbl.textContent = playing ? t("btn_pause_music") : t("watch_story_btn");
-      }
-      if (!playing) {
-        cancelAnimationFrame(storyRaf);
-        storyTitleSpans.concat(storyBodySpans).forEach((sp) => {
-          sp.classList.add("lit");
-          sp.classList.remove("active-word");
-        });
-      }
-    }
-
-    btn.addEventListener("click", () => {
+    if (!voiceButton || !voiceAudio) return;
+    const background = document.getElementById("rm-audio");
+    const error = document.getElementById("story-voice-error");
+    voiceButton.addEventListener("click", () => {
       if (voiceAudio.paused) {
-        if (bgAudio && !bgAudio.paused) bgAudio.pause();
-        storyTitleSpans.concat(storyBodySpans).forEach((sp) => {
-          sp.classList.remove("lit", "active-word");
+        if (background && !background.paused) background.pause();
+        error.hidden = true;
+        voiceAudio.play().catch((reason) => {
+          if (reason.name !== "AbortError") error.hidden = false;
         });
-        voiceAudio.play().then(() => {
-          setSpeakingUI(true);
-          storyRaf = requestAnimationFrame(updateHighlightFrame);
-        }).catch(() => {});
       } else {
         voiceAudio.pause();
-        setSpeakingUI(false);
       }
     });
-
+    voiceAudio.addEventListener("play", syncNarrationButton);
+    voiceAudio.addEventListener("pause", syncNarrationButton);
     voiceAudio.addEventListener("ended", () => {
       voiceAudio.currentTime = 0;
-      setSpeakingUI(false);
+      syncNarrationButton();
     });
-    voiceAudio.addEventListener("pause", () => setSpeakingUI(false));
-
-    renderStoryKaraokeWords();
+    voiceAudio.addEventListener("timeupdate", () => {
+      if (voiceAudio.paused || reducedMotion.matches || document.hidden || storyWords.length !== PROLOGUE_TIMING_MS.length) return;
+      const ms = voiceAudio.currentTime * 1000;
+      const next = PROLOGUE_TIMING_MS.findIndex((cue) => cue > ms);
+      const current = storyWords[next === -1 ? storyWords.length - 1 : next - 1];
+      if (current === activeWord) return;
+      clearWordHighlight();
+      activeWord = current;
+      activeWord?.classList.add("active-word");
+    });
+    reducedMotion.addEventListener("change", clearWordHighlight);
   }
 
-  // Boot!
-  initLanguageDropdown();
+  initNavigation();
+  initSoundtrack();
   initPyramidExplorer();
   initSanctumExplorer();
   initEnemyFilters();
   initKabeelAltar();
   initHelpBookExplorer();
+  initLightbox();
   initLegendStudioVoice();
   applyLanguage(currentLang);
 })();
