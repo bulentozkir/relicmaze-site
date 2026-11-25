@@ -281,7 +281,14 @@ select {
 }
 
 .menu-panel [aria-current], .footer-links [aria-current] { color: var(--accent); text-decoration: underline; }
-.toolbar-store { color: var(--accent); }
+.toolbar-store { gap: 8px; color: var(--accent); }
+.toolbar-store::before, .msstore-cta::before {
+  flex: 0 0 20px;
+  block-size: 20px;
+  background-color: currentColor;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='1.5' stroke-linejoin='round' d='M5 7h14l1 14H4L5 7zM9 7V6a3 3 0 0 1 6 0v1'/%3E%3Cpath d='M8.5 11h3v3h-3zm4 0h3v3h-3zm-4 4h3v3h-3zm4 0h3v3h-3z'/%3E%3C/svg%3E") center / contain no-repeat;
+  content: "";
+}
 .language-picker select { inline-size: 112px; font-size: .875rem; }
 .language-error {
   position: absolute;
@@ -920,6 +927,10 @@ kbd { white-space: nowrap; }
 }
 
 @media (forced-colors: active) {
+  .toolbar-store::before, .msstore-cta::before {
+    forced-color-adjust: none;
+    background-color: LinkText;
+  }
   .msstore-cta.is-pulsing:not(:hover, :focus) { animation: none; }
 }
 
@@ -1050,7 +1061,7 @@ body:has(.lightbox[open]) { overflow: hidden; }
 }
 
 @media (max-width: 960px) {
-  .toolbar-sections, .toolbar-store { display: none; }
+  .toolbar-sections { display: none; }
   .stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 0; }
   .stat-card:nth-child(3n + 1) { border-inline-start: 0; padding-inline-start: 0; }
   .walkthrough-grid, .relics-grid, .gallery-grid, .cast-grid, .enemies-grid, .engine-proofs-grid {
@@ -1078,12 +1089,22 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .recovery-survey { inline-size: min(70%, 280px); }
   .controls-table { table-layout: fixed; }
   .language-picker select { inline-size: min(28vw, 112px); }
+  .toolbar-store { flex: none; justify-content: center; inline-size: 44px; padding: 0; }
+  .toolbar-store-label {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
   .menu-panel { padding: 8px; }
 }
 
 @media (max-width: 460px) {
   .toolbar-inner { gap: 8px; }
-  .toolbar-actions { flex-wrap: nowrap; }
+  .toolbar-actions { flex-wrap: nowrap; min-inline-size: 0; }
+  .language-picker { min-inline-size: 0; }
   .top-toolbar .brand-link { font-size: 1.125rem; }
   .top-toolbar .brand-crest { inline-size: 28px; }
   .hero .cta-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); inline-size: 100%; align-items: stretch; }
