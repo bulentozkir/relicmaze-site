@@ -6,7 +6,13 @@
 >
   <url>
     <loc>https://bulentozkir.github.io/relicmaze-site/</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-25</lastmod>
+    <image:image>
+      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/screenshots/sanctum-07-1440.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/screenshots/milo-move-out.webp</image:loc>
+    </image:image>
     <image:image>
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/logos/RelicMaze-Logo-1920x1080.png</image:loc>
     </image:image>
@@ -17,28 +23,28 @@
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/logos/RelicMaze-BoxArt-1080x1080.png</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/screenshots/01-Gameplay-Astral-Veil-Chamber.png</image:loc>
+      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/thumbnails/01-Gameplay-Astral-Veil-Chamber.webp</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/screenshots/02-Gameplay-Gecko-Spire-Shafts.png</image:loc>
+      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/thumbnails/02-Gameplay-Gecko-Spire-Shafts.webp</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/screenshots/03-Gameplay-Sunken-Cenote-Sluice.png</image:loc>
+      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/thumbnails/03-Gameplay-Sunken-Cenote-Sluice.webp</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/screenshots/04-Gameplay-Shrouded-Torch-Vault.png</image:loc>
+      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/thumbnails/04-Gameplay-Shrouded-Torch-Vault.webp</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png</image:loc>
+      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/thumbnails/05-Gameplay-Hidden-Sanctum-Puzzle.webp</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/screenshots/07-Game-Opening-Page.png</image:loc>
+      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/thumbnails/07-Game-Opening-Page.webp</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/screenshots/10-Journal-Page.png</image:loc>
+      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/thumbnails/10-Journal-Page.webp</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/enemies/kabeel-portrait.png</image:loc>
+      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/thumbnails/kabeel-portrait.webp</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/previews/all-144-rooms.png</image:loc>
@@ -46,7 +52,7 @@
   </url>
   <url>
     <loc>https://bulentozkir.github.io/relicmaze-site/trailer.html</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <video:video>
       <video:thumbnail_loc>https://bulentozkir.github.io/relicmaze-site/assets/media/trailer-poster.webp</video:thumbnail_loc>
       <video:title>RelicMaze Gameplay Trailer</video:title>
@@ -58,7 +64,7 @@
   </url>
   <url>
     <loc>https://bulentozkir.github.io/relicmaze-site/support.html</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://bulentozkir.github.io/relicmaze-site/privacy.html</loc>

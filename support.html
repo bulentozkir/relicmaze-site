@@ -56,7 +56,7 @@
         "name": "RelicMaze Support | Windows Requirements & Save Files",
         "description": "Find RelicMaze's Windows requirements, local save file locations, controller and keyboard controls, accessibility settings, and troubleshooting.",
         "inLanguage": "en",
-        "dateModified": "2026-11-21",
+        "dateModified": "2026-11-25",
         "isPartOf": {
           "@id": "https://bulentozkir.github.io/relicmaze-site/#website"
         },
@@ -100,7 +100,7 @@
             "name": "What accessibility features and Stuck Helpers are included in RelicMaze?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "RelicMaze includes Clear View high-contrast rendering (F9/F10), UI scaling from 80% up to 250%, Bold Text, a Chamber Magnifier, Spoken Narration or live captions in 20 languages, Reduced Motion, Timing Assists, and the Golden Solution Bulb playback helper."
+              "text": "RelicMaze offers four Clear View palettes, 80%–250% UI scaling, a magnifier, reduced motion, timing assists, and the Golden Solution Bulb. Narration uses a compatible Windows voice; when no voice is available, the game shows captions."
             }
           },
           {
@@ -108,7 +108,7 @@
             "name": "Does RelicMaze support controllers and custom key bindings?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. Standard XInput and Windows gamepads work alongside keyboard controls, and every movement, action, and gamepad input (except F11 and F12) can be rebound under Settings → Controls."
+              "text": "Yes. RelicMaze supports standard XInput and Windows gamepads. Under Settings → Controls, you can rebind gameplay actions, including fullscreen (F11) and screenshot (F12). Fixed menu navigation keys are not rebindable."
             }
           }
         ]
@@ -121,7 +121,7 @@
   <link rel="icon" type="image/png" sizes="300x300" href="assets/logos/RelicMaze-Logo-300x300.png">
   <link rel="apple-touch-icon" sizes="150x150" href="assets/logos/RelicMaze-Logo-150x150.png">
   <link rel="manifest" href="site.webmanifest">
-  <link rel="stylesheet" href="assets/css/styles.css?v=13">
+  <link rel="stylesheet" href="assets/css/styles.css?v=14">
 </head>
 <body data-page="support">
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -186,9 +186,17 @@
 
     <section class="doc-body">
       <div class="container">
-        <div class="doc-grid">
-          <article class="temple-frame doc-card reveal">
-            <h2>1. System Requirements &amp; Installation</h2>
+        <nav class="doc-jump-links" aria-label="On this page" lang="en">
+          <a href="#installation">Installation</a>
+          <a href="#save-files">Save files</a>
+          <a href="#accessibility-help">Accessibility</a>
+          <a href="#stuck-help">Getting unstuck</a>
+          <a href="#mine-cart-help">Mine-cart puzzles</a>
+          <a href="#troubleshooting">Troubleshooting</a>
+        </nav>
+        <div class="doc-grid" lang="en" dir="ltr">
+          <article class="temple-frame doc-card reveal" id="installation">
+            <h2>Windows requirements and installation</h2>
             <ul>
               <li><strong>Operating System:</strong> Windows 11 or Windows 10 (version 1903 / build 18362 or newer).</li>
               <li><strong>Architectures:</strong> Native <code>x64</code> and <code>ARM64</code> packages (MSIX bundle and MSI installers).</li>
@@ -196,10 +204,11 @@
               <li><strong>Single-Instance Protection:</strong> Launching <code>RelicMaze.exe</code> while already open switches cleanly to the running window instead of opening a duplicate instance.</li>
               <li><strong>Seamless Upgrades:</strong> Installing a newer build replaces the previous installation in place without duplicating shortcuts or deleting save progress.</li>
             </ul>
+            <p><a href="./#get-relicmaze">Find RelicMaze on the Microsoft Store</a> or <a href="trailer.html">watch the gameplay trailer</a>.</p>
           </article>
 
-          <article class="temple-frame doc-card reveal">
-            <h2>2. Save Files &amp; Settings Storage</h2>
+          <article class="temple-frame doc-card reveal" id="save-files">
+            <h2>RelicMaze save files and settings</h2>
             <p>
               Both the Microsoft Store / MSIX package and the standalone MSI installer write save data and configuration to your real user profile directory:
             </p>
@@ -211,29 +220,48 @@
             <p>
               Uninstalling RelicMaze leaves your save files intact so you never lose expedition progress. To reset your campaign, choose <strong>Delete Expedition Save…</strong> on the Title Screen.
             </p>
+            <p>Updating keeps your checkpoint, collected items, and previously cleared chambers. Best times and ghosts for routes affected by the new treasure requirements may reset.</p>
           </article>
 
-          <article class="temple-frame doc-card reveal">
-            <h2>3. Accessibility &amp; Quick Shortcuts</h2>
+          <article class="temple-frame doc-card reveal" id="accessibility-help">
+            <h2>Accessibility and keyboard shortcuts</h2>
             <ul>
               <li><kbd>F9</kbd> — Toggle <strong>Clear View</strong> low-vision high-contrast rendering on/off at any time.</li>
               <li><kbd>F10</kbd> — Cycle through the four contrast-audited Clear View palettes.</li>
-              <li><kbd>/</kbd> (or the toolbar <kbd>?</kbd> button) — Open the 14-page illustrated book <em>Help</em> (numbered HUD, controls, symbols, crowns, and stuck helpers); <kbd>F1</kbd> or <kbd>H</kbd> opens the Controls reference card; <strong>Legend</strong> opens the 17-page studio-voiced <em>Legend</em> book.</li>
-              <li><strong>Golden Solution Bulb:</strong> Available on the toolbar from the start in Chambers 1–10 (and their first two Sanctums), and unlocked after 19 failed attempts in any later chamber or Sanctum.</li>
-              <li><kbd>Tab</kbd> or <kbd>J</kbd> — Open the 144-Chamber stepped pyramid Journal (<kbd>T</kbd> starts a clean Time Trial).</li>
-              <li><strong>Settings → Accessibility:</strong> Scale UI from 80% up to 250%, enable Bold Text, Chamber Magnifier, Spoken Narration (via Windows TTS voices or live captions across 20 languages), Reduced Motion, Reduced Flashes, and Timing Assists.</li>
+              <li><kbd>U</kbd> (or the toolbar <kbd>?</kbd> button) opens the illustrated <em>Help</em> book. <kbd>F1</kbd> or <kbd>H</kbd> opens the Controls card.</li>
+              <li><kbd>Tab</kbd> or <kbd>J</kbd> opens the Journal. <kbd>T</kbd> starts a clean Time Trial for the selected chamber.</li>
+              <li><kbd>Ctrl</kbd> + <kbd>R</kbd> retries the current chamber or Sanctum from its checkpoint. <kbd>R</kbd> alone resets a mine-cart board.</li>
+              <li><strong>Settings → Accessibility:</strong> Scale the UI from 80% to 250% or turn on Bold Text, the Chamber Magnifier, Narration, Reduced Motion, Reduced Flashes, or Timing Assists.</li>
+              <li><strong>Settings → General → Language:</strong> Choose from 30 game languages. Arabic, Urdu, Western Punjabi, and Persian use right-to-left menus.</li>
             </ul>
           </article>
 
-          <article class="temple-frame doc-card reveal">
-            <h2>4. Troubleshooting &amp; Contact</h2>
-            <h3>No Spoken Voice for Selected Language</h3>
+          <article class="temple-frame doc-card" id="stuck-help">
+            <h2>Getting unstuck in a chamber or Sanctum</h2>
+            <p>Use <strong>Pause → Show one move</strong> to preview an input from where Milo stands. After three failures in the same chamber or Sanctum, <strong>Pause → Assists</strong> offers a hint, half-speed play, or one move at a time.</p>
+            <p>The <strong>Golden Solution Bulb</strong> unlocks after 19 failures in Chambers 1–25 or 49 in Chambers 26–144. A Hidden Sanctum uses its entrance chamber’s threshold but counts its own failures. The replay does not change your live attempt.</p>
+          </article>
+
+          <article class="temple-frame doc-card" id="mine-cart-help">
+            <h2>Milo Move Out: mine-cart controls and hints</h2>
+            <p>On most first clears, the onward door opens a mine yard. Drag a wagon with the pointer, or select it with the keyboard or gamepad and move it along its track. Clear the way for Milo’s red cart to reach the exit on the right.</p>
+            <ul>
+              <li>A one-step hint is available from the first move.</li>
+              <li>After 99 valid slides on the same unsolved board, choose <strong>Show me the solution</strong> (<kbd>K</kbd> or <kbd>L3</kbd>). The game previews a solution without moving your live board.</li>
+              <li><kbd>R</kbd> resets the board, not the chamber. Undoing or resetting does not erase the valid-slide count.</li>
+            </ul>
+            <p><a href="./#game-update">See the mine-yard screenshot and the latest game changes</a>.</p>
+          </article>
+
+          <article class="temple-frame doc-card reveal" id="troubleshooting">
+            <h2>Troubleshooting and contact</h2>
+            <h3>No spoken voice for the selected language</h3>
             <p>
               RelicMaze uses installed Windows speech synthesis voices. If Windows does not have a voice pack installed for your chosen language, all spoken hints and descriptions automatically appear as readable on-screen captions. You can add additional voices in <strong>Windows Settings → Time &amp; language → Speech</strong>.
             </p>
-            <h3>Controller Reconnection</h3>
+            <h3>Controller setup and remapping</h3>
             <p>
-              Standard XInput / Windows gamepads work seamlessly alongside keyboard navigation (D-Pad / Left Stick to move, South button to jump, West button to interact, Start to pause). Every key and gamepad button (except <kbd>F11</kbd>/<kbd>F12</kbd>) can be rebound under <strong>Settings → Controls</strong>.
+              Use a standard XInput or Windows gamepad alongside the keyboard. Under <strong>Settings → Controls</strong>, you can rebind gameplay actions, including fullscreen (<kbd>F11</kbd>) and screenshot (<kbd>F12</kbd>). Fixed menu navigation keys are not rebindable.
             </p>
             <h3>Contact the Developer &amp; Report Issues</h3>
             <p>
@@ -247,8 +275,8 @@
           </article>
         </div>
 
-        <article class="temple-frame doc-card reveal" aria-labelledby="faq-heading">
-          <h2 id="faq-heading">5. Frequently Asked Questions</h2>
+        <article class="temple-frame doc-card reveal" id="faq" aria-labelledby="faq-heading" lang="en" dir="ltr">
+          <h2 id="faq-heading">Frequently asked questions</h2>
           <div class="faq-list">
             <details class="faq-item" open>
               <summary>What are the Windows system requirements for RelicMaze?</summary>
@@ -264,11 +292,11 @@
             </details>
             <details class="faq-item">
               <summary>What accessibility features and Stuck Helpers are included in RelicMaze?</summary>
-              <p>RelicMaze includes Clear View high-contrast rendering (<kbd>F9</kbd>/<kbd>F10</kbd>), UI scaling from 80% up to 250%, Bold Text, a Chamber Magnifier, Spoken Narration or live captions in 20 languages, Reduced Motion, Timing Assists, and the Golden Solution Bulb playback helper.</p>
+              <p>RelicMaze offers four Clear View palettes, 80%–250% UI scaling, a magnifier, reduced motion, timing assists, and the Golden Solution Bulb. Narration uses a compatible Windows voice; when no voice is available, the game shows captions.</p>
             </details>
             <details class="faq-item">
               <summary>Does RelicMaze support controllers and custom key bindings?</summary>
-              <p>Yes. Standard XInput and Windows gamepads work alongside keyboard controls, and every movement, action, and gamepad input (except <kbd>F11</kbd> and <kbd>F12</kbd>) can be rebound under <strong>Settings → Controls</strong>.</p>
+              <p>Yes. RelicMaze supports standard XInput and Windows gamepads. Under <strong>Settings → Controls</strong>, you can rebind gameplay actions, including fullscreen (<kbd>F11</kbd>) and screenshot (<kbd>F12</kbd>). Fixed menu navigation keys are not rebindable.</p>
             </details>
           </div>
         </article>
@@ -286,6 +314,7 @@
         </span>
       </a>
       <div class="footer-links">
+        <a href="trailer.html" class="hud-btn" hreflang="en" data-i18n="nav_trailer">Trailer</a>
         <a href="support.html" class="hud-btn" aria-current="page" data-i18n="btn_support">Support</a>
         <a href="privacy.html" class="hud-btn" data-i18n="btn_privacy">Privacy</a>
         <a href="copyright.html" class="hud-btn" data-i18n="btn_copyright">Copyright</a>
@@ -297,7 +326,7 @@
     </div>
   </footer>
 
-  <script src="assets/js/i18n-data.js?v=12" defer></script>
-  <script src="assets/js/app.js?v=13" defer></script>
+  <script src="assets/js/i18n-data.js?v=13" defer></script>
+  <script src="assets/js/app.js?v=14" defer></script>
 </body>
 </html>

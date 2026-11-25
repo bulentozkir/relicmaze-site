@@ -1,5 +1,6 @@
 (function () {
   const I18N = window.RELICMAZE_I18N || { languages: [], strings: {} };
+  const translationsUrl = new URL("i18n-translations.js?v=13", document.currentScript.src);
   const STORAGE_LANG = "rm_site_lang";
   const STORAGE_CLEAR = "rm_clear_view";
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
@@ -31,15 +32,15 @@
     hero_tagline: "144 chambers beneath a stepped pyramid",
     gameplay_still: "Gameplay still",
     gameplay_label: "Gameplay footage",
-    intro_rules: "Collect every seal to open the next door. Find nine Meridian sigils and the Heart to open the final one. Hit a hazard and you return to the chamber entrance with your progress intact.",
+    intro_rules: "Guide Milo through the pyramid, collecting seals and treasure to open each door. Miss a jump or hit a trap and you can try again without losing collected items.",
     cta_explore: "Explore 144 chambers",
-    hero_explore: "Explore the pyramid",
+    hero_explore: "Pyramid atlas",
     trailer_title: "Trailer and soundtrack",
     soundtrack_label: "Original soundtrack",
     walkthrough_strip_title: "Solver walkthroughs",
     pyramid_eyebrow: "Survey of the pyramid",
     pyramid_sub: "Select a chamber to see its region, sigil, or Sanctum gateway. On a smaller screen, use the floor picker to move through the pyramid.",
-    puzzles_eyebrow: "Square-numbered gateways",
+    puzzles_eyebrow: "Hidden gateways",
     enemies_eyebrow: "Illustrated bestiary",
     kabeel_eyebrow: "Chamber 144",
     relics_eyebrow: "Field notes on the Astral Veil",
@@ -69,20 +70,21 @@
   function getInitialLang() {
     const params = new URLSearchParams(window.location.search);
     const q = params.get("lang");
-    if (q && I18N.strings[q]) return q;
+    const supported = (code) => I18N.languages.some((language) => language.code === code);
+    if (supported(q)) return q;
     try {
       const saved = localStorage.getItem(STORAGE_LANG);
-      if (saved && I18N.strings[saved]) return saved;
+      if (supported(saved)) return saved;
     } catch (_) {}
     return "en";
   }
 
-  let currentLang = getInitialLang();
-  const initialDocTitle = document.title;
-  const metaDescEl = document.querySelector('meta[name="description"]');
-  const initialMetaDesc = metaDescEl ? metaDescEl.getAttribute("content") || "" : "";
-  const pageKind = document.body.dataset.page || "home";
+  const preferredLang = getInitialLang();
+  let currentLang = "en";
   const languagePicker = document.getElementById("site-language");
+  let translations;
+  let languageRequest = 0;
+  let languageError;
 
   function t(key, fallback) {
     const table = I18N.strings[currentLang] || I18N.strings.en || {};
@@ -92,29 +94,49 @@
     return table[key] || table[localizedFallbacks[key]] || englishCopy[key] || I18N.strings.en?.[key] || fallback || key;
   }
 
-  function syncLocalizedHeadMeta(code) {
-    if (code === "en") {
-      document.title = initialDocTitle;
-      if (metaDescEl && initialMetaDesc) metaDescEl.setAttribute("content", initialMetaDesc);
-      return;
+  function loadTranslations() {
+    if (!translations) {
+      translations = new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = translationsUrl.href;
+        script.onload = () => {
+          const strings = window.RELICMAZE_TRANSLATIONS;
+          if (!strings || !I18N.languages.every(({ code }) => code === "en" || Object.hasOwn(strings, code))) {
+            script.remove();
+            reject(new Error("Missing RelicMaze translation data"));
+            return;
+          }
+          Object.assign(I18N.strings, strings);
+          resolve();
+        };
+        script.onerror = () => {
+          script.remove();
+          reject(new Error(`Could not load ${translationsUrl.pathname}`));
+        };
+        document.head.append(script);
+      }).catch((error) => {
+        translations = undefined;
+        throw error;
+      });
     }
-    let nextTitle = initialDocTitle;
-    let nextDesc = initialMetaDesc;
-    if (pageKind === "support") {
-      nextTitle = `${t("support_page_title")} — RelicMaze`;
-      nextDesc = t("support_page_sub");
-    } else if (pageKind === "privacy") {
-      nextTitle = `${t("privacy_page_title")} — RelicMaze`;
-      nextDesc = t("privacy_page_sub");
-    } else if (pageKind === "copyright") {
-      nextTitle = `${t("copyright_page_title")} — RelicMaze`;
-      nextDesc = t("copyright_page_sub");
-    } else if (pageKind === "home") {
-      nextTitle = t("subtitle_game");
-      nextDesc = t("intro_rules");
+    return translations;
+  }
+
+  async function chooseLanguage(code, updateUrl) {
+    const request = ++languageRequest;
+    if (languageError) languageError.hidden = true;
+    if (code !== "en" && !Object.hasOwn(I18N.strings, code)) {
+      try {
+        await loadTranslations();
+      } catch (error) {
+        console.warn("RelicMaze language could not load:", error);
+        if (request !== languageRequest) return;
+        if (languagePicker) languagePicker.value = currentLang;
+        if (languageError) languageError.hidden = false;
+        return;
+      }
     }
-    if (nextTitle) document.title = nextTitle;
-    if (metaDescEl && nextDesc) metaDescEl.setAttribute("content", nextDesc);
+    if (request === languageRequest) applyLanguage(code, updateUrl);
   }
 
   function applyLanguage(code, updateUrl) {
@@ -142,12 +164,16 @@
 
     document.documentElement.lang = meta.code;
     document.documentElement.dir = meta.rtl ? "rtl" : "ltr";
-    syncLocalizedHeadMeta(meta.code);
 
     if (languagePicker) languagePicker.value = code;
 
+    const table = I18N.strings[code] || {};
     document.querySelectorAll("[data-i18n]").forEach((el) => {
-      el.textContent = t(el.dataset.i18n, el.textContent);
+      const key = el.dataset.i18n;
+      el.textContent = t(key, el.textContent.trim());
+      const localized = table[key] || table[localizedFallbacks[key]] || (labels[code] && labelKeys.includes(key));
+      if (code !== "en" && !localized) el.lang = "en";
+      else el.removeAttribute("lang");
     });
 
     syncPhaseState();
@@ -169,7 +195,13 @@
         return option;
       }));
       languagePicker.closest("label").hidden = false;
-      languagePicker.addEventListener("change", () => applyLanguage(languagePicker.value, true));
+      languageError = document.createElement("p");
+      languageError.className = "language-error";
+      languageError.hidden = true;
+      languageError.setAttribute("role", "status");
+      languageError.textContent = "Could not load this language. Choose it again to retry.";
+      languagePicker.closest(".toolbar-actions").append(languageError);
+      languagePicker.addEventListener("change", () => chooseLanguage(languagePicker.value, true));
     }
 
     const menu = document.querySelector(".site-menu");
@@ -267,74 +299,6 @@
       else audio.pause();
     });
     picker?.addEventListener("change", () => setTrack(Number(picker.value), !audio.paused));
-    initVisualizer(audio);
-  }
-
-  function initVisualizer(audio) {
-    const canvas = document.getElementById("audio-visualizer");
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    // The Web Audio graph cannot read file:// media; native playback still works.
-    if (!canvas || !AudioContext || location.protocol === "file:" || !("IntersectionObserver" in window)) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let graph;
-    let analyser;
-    let samples;
-    let visible = false;
-    let frame = 0;
-    let lastFrame = 0;
-    const canDraw = () => !!analyser && !audio.paused && visible && !document.hidden && !reducedMotion.matches;
-
-    function draw(now) {
-      frame = 0;
-      if (!canDraw()) return;
-      if (now - lastFrame >= 32) {
-        lastFrame = now;
-        analyser.getByteFrequencyData(samples);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < 22; i++) {
-          const height = Math.max(2, samples[i] / 255 * canvas.height);
-          ctx.fillRect(i * 6, canvas.height - height, 3, height);
-        }
-      }
-      frame = requestAnimationFrame(draw);
-    }
-
-    async function sync() {
-      if (!audio.paused && visible && !document.hidden && !reducedMotion.matches && !graph) {
-        try {
-          graph = new AudioContext();
-          if (graph.state === "suspended") await graph.resume();
-          analyser = graph.createAnalyser();
-          analyser.fftSize = 64;
-          samples = new Uint8Array(analyser.frequencyBinCount);
-          analyser.connect(graph.destination);
-          graph.createMediaElementSource(audio).connect(analyser);
-          ctx.fillStyle = "#d5ac78";
-        } catch (error) {
-          analyser = null;
-          console.warn("RelicMaze spectrum could not start:", error);
-        }
-      }
-      if (canDraw()) {
-        if (!frame) frame = requestAnimationFrame(draw);
-      } else {
-        cancelAnimationFrame(frame);
-        frame = 0;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }
-    }
-
-    new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-      sync();
-    }).observe(canvas);
-    audio.addEventListener("play", sync);
-    audio.addEventListener("pause", sync);
-    audio.addEventListener("ended", sync);
-    document.addEventListener("visibilitychange", sync);
-    reducedMotion.addEventListener("change", sync);
   }
 
   const trailer = document.getElementById("trailer-video");
@@ -368,7 +332,7 @@
     49: { code: "S6", name: "The Color-Coded Gatekeeper", kind: "Glyph Sequence" },
     64: { code: "S7", name: "The Rolling Boulder Maze", kind: "Mechanical & Trap" },
     81: { code: "S8", name: "The Synchronized Torches", kind: "Symbol & Poem" },
-    100: { code: "S9", name: "The Shifting Labyrinth", kind: "Compass Navigation" },
+    90: { code: "S9", name: "The Shifting Labyrinth", kind: "Compass Navigation" },
     121: { code: "S10", name: "The Altar of Tribute", kind: "Equilibrium Logic" },
     144: { code: "S11", name: "The Final Synthesis", kind: "Master Sanctum" },
   };
@@ -430,7 +394,7 @@
     let badge = "";
     if (n === 144) badge = " · Kabeel";
     else if (SIGIL_ROOMS.has(n)) badge = ` · Meridian sigil ${n / 15}`;
-    else if (SANCTUMS[n]) badge = ` · Gateway to Sanctum ${SANCTUMS[n].code}`;
+    if (SANCTUMS[n] && n !== 144) badge += ` · Gateway to Sanctum ${SANCTUMS[n].code}`;
 
     titleEl.textContent = `${t(`reg_${reg.idx}`)}${badge}`;
     metaEl.textContent = `${t("atlas_floor")} ${floor} / 12 · ${reg.vibe}`;
@@ -502,29 +466,29 @@
         cell.style.setProperty("--cell-color", reg.color);
         cell.textContent = String(n);
         const appendix = SIGIL_ROOMS.has(n) ? ", Meridian sigil" : n === 144 ? ", finale" : "";
-        cell.setAttribute("aria-label", `Chamber ${n}${appendix}`);
+        const gateway = SANCTUMS[n] ? `, Sanctum ${SANCTUMS[n].code} gateway` : "";
+        cell.setAttribute("aria-label", `Chamber ${n}${appendix}${gateway}`);
         cell.setAttribute("aria-pressed", "false");
         cell.addEventListener("pointerenter", (event) => {
           if (event.pointerType === "mouse" && atlasHover.matches) inspectChamber(n, false);
         });
         cell.addEventListener("click", () => inspectChamber(n, false));
         row.appendChild(cell);
-      }
-
-      if (SANCTUMS[lastInFloor]) {
-        const sc = SANCTUMS[lastInFloor];
-        const sBtn = document.createElement("button");
-        sBtn.type = "button";
-        sBtn.className = "sanctum-node";
-        sBtn.dataset.room = String(lastInFloor);
-        sBtn.textContent = sc.code;
-        sBtn.setAttribute("aria-label", `${sc.code}: ${sc.name}`);
-        sBtn.setAttribute("aria-pressed", "false");
-        sBtn.addEventListener("pointerenter", (event) => {
-          if (event.pointerType === "mouse" && atlasHover.matches) inspectChamber(lastInFloor, true);
-        });
-        sBtn.addEventListener("click", () => inspectChamber(lastInFloor, true));
-        row.appendChild(sBtn);
+        if (SANCTUMS[n]) {
+          const sc = SANCTUMS[n];
+          const sBtn = document.createElement("button");
+          sBtn.type = "button";
+          sBtn.className = "sanctum-node";
+          sBtn.dataset.room = String(n);
+          sBtn.textContent = sc.code;
+          sBtn.setAttribute("aria-label", `${sc.code}: ${sc.name}`);
+          sBtn.setAttribute("aria-pressed", "false");
+          sBtn.addEventListener("pointerenter", (event) => {
+            if (event.pointerType === "mouse" && atlasHover.matches) inspectChamber(n, true);
+          });
+          sBtn.addEventListener("click", () => inspectChamber(n, true));
+          row.appendChild(sBtn);
+        }
       }
 
       rowsContainer.appendChild(row);
@@ -583,7 +547,7 @@
 
   function initLightbox() {
     const dialog = document.getElementById("lightbox");
-    if (!dialog) return;
+    if (!dialog || typeof dialog.showModal !== "function") return;
     const image = document.getElementById("lightbox-img");
     const player = document.getElementById("lightbox-video");
     const caption = document.getElementById("lightbox-caption");
@@ -603,7 +567,10 @@
 
     function show(indexInGroup) {
       current = (indexInGroup + items.length) % items.length;
-      const { lightboxSrc, lightboxVideo, lightboxTitle } = items[current].dataset;
+      const link = items[current];
+      const { lightboxTitle } = link.dataset;
+      const lightboxVideo = link.hasAttribute("data-lightbox-video");
+      const thumb = link.querySelector("img");
       const title = lightboxTitle || "RelicMaze";
       clearVideo();
       image.hidden = Boolean(lightboxVideo);
@@ -611,24 +578,25 @@
       error.hidden = true;
       if (lightboxVideo) {
         image.removeAttribute("src");
-        player.poster = lightboxSrc;
+        player.poster = thumb?.currentSrc || thumb?.src || "";
         player.setAttribute("aria-label", title);
-        player.src = lightboxVideo;
+        player.src = link.href;
       } else {
-        const thumb = items[current].querySelector("img");
         image.alt = thumb?.alt || title;
-        image.src = lightboxSrc;
+        image.src = link.href;
       }
       caption.textContent = title;
       index.textContent = `${current + 1} / ${items.length}`;
       pagination.hidden = items.length < 2;
     }
 
-    document.querySelectorAll("[data-lightbox-src]").forEach((item) => {
+    document.querySelectorAll("a[data-lightbox-title]").forEach((item) => {
       item.setAttribute("aria-haspopup", "dialog");
-      item.addEventListener("click", () => {
+      item.addEventListener("click", (event) => {
+        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
         const group = item.closest("[data-viewer-group]");
-        items = group ? [...group.querySelectorAll("[data-lightbox-src]")].filter((el) => !el.closest("[hidden]")) : [item];
+        items = group ? [...group.querySelectorAll("a[data-lightbox-title]")].filter((el) => !el.closest("[hidden]")) : [item];
         opener = item;
         show(items.indexOf(item));
         dialog.showModal();
@@ -662,18 +630,23 @@
   }
 
   const SANCTUM_LIST = [
-    { order: 1, first: 2, room: 4, floor: 2, regIdx: 0, shot: "assets/screenshots/sanctum-04-dial.png" },
-    { order: 2, first: 5, room: 9, floor: 3, regIdx: 0, shot: "assets/screenshots/sanctum-04-dial.png" },
-    { order: 3, first: 10, room: 16, floor: 4, regIdx: 1, shot: "assets/screenshots/sanctum-04-dial.png" },
-    { order: 4, first: 17, room: 25, floor: 5, regIdx: 1, shot: "assets/screenshots/sanctum-25-prism.png" },
-    { order: 5, first: 26, room: 36, floor: 6, regIdx: 2, shot: "assets/screenshots/sanctum-25-prism.png" },
-    { order: 6, first: 37, room: 49, floor: 7, regIdx: 3, shot: "assets/screenshots/sanctum-25-prism.png" },
-    { order: 7, first: 50, room: 64, floor: 8, regIdx: 4, shot: "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" },
-    { order: 8, first: 65, room: 81, floor: 9, regIdx: 5, shot: "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" },
-    { order: 9, first: 82, room: 100, floor: 10, regIdx: 6, shot: "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" },
-    { order: 10, first: 101, room: 121, floor: 11, regIdx: 8, shot: "assets/screenshots/sanctum-25-prism.png" },
-    { order: 11, first: 122, room: 144, floor: 12, regIdx: 9, shot: "assets/screenshots/05-Gameplay-Hidden-Sanctum-Puzzle.png" },
+    { order: 1, room: 4, plate: 1 },
+    { order: 2, room: 9, plate: 1 },
+    { order: 3, room: 16, plate: 1 },
+    { order: 4, room: 25, plate: 4 },
+    { order: 5, room: 36, plate: 4 },
+    { order: 6, room: 49, plate: 4 },
+    { order: 7, room: 64, plate: 7 },
+    { order: 8, room: 81, plate: 7 },
+    { order: 9, room: 90, plate: 7 },
+    { order: 10, room: 121, plate: 4 },
+    { order: 11, room: 144, plate: 7 },
   ];
+  const SANCTUM_PLATES = {
+    1: { file: "sanctum-04-dial", alt: "A glyph dial beside a stairway in the Tilted Dial Sanctum" },
+    4: { file: "sanctum-25-prism", alt: "A prism and the light path in the Prism and Sunbeam Sanctum" },
+    7: { file: "05-Gameplay-Hidden-Sanctum-Puzzle", alt: "A torchlit chamber with a stone sphere and ladders in the Rolling Boulder Maze" },
+  };
   let activeSanctumIdx = 6; // Default S07 (Chamber 64 — Rolling Boulder Maze)
 
   function renderActiveSanctum() {
@@ -693,25 +666,27 @@
     const clueEl = document.getElementById("sanctum-stage-clue");
     const shotImg = document.getElementById("sanctum-shot-img");
     const shotBtn = document.getElementById("sanctum-shot-btn");
+    const shotCaption = document.getElementById("sanctum-shot-caption");
 
     const titleText = t(`s${k}_title`);
     const archText = t(`s${k}_arch`);
-    if (badgeCode) badgeCode.textContent = `Sanctum ${String(k).padStart(2, "0")} / 11 · Chamber ${String(item.room).padStart(3, "0")} (${item.floor}²)`;
+    if (badgeCode) badgeCode.textContent = `Sanctum ${String(k).padStart(2, "0")} / 11 · Chamber ${String(item.room).padStart(3, "0")}`;
     if (badgeArch) badgeArch.textContent = archText;
-    if (badgeRegion) badgeRegion.textContent = `${t("atlas_floor")} ${item.floor} · ${item.first}–${item.room} · ${t(`reg_${item.regIdx}`)}`;
+    const floor = Math.floor(Math.sqrt(item.room - 1)) + 1;
+    if (badgeRegion) badgeRegion.textContent = `${t("atlas_floor")} ${floor} · ${t(`reg_${regionForRoom(item.room).idx}`)}`;
     if (titleEl) titleEl.textContent = titleText;
     if (objEl) objEl.textContent = t(`s${k}_obj`);
     if (clueEl) clueEl.textContent = t(`s${k}_clue`);
+    const plate = SANCTUM_PLATES[item.plate];
+    const plateLabel = `${t(`s${item.plate}_title`)} · Sanctum S${String(item.plate).padStart(2, "0")}`;
+    if (shotCaption) shotCaption.textContent = plateLabel;
     if (shotImg) {
-      shotImg.src = item.shot;
-      shotImg.alt = `${titleText} — Sanctum ${k}`;
-      const is1080 = item.shot.indexOf("05-Gameplay-") !== -1;
-      shotImg.width = is1080 ? 1920 : 1600;
-      shotImg.height = is1080 ? 1080 : 900;
+      shotImg.src = `assets/thumbnails/${plate.file}.webp`;
+      shotImg.alt = plate.alt;
     }
     if (shotBtn) {
-      shotBtn.dataset.lightboxSrc = item.shot;
-      shotBtn.dataset.lightboxTitle = `Sanctum S${String(k).padStart(2, "0")} (Chamber ${item.room}) — ${titleText}`;
+      shotBtn.href = `assets/screenshots/${plate.file}.png`;
+      shotBtn.dataset.lightboxTitle = plateLabel;
     }
   }
 
@@ -952,7 +927,7 @@
     plateImg.src = ch.plate;
     plateImg.alt = `${titleText} — RelicMaze Help Book Plate`;
     if (plateBtn) {
-      plateBtn.dataset.lightboxSrc = ch.plate;
+      plateBtn.href = ch.plate;
       plateBtn.dataset.lightboxTitle = `${t("book_help")} (${ch.pageBadge}) — ${titleText}`;
     }
 
@@ -964,6 +939,7 @@
       h4.textContent = t(hk);
       const p = document.createElement("p");
       p.textContent = t(bk);
+      if (currentLang !== "en" && !I18N.strings[currentLang]?.[bk]) p.lang = "en";
       box.appendChild(h4);
       box.appendChild(p);
       calloutsWrap.appendChild(box);
@@ -1088,5 +1064,6 @@
   initHelpBookExplorer();
   initLightbox();
   initLegendStudioVoice();
-  applyLanguage(currentLang);
+  if (preferredLang === "en") applyLanguage("en");
+  else chooseLanguage(preferredLang, false);
 })();
