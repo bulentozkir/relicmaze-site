@@ -218,6 +218,25 @@
     });
   }
 
+  function initStoreHighlight() {
+    const link = document.querySelector(".msstore-cta");
+    if (!link || !("IntersectionObserver" in window)) return;
+
+    const forcedColors = matchMedia("(forced-colors: active)");
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.intersectionRatio < 0.5) return;
+      observer.disconnect();
+      if (!reducedMotion.matches && !forcedColors.matches && !link.matches(":hover, :focus")) {
+        link.classList.add("is-pulsing");
+      }
+    }, { threshold: 0.5 });
+
+    const finish = () => link.classList.remove("is-pulsing");
+    link.addEventListener("animationend", finish);
+    link.addEventListener("animationcancel", finish);
+    observer.observe(link);
+  }
+
   function setClearView(enabled) {
     document.body.classList.toggle("clear-view", enabled);
     try {
@@ -1056,6 +1075,7 @@
   }
 
   initNavigation();
+  initStoreHighlight();
   initSoundtrack();
   initPyramidExplorer();
   initSanctumExplorer();

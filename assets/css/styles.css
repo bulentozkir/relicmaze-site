@@ -903,6 +903,25 @@ kbd { white-space: nowrap; }
 .msstore-banner-art { flex: none; inline-size: 64px; border-radius: 4px; }
 .msstore-banner h2 { font: 400 clamp(1.375rem, 2.6vw, 2rem)/1.2 var(--serif); }
 .msstore-banner p { margin-block-start: 4px; color: var(--secondary); font-size: .925rem; }
+.msstore-cta {
+  --store-pulse: #b5e3d8;
+  min-block-size: 56px;
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .msstore-cta.is-pulsing:not(:hover, :focus) {
+    animation: msstore-pulse 4s ease-in-out;
+  }
+}
+
+@keyframes msstore-pulse {
+  50% { background-color: var(--store-pulse); border-color: var(--store-pulse); }
+}
+
+@media (forced-colors: active) {
+  .msstore-cta.is-pulsing:not(:hover, :focus) { animation: none; }
+}
 
 .lightbox {
   position: fixed;
