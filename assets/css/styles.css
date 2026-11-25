@@ -674,7 +674,7 @@ a[data-lightbox-title]:hover {
   gap: 4px;
   font-variant-numeric: tabular-nums;
 }
-.sanctum-stage, .help-book-stage, .kabeel-grid, .a11y-split {
+.sanctum-stage, .help-book-stage, .kabeelith-grid, .a11y-split {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: start;
@@ -737,10 +737,10 @@ a.enemy-portrait-wrap {
 .enemy-chip { color: var(--muted); font-size: .8125rem; }
 .enemy-chip::before { color: var(--accent); content: "· "; }
 
-.kabeel-grid { grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); }
-.kabeel-sim-box, .doc-card, .controls-panel { padding: var(--stage-space); }
-.kabeel-sim-box > .filter-bar { margin-block: 0 12px; }
-.kabeel-portrait-stage {
+.kabeelith-grid { grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); }
+.kabeelith-sim-box, .doc-card, .controls-panel { padding: var(--stage-space); }
+.kabeelith-sim-box > .filter-bar { margin-block: 0 12px; }
+.kabeelith-portrait-stage {
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -748,8 +748,8 @@ a.enemy-portrait-wrap {
   border-radius: var(--radius);
   background: var(--deep);
 }
-.kabeel-portrait-stage img { inline-size: 100%; block-size: 100%; object-fit: contain; }
-.kabeel-felled img { opacity: .65; }
+.kabeelith-portrait-stage img { inline-size: 100%; block-size: 100%; object-fit: contain; }
+.kabeelith-felled img { opacity: .65; }
 .duel-progress {
   display: block;
   inline-size: 100%;
@@ -757,15 +757,15 @@ a.enemy-portrait-wrap {
   margin-block: 16px;
   accent-color: var(--accent);
 }
-.kabeel-meters, .a11y-pills {
+.kabeelith-meters, .a11y-pills {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px 16px;
 }
-.kabeel-stat, .a11y-box { display: grid; align-content: start; gap: 4px; }
-.kabeel-stat { padding-block: 8px; border-block-end: 1px solid var(--line); }
-.kabeel-stat span, .a11y-box span { color: var(--muted); font-size: .875rem; }
-.kabeel-meters + .control-row { margin-block-start: 16px; }
+.kabeelith-stat, .a11y-box { display: grid; align-content: start; gap: 4px; }
+.kabeelith-stat { padding-block: 8px; border-block-end: 1px solid var(--line); }
+.kabeelith-stat span, .a11y-box span { color: var(--muted); font-size: .875rem; }
+.kabeelith-meters + .control-row { margin-block-start: 16px; }
 .duel-notes { display: grid; gap: 16px; }
 
 .astral-controls { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-block-end: 16px; }
@@ -1041,7 +1041,7 @@ body:has(.lightbox[open]) { overflow: hidden; }
 }
 
 @media (max-width: 760px) {
-  .hero-grid, .field-note, .section-header, .sanctum-stage, .help-book-stage, .kabeel-grid,
+  .hero-grid, .field-note, .section-header, .sanctum-stage, .help-book-stage, .kabeelith-grid,
   .a11y-split, .audio-deck, .warning-note, .voices-grid, .doc-hero .recovery-grid, .pyramid-explorer, .update-grid {
     grid-template-columns: minmax(0, 1fr);
   }

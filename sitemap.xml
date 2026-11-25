@@ -44,7 +44,7 @@
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/thumbnails/10-Journal-Page.webp</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/thumbnails/kabeel-portrait.webp</image:loc>
+      <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/thumbnails/kabeelith-portrait.webp</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://bulentozkir.github.io/relicmaze-site/assets/previews/all-144-rooms.png</image:loc>
@@ -56,10 +56,10 @@
     <video:video>
       <video:thumbnail_loc>https://bulentozkir.github.io/relicmaze-site/assets/media/trailer-poster.webp</video:thumbnail_loc>
       <video:title>RelicMaze Gameplay Trailer</video:title>
-      <video:description>Watch 55 seconds of RelicMaze gameplay and see how Milo explores the chambers of this offline puzzle platformer for Windows.</video:description>
+      <video:description>Watch the 60-second RelicMaze trailer, from temple puzzles to Milo's duel with Kabeelith in this offline Windows puzzle platformer.</video:description>
       <video:content_loc>https://bulentozkir.github.io/relicmaze-site/assets/media/trailer.mp4</video:content_loc>
-      <video:duration>55</video:duration>
-      <video:publication_date>2026-11-16T18:49:33+03:00</video:publication_date>
+      <video:duration>60</video:duration>
+      <video:publication_date>2026-11-25</video:publication_date>
     </video:video>
   </url>
   <url>

@@ -4,7 +4,7 @@ Official static GitHub Pages showcase for **RelicMaze** — an original room-by-
 
 ## Structure
 
-- `index.html` — Main showcase with an in-game hero still, dated game development notes, on-demand trailer and solver walkthroughs, both original 432 Hz soundtracks, interactive 144-chamber pyramid and 11 Sanctums, illustrated bestiary, Kabeel duel, *Help* plates, narrated *Legend* prologue, Astral Veil diagram, and gallery.
+- `index.html` — Main showcase with an in-game hero still, dated game development notes, on-demand trailer and solver walkthroughs, both original 432 Hz soundtracks, interactive 144-chamber pyramid and 11 Sanctums, illustrated bestiary, Kabeelith duel, *Help* plates, narrated *Legend* prologue, Astral Veil diagram, and gallery.
 - `trailer.html` — Dedicated English gameplay trailer page with native playback and `VideoObject` structured data.
 - `support.html` — Player Support, system requirements, save file locations (`%APPDATA%\RelicMaze`), controls, and accessibility shortcuts.
 - `privacy.html` — Privacy Policy (100% offline play, zero telemetry, zero accounts, local-only saves).
@@ -17,7 +17,7 @@ Official static GitHub Pages showcase for **RelicMaze** — an original room-by-
 
 The site uses shared CSS and vanilla JavaScript; there is no build step. Serve the repository with a static HTTP server. When testing the custom 404 page, mount the site under `/relicmaze-site/` to match GitHub Pages: its project-root links also need to work from missing nested URLs. The mobile menu and floor picker work in both directions. Clear View (`F9`) increases contrast. Reduced-motion preferences turn off UI transitions and the prologue word highlight.
 
-Gameplay videos use seekable, inline MP4s and load on demand. The site keeps the original GIFs as source material but uses still previews. Gallery links open directly to full-resolution originals without JavaScript and open a viewer when JavaScript is available. Heavier plates display smaller WebP previews from `assets/thumbnails/`.
+Gameplay videos use seekable, inline MP4s and load on demand. The site uses still previews and retains GIF versions separately, including a silent export of the gameplay trailer. Gallery links open directly to full-resolution images without JavaScript and open a viewer when JavaScript is available. Heavier plates display smaller WebP previews from `assets/thumbnails/`.
 
 The game offers 30 languages; the website has a separate 20-language interface. The English site starts with `assets/js/i18n-data.js` and loads `assets/js/i18n-translations.js` only when a visitor chooses or previously saved another language. If a translated game fact is stale, fall back to current English copy until that translation is reviewed. Keep development notes distinct from published Store releases.
 

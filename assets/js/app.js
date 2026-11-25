@@ -1,6 +1,6 @@
 (function () {
   const I18N = window.RELICMAZE_I18N || { languages: [], strings: {} };
-  const translationsUrl = new URL("i18n-translations.js?v=13", document.currentScript.src);
+  const translationsUrl = new URL("i18n-translations.js?v=14", document.currentScript.src);
   const STORAGE_LANG = "rm_site_lang";
   const STORAGE_CLEAR = "rm_clear_view";
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
@@ -42,7 +42,7 @@
     pyramid_sub: "Select a chamber to see its region, sigil, or Sanctum gateway. On a smaller screen, use the floor picker to move through the pyramid.",
     puzzles_eyebrow: "Hidden gateways",
     enemies_eyebrow: "Illustrated bestiary",
-    kabeel_eyebrow: "Chamber 144",
+    kabeelith_eyebrow: "Chamber 144",
     relics_eyebrow: "Field notes on the Astral Veil",
     gallery_eyebrow: "Visual archive",
     the_legend: "The legend",
@@ -320,7 +320,7 @@
     { idx: 6, start: 91, end: 105, color: "#5a9be6", sigil: 105, vibe: "Flooded rainclock basins, breath gauges & hanging conduits." },
     { idx: 7, start: 106, end: 120, color: "#d4b85a", sigil: 120, vibe: "Shrouded astronomical vaults, portals & precision beam instruments." },
     { idx: 8, start: 121, end: 135, color: "#e05568", sigil: 135, vibe: "Ash-lined gauntlets, reactive guardians & spectral trials." },
-    { idx: 9, start: 136, end: 144, color: "#ff8533", sigil: null, vibe: "Deepest inferno of the Pyramid: Kabeel, the winged satanic lava-born beast, guards the Heart of the Meridian." },
+    { idx: 9, start: 136, end: 144, color: "#ff8533", sigil: null, vibe: "Deepest inferno of the Pyramid: Kabeelith, the winged satanic lava-born beast, guards the Heart of the Meridian." },
   ];
 
   const SANCTUMS = {
@@ -392,7 +392,7 @@
 
     numEl.textContent = String(n).padStart(3, "0");
     let badge = "";
-    if (n === 144) badge = " · Kabeel";
+    if (n === 144) badge = " · Kabeelith";
     else if (SIGIL_ROOMS.has(n)) badge = ` · Meridian sigil ${n / 15}`;
     if (SANCTUMS[n] && n !== 144) badge += ` · Gateway to Sanctum ${SANCTUMS[n].code}`;
 
@@ -740,19 +740,19 @@
     });
   }
 
-  function initKabeelAltar() {
-    const portraitImg = document.getElementById("kabeel-main-img");
-    const stageWrap = document.getElementById("kabeel-portrait-stage");
-    const viewFullBtn = document.getElementById("kabeel-view-full");
-    const viewWitheredBtn = document.getElementById("kabeel-view-withered");
-    const viewVisageBtn = document.getElementById("kabeel-view-visage");
+  function initKabeelithAltar() {
+    const portraitImg = document.getElementById("kabeelith-main-img");
+    const stageWrap = document.getElementById("kabeelith-portrait-stage");
+    const viewFullBtn = document.getElementById("kabeelith-view-full");
+    const viewWitheredBtn = document.getElementById("kabeelith-view-withered");
+    const viewVisageBtn = document.getElementById("kabeelith-view-visage");
     const strikeBtn = document.getElementById("btn-throw-stone");
     const resetBtn = document.getElementById("btn-reset-duel");
-    const elHits = document.getElementById("kabeel-hits-val");
-    const elScore = document.getElementById("kabeel-score-val");
-    const elHorn = document.getElementById("kabeel-horn-val");
-    const elState = document.getElementById("kabeel-bridge-val");
-    const progress = document.getElementById("kabeel-progress");
+    const elHits = document.getElementById("kabeelith-hits-val");
+    const elScore = document.getElementById("kabeelith-score-val");
+    const elHorn = document.getElementById("kabeelith-horn-val");
+    const elState = document.getElementById("kabeelith-bridge-val");
+    const progress = document.getElementById("kabeelith-progress");
 
     if (!portraitImg) return;
     let hits = 0;
@@ -763,8 +763,8 @@
       const isVisage = src.indexOf("visage") !== -1;
       portraitImg.width = isVisage ? 537 : 776;
       portraitImg.height = isVisage ? 516 : 752;
-      portraitImg.alt = isVisage ? "Close-up of Kabeel’s horned face" :
-        activeBtn === viewWitheredBtn ? "Withered Kabeel with exposed bones" : "Illustration of Kabeel with four horns and unfurled wings";
+      portraitImg.alt = isVisage ? "Close-up of Kabeelith’s horned face" :
+        activeBtn === viewWitheredBtn ? "Withered Kabeelith with exposed bones" : "Illustration of Kabeelith with four horns and unfurled wings";
       [viewFullBtn, viewWitheredBtn, viewVisageBtn].forEach((b) => {
         b?.setAttribute("aria-pressed", String(b === activeBtn));
       });
@@ -790,17 +790,17 @@
           : "Enthroned";
       }
       if (strikeBtn) strikeBtn.disabled = felled;
-      if (stageWrap) stageWrap.classList.toggle("kabeel-felled", felled);
+      if (stageWrap) stageWrap.classList.toggle("kabeelith-felled", felled);
     }
 
     if (viewFullBtn) {
-      viewFullBtn.addEventListener("click", () => setActivePortraitTab(viewFullBtn, "assets/enemies/kabeel-portrait.png?v=6"));
+      viewFullBtn.addEventListener("click", () => setActivePortraitTab(viewFullBtn, "assets/enemies/kabeelith-portrait.png?v=6"));
     }
     if (viewWitheredBtn) {
-      viewWitheredBtn.addEventListener("click", () => setActivePortraitTab(viewWitheredBtn, "assets/enemies/kabeel-withered.png?v=6"));
+      viewWitheredBtn.addEventListener("click", () => setActivePortraitTab(viewWitheredBtn, "assets/enemies/kabeelith-withered.png?v=6"));
     }
     if (viewVisageBtn) {
-      viewVisageBtn.addEventListener("click", () => setActivePortraitTab(viewVisageBtn, "assets/enemies/kabeel-visage.png?v=6"));
+      viewVisageBtn.addEventListener("click", () => setActivePortraitTab(viewVisageBtn, "assets/enemies/kabeelith-visage.png?v=6"));
     }
 
     if (strikeBtn) {
@@ -808,7 +808,7 @@
         if (hits >= NEEDED) return;
         hits++;
         if (hits === 25 && viewWitheredBtn) {
-          setActivePortraitTab(viewWitheredBtn, "assets/enemies/kabeel-withered.png?v=6");
+          setActivePortraitTab(viewWitheredBtn, "assets/enemies/kabeelith-withered.png?v=6");
         }
         syncStats();
         if (hits === NEEDED) resetBtn?.focus();
@@ -818,7 +818,7 @@
     if (resetBtn) {
       resetBtn.addEventListener("click", () => {
         hits = 0;
-        if (viewFullBtn) setActivePortraitTab(viewFullBtn, "assets/enemies/kabeel-portrait.png?v=6");
+        if (viewFullBtn) setActivePortraitTab(viewFullBtn, "assets/enemies/kabeelith-portrait.png?v=6");
         syncStats();
       });
     }
@@ -1060,7 +1060,7 @@
   initPyramidExplorer();
   initSanctumExplorer();
   initEnemyFilters();
-  initKabeelAltar();
+  initKabeelithAltar();
   initHelpBookExplorer();
   initLightbox();
   initLegendStudioVoice();
