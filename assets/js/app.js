@@ -1,6 +1,6 @@
 (function () {
   const I18N = window.RELICMAZE_I18N || { languages: [], strings: {} };
-  const translationsUrl = new URL("i18n-translations.js?v=14", document.currentScript.src);
+  const translationsUrl = new URL("i18n-translations.js?v=15", document.currentScript.src);
   const STORAGE_LANG = "rm_site_lang";
   const STORAGE_CLEAR = "rm_clear_view";
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");

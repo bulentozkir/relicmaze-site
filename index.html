@@ -58,7 +58,7 @@
         "name": "RelicMaze | Offline Puzzle Platformer for Windows",
         "description": "Guide Milo through 144 chambers and 11 Hidden Sanctums in RelicMaze, an offline puzzle platformer for Windows. Watch gameplay and browse the pyramid atlas.",
         "inLanguage": "en",
-        "dateModified": "2026-11-25",
+        "dateModified": "2026-11-26",
         "isPartOf": {
           "@id": "https://bulentozkir.github.io/relicmaze-site/#website"
         },
@@ -299,9 +299,9 @@
     <section class="section update-section" id="game-update" aria-labelledby="update-title">
       <div class="container">
         <div class="section-header" lang="en" dir="ltr">
-          <p class="eyebrow"><span>Game development · <time datetime="2026-11-25">November 25, 2026</time></span></p>
+          <p class="eyebrow"><span>Game development · <time datetime="2026-11-26">November 26, 2026</time></span></p>
           <h2 class="section-title" id="update-title">Milo Move Out: mine-cart puzzles</h2>
-          <p class="section-sub">What’s changed in development build 0.0.17.</p>
+          <p class="section-sub">What’s changed in development build 0.0.19.</p>
         </div>
         <div class="update-grid">
           <figure class="update-plate">
@@ -310,11 +310,12 @@
             <figcaption class="gallery-caption" lang="en" dir="ltr">Milo Move Out · In-game screenshot</figcaption>
           </figure>
           <div class="update-copy" lang="en" dir="ltr">
-            <p>Most first-time exits now lead to a 6×6 mine yard. Slide the wagons along their rails to clear a path for Milo’s red cart. Each chamber has its own board; certain routes earn a direct exit instead.</p>
+            <p>Most first-time exits lead to a 6×6 mine yard. Slide the wagons along their rails to clear a path for Milo’s red cart. All 144 chamber boards are now in the hard tier (17–36 minimum moves); certain routes earn a direct exit instead.</p>
             <ul>
-              <li>Collect each chamber’s treasure as well as its seals before leaving.</li>
-              <li>The Shifting Labyrinth now follows <a href="#puzzles">Chamber 90</a>. Chamber 100 still has its Astral Relay, but no Sanctum.</li>
-              <li>The game now offers 30 languages, including right-to-left menus in Arabic, Urdu, Western Punjabi, and Persian.</li>
+              <li>Revisit any reached chamber or Sanctum from the Chamber Journal, or click <strong>Restart Milo Move Out</strong> to replay a past chamber’s board from the start.</li>
+              <li>Press <kbd>Ctrl</kbd> + <kbd>R</kbd> + <kbd>X</kbd> in any chamber or Sanctum to play it again from scratch.</li>
+              <li>Solution previews now unlock after 299 valid slides on the same mine-cart board, and the Golden Solution Bulb unlocks after 199 failures in the same chamber or Sanctum.</li>
+              <li>Collect each chamber’s treasure as well as its seals, explore The Shifting Labyrinth after <a href="#puzzles">Chamber 90</a>, and choose from 30 game languages (with right-to-left menus in Arabic, Urdu, Western Punjabi, and Persian).</li>
             </ul>
             <a href="support.html#mine-cart-help">Mine-cart controls and hints</a>
           </div>
@@ -404,7 +405,7 @@
               <span class="walkthrough-label">Chamber 101</span>
             </a>
             <a class="walkthrough-card" href="assets/previews/selected-rooms-walkthrough.png" data-lightbox-title="Selected Chambers — Deterministic Route Traces">
-              <img src="assets/previews/selected-rooms-walkthrough.png?v=10" alt="Selected rooms solver traces" width="1056" height="1176" loading="lazy" decoding="async">
+              <img src="assets/previews/selected-rooms-walkthrough.png?v=11" alt="Selected rooms solver traces" width="1056" height="1176" loading="lazy" decoding="async">
               <span class="walkthrough-label">Route atlas</span>
             </a>
           </div>
@@ -1075,7 +1076,7 @@
           </a>
 
           <a class="gallery-item" data-category="art" href="assets/previews/all-144-rooms.png" data-lightbox-title="Complete 144-Chamber Architectural Contact Sheet">
-            <img class="gallery-thumb" src="assets/previews/all-144-rooms.png?v=10" alt="All 144 Chambers architectural mosaic" width="1360" height="1600" loading="lazy" decoding="async">
+            <img class="gallery-thumb" src="assets/previews/all-144-rooms.png?v=11" alt="All 144 Chambers architectural mosaic" width="1360" height="1600" loading="lazy" decoding="async">
             <div class="gallery-caption"><strong>All 144 Chambers Mosaic</strong><span>FULL CAMPAIGN</span></div>
           </a>
         </div>
@@ -1349,6 +1350,11 @@
                 <td><kbd>Ctrl</kbd> + <kbd>R</kbd></td>
                 <td>—</td>
               </tr>
+              <tr>
+                <td>Play chamber from scratch</td>
+                <td><kbd>Ctrl</kbd> + <kbd>R</kbd> + <kbd>X</kbd></td>
+                <td>—</td>
+              </tr>
             </tbody>
           </table>
           <p class="section-sub"><a href="support.html#accessibility-help">More shortcuts and accessibility settings</a></p>
@@ -1437,7 +1443,7 @@
     </div>
   </footer>
 
-  <script src="assets/js/i18n-data.js?v=14" defer></script>
-  <script src="assets/js/app.js?v=16" defer></script>
+  <script src="assets/js/i18n-data.js?v=15" defer></script>
+  <script src="assets/js/app.js?v=17" defer></script>
 </body>
 </html>

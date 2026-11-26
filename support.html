@@ -56,7 +56,7 @@
         "name": "RelicMaze Support | Windows Requirements & Save Files",
         "description": "Find RelicMaze's Windows requirements, local save file locations, controller and keyboard controls, accessibility settings, and troubleshooting.",
         "inLanguage": "en",
-        "dateModified": "2026-11-25",
+        "dateModified": "2026-11-26",
         "isPartOf": {
           "@id": "https://bulentozkir.github.io/relicmaze-site/#website"
         },
@@ -229,8 +229,8 @@
               <li><kbd>F9</kbd> — Toggle <strong>Clear View</strong> low-vision high-contrast rendering on/off at any time.</li>
               <li><kbd>F10</kbd> — Cycle through the four contrast-audited Clear View palettes.</li>
               <li><kbd>U</kbd> (or the toolbar <kbd>?</kbd> button) opens the illustrated <em>Help</em> book. <kbd>F1</kbd> or <kbd>H</kbd> opens the Controls card.</li>
-              <li><kbd>Tab</kbd> or <kbd>J</kbd> opens the Journal. <kbd>T</kbd> starts a clean Time Trial for the selected chamber.</li>
-              <li><kbd>Ctrl</kbd> + <kbd>R</kbd> retries the current chamber or Sanctum from its checkpoint. <kbd>R</kbd> alone resets a mine-cart board.</li>
+              <li><kbd>Tab</kbd> or <kbd>J</kbd> opens the Journal to revisit any reached chamber or Sanctum, start a clean Time Trial (<kbd>T</kbd>), or click <strong>Restart Milo Move Out</strong> on a past chamber.</li>
+              <li><kbd>Ctrl</kbd> + <kbd>R</kbd> retries the current chamber or Sanctum from its checkpoint, and <kbd>Ctrl</kbd> + <kbd>R</kbd> + <kbd>X</kbd> plays it again from scratch. <kbd>R</kbd> alone resets a mine-cart board.</li>
               <li><strong>Settings → Accessibility:</strong> Scale the UI from 80% to 250% or turn on Bold Text, the Chamber Magnifier, Narration, Reduced Motion, Reduced Flashes, or Timing Assists.</li>
               <li><strong>Settings → General → Language:</strong> Choose from 30 game languages. Arabic, Urdu, Western Punjabi, and Persian use right-to-left menus.</li>
             </ul>
@@ -239,22 +239,27 @@
           <article class="temple-frame doc-card" id="stuck-help">
             <h2>Getting unstuck in a chamber or Sanctum</h2>
             <p>Use <strong>Pause → Show one move</strong> to preview an input from where Milo stands. After three failures in the same chamber or Sanctum, <strong>Pause → Assists</strong> offers a hint, half-speed play, or one move at a time.</p>
-            <p>The <strong>Golden Solution Bulb</strong> unlocks after 19 failures in Chambers 1–25 or 49 in Chambers 26–144. A Hidden Sanctum uses its entrance chamber’s threshold but counts its own failures. The replay does not change your live attempt.</p>
+            <p>The <strong>Golden Solution Bulb</strong> unlocks after 199 failures in the same chamber or Sanctum; each chamber and Sanctum counts its failures separately. The replay does not change your live attempt.</p>
           </article>
 
           <article class="temple-frame doc-card" id="mine-cart-help">
             <h2>Milo Move Out: mine-cart controls and hints</h2>
-            <p>On most first clears, the onward door opens a mine yard. Drag a wagon with the pointer, or select it with the keyboard or gamepad and move it along its track. Clear the way for Milo’s red cart to reach the exit on the right.</p>
+            <p>On most first clears, the onward door opens a 6×6 mine yard. All 144 chamber boards are in the hard tier (at least 17 moves). Drag a wagon with the pointer, or select it with the keyboard or gamepad and move it along its track to clear the way for Milo’s red cart to reach the exit on the right.</p>
             <ul>
               <li>A one-step hint is available from the first move.</li>
-              <li>After 99 valid slides on the same unsolved board, choose <strong>Show me the solution</strong> (<kbd>K</kbd> or <kbd>L3</kbd>). The game previews a solution without moving your live board.</li>
+              <li>After 299 valid slides on the same unsolved board, choose <strong>Show me the solution</strong> (<kbd>K</kbd> or <kbd>L3</kbd>). The game previews a solution without moving your live board.</li>
               <li><kbd>R</kbd> resets the board, not the chamber. Undoing or resetting does not erase the valid-slide count.</li>
+              <li>In the Chamber Journal, select any past chamber or Sanctum and click <strong>Restart Milo Move Out</strong> to confirm and replay that chamber’s board from the beginning.</li>
             </ul>
             <p><a href="./#game-update">See the mine-yard screenshot and the latest game changes</a>.</p>
           </article>
 
           <article class="temple-frame doc-card reveal" id="troubleshooting">
             <h2>Troubleshooting and contact</h2>
+            <h3>Standalone MSI closes at launch after an earlier update</h3>
+            <p>
+              If reinstalling or updating over the standalone MSI edition of <code>v0.0.17</code> causes the game to close at launch (for example, <code>hostfxr_initialize_for_dotnet_command_line failed</code> in <code>%APPDATA%\RelicMaze\logs\godot.log</code>), open <strong>Windows Settings → Apps → Installed apps → RelicMaze</strong>, uninstall the MSI edition, and install the matching <code>x64</code> or <code>ARM64</code> MSI again. Your saves in <code>%APPDATA%\RelicMaze</code> stay intact. This workaround applies only to the standalone MSI installer, not the Microsoft Store edition.
+            </p>
             <h3>No spoken voice for the selected language</h3>
             <p>
               RelicMaze uses installed Windows speech synthesis voices. If Windows does not have a voice pack installed for your chosen language, all spoken hints and descriptions automatically appear as readable on-screen captions. You can add additional voices in <strong>Windows Settings → Time &amp; language → Speech</strong>.
@@ -326,7 +331,7 @@
     </div>
   </footer>
 
-  <script src="assets/js/i18n-data.js?v=14" defer></script>
-  <script src="assets/js/app.js?v=15" defer></script>
+  <script src="assets/js/i18n-data.js?v=15" defer></script>
+  <script src="assets/js/app.js?v=17" defer></script>
 </body>
 </html>
